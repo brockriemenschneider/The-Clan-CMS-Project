@@ -124,7 +124,7 @@
 
 			<div id='inputrow'>
 				<div class='title'>
-					<span class='required'>*</span> <span class='white'>Database Password</span>
+					<span class='white'>Database Password</span>
 				</div>
 				<div class='right'>
 					<div class='data'>
