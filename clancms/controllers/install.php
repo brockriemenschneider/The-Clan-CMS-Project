@@ -88,7 +88,7 @@ class Install extends Controller {
         $this->form_validation->set_rules('hostname', 'Database Host', 'trim|required');
         $this->form_validation->set_rules('database', 'Database Name', 'trim|required');
 		$this->form_validation->set_rules('username', 'Database Username', 'trim|required');
-		$this->form_validation->set_rules('password', 'Database Password', 'trim|required');
+		$this->form_validation->set_rules('password', 'Database Password', 'trim');
 		$this->form_validation->set_rules('create_database', '', '');
 		
 		// Assign the create database variable so we can check it
