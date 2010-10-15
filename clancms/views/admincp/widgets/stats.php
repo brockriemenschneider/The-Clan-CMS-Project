@@ -6,7 +6,7 @@
 			<div class="subheader">
 				<?php echo heading('Site Stats', 4); ?>
 			</div>
-			Articles: <?php echo anchor(ADMINCP . 'articles', $total_articles_published . ' Published'); ?>, <?php echo anchor(ADMINCP . 'articles/drafts', $total_articles_drafts . ' Draft(s)'); ?>
+			Articles: <?php echo anchor(ADMINCP . 'articles', $total_articles_published . ' Published'); ?>, <?php echo anchor(ADMINCP . 'articles/drafts', $total_articles_drafts . ' Drafts'); ?>
 			<?php echo br(); ?>
 			Matches: <?php echo anchor(ADMINCP . 'matches', $total_matches . ' Matches'); ?>
 			<?php echo br(); ?>
