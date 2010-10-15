@@ -20,7 +20,7 @@
 			<div class="inside">
 				
 				<?php if(validation_errors()): ?>
-				<div id="error">
+				<div class="alert">
 					<?php echo validation_errors(); ?>
 				</div>
 				<?php endif; ?>
