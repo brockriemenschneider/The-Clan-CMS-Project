@@ -44,8 +44,8 @@ class Dashboard extends Controller {
 		// Load the Alerts model
 		$this->load->model('Alerts_model', 'alerts');
 		
-		// Check if upgrade files exist
-		$this->_check_upgrade();
+		// Check if update files exist
+		$this->_check_update();
 			
 		// Check if installation files exist
 		$this->_check_installation();
@@ -113,7 +113,7 @@ class Dashboard extends Controller {
 	/**
 	 * Download
 	 *
-	 * Downloads a upgrade
+	 * Downloads a update
 	 *
 	 * @access	public
 	 * @return	void
@@ -127,80 +127,107 @@ class Dashboard extends Controller {
 			redirect(ADMINCP);
 		}
 		
-		// Retrieve the upgrade
-		$upgrade = $this->uri->segment(4, '');
+		// Retrieve the update
+		$update = $this->uri->segment(4, '');
 		
-		// Load the unzip library
-		$this->load->library('unzip');
-		
-		// Download the upgrade
-		copy('http://www.xcelgaming.com/downloads/upgrades/' . $upgrade . '.zip', $upgrade . '.zip');
-		
-		// Unpack the upgrade from the package
-		$this->unzip->extract($upgrade . '.zip');
-
-		// Delete the upgrade package
-		unlink($upgrade . '.zip');
+		// Download the update
+		copy('http://www.xcelgaming.com/download/ClanCMS-' . $update . '.zip', 'Update.zip');
 		
 		// Redirect the administrator
-		redirect(ADMINCP . 'dashboard/upgrade');
+		redirect(ADMINCP . 'dashboard/update');
 	}
 	
 	// --------------------------------------------------------------------
 	
 	/**
-	 * Upgrade
+	 * Update
 	 *
-	 * Upgrade the script
+	 * Update the script
 	 *
 	 * @access	public
 	 * @return	void
 	 */
-	function upgrade()
+	function update()
 	{
 		// Check is administrator is super administrator
-		if($this->session->userdata('user_id') != SUPERADMINISTRATOR)
+		if($this->session->userdata('user_id') != SUPERADMINISTRATOR OR !file_exists('Update.zip'))
 		{
 			// Administrator isn't a super administrator, redirect the administrator
 			redirect(ADMINCP);
 		}
 		
-		// Load the upgrade library
-		$this->load->library('upgrade');
+		// Load the file helper
+		$this->load->helper('file');
 		
-		// Install the upgrade
-		$this->upgrade->install();
+		// Define the path to important files
+		$important_files = array(
+			'./clancms/config/config.php',
+			'./clancms/config/database.php'
+		);
 		
-		// Delete the upgrade package
-		$this->upgrade->self_destruct();
+		// Loop through the important files
+		foreach($important_files as $important_file)
+		{
+			// Retrieve the files
+			$file[$important_file] = read_file($important_file);
+		}
+		
+		// Load the unzip library
+		$this->load->library('unzip');
+		
+		// Unzip the update
+		$this->unzip->extract('Update.zip');
+		
+		// Loop through the important files
+		foreach($important_files as $important_file)
+		{
+			// Write the important files
+			write_file($important_file, $file[$important_file]);
+		}
+		
+		// Load the Installer library
+		$this->load->library('installer');
+		
+		// Write the clancms file
+		$this->installer->write_ClanCMS_file();
+		
+		// Load the update library
+		$this->load->library('update');
+		
+		// Install the update
+		$this->update->install();
+		
+		// Delete the update package
+		$this->update->self_destruct();
+		unlink('Update.zip');
 		
 		// Redirect the administrator
-		redirect(ADMINCP);
+		redirect(ADMINCP . 'dashboard/installation');
 	}
 	
 	// --------------------------------------------------------------------
 	
 	/**
-	 * Check Upgrade
+	 * Check Update
 	 *
-	 * Checks to see if upgrade files exist
+	 * Checks to see if update files exist
 	 *
 	 * @access	private
 	 * @return	void
 	 */
-	function _check_upgrade()
+	function _check_update()
 	{
 		// Check if files exist
-		if(file_exists('./clancms/libraries/Upgrade.php'))
+		if(file_exists('Update.zip'))
 		{
 			// Check if alert already exists
-			if(!$alert = $this->alerts->get_alert(array('alert_slug' => 'upgrade')))
+			if(!$alert = $this->alerts->get_alert(array('alert_slug' => 'update')))
 			{
 				// Set up the data
 				$data = array(
-					'alert_title'	=> 'You have a pending manual upgrade.',
-					'alert_link'	=> 'admincp/dashboard/upgrade',
-					'alert_slug'	=> 'upgrade',
+					'alert_title'	=> 'You have a pending manual update.',
+					'alert_link'	=> 'admincp/dashboard/update',
+					'alert_slug'	=> 'update',
 					'user_id'		=> SUPERADMINISTRATOR
 				);
 			
@@ -211,7 +238,7 @@ class Dashboard extends Controller {
 		else
 		{
 			// Check if alert already exists
-			if($alert = $this->alerts->get_alert(array('alert_slug' => 'upgrade')))
+			if($alert = $this->alerts->get_alert(array('alert_slug' => 'update')))
 			{
 				// Alert doesn't exist, insert the alert into the database
 				$this->alerts->delete_alert($alert->alert_id);
