@@ -40,6 +40,9 @@ class Dashboard extends Controller {
 		// Load the Squads Model
 		$this->load->model('Squads_model', 'squads');
 		
+		// Load the Pages Model
+		$this->load->model('Pages_model', 'pages');
+		
 		// Load the typography library
 		$this->load->library('typography');
 		
@@ -119,6 +122,35 @@ class Dashboard extends Controller {
 	// --------------------------------------------------------------------
 	
 	/**
+	 * Page
+	 *
+	 * Display's a page
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function page()
+	{	
+		// Retrieve the page or show 404
+		($page = $this->pages->get_page(array('page_slug' => $this->uri->segment(2, '')))) or show_404();
+		
+		// Assign page title
+		$page->title = $page->page_title;
+				
+		// Format the text, create links, and assign page content
+		$page->content = auto_link($this->typography->auto_typography($page->page_content));
+		
+		// Create a reference to page
+		$this->data->page =& $page;
+	
+		// Load the page view
+		$this->load->view(THEME . 'page', $this->data);
+
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
 	 * Banned
 	 *
 	 * Display's the banned page
@@ -128,12 +160,17 @@ class Dashboard extends Controller {
 	 */
 	function banned()
 	{	
-		// Set up message data
-		$this->data->title = "You Have Been Banned!";
-		$this->data->message = "You have been banned from this site!";
+		// Assign page title
+		$page->title = "You Have Been Banned!";
 		
-		// Load the message view
-		$this->load->view(THEME . 'message', $this->data);
+		// Assign page content
+		$page->content = "You have been banned from this site!";
+		
+		// Create a reference to page
+		$this->data->page =& $page;
+		
+		// Load the page view
+		$this->load->view(THEME . 'page', $this->data);
 	}
 
 }

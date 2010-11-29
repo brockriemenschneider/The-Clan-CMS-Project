@@ -46,7 +46,7 @@
 					<td><?php if($member->member_role): echo $member->member_role; else: echo 'N/A'; endif; ?></td>
 					<td><?php echo $member->total_kills; ?></td>
 					<td><?php echo $member->total_deaths; ?></td>
-					<td><?php echo $member->kd; ?></td>
+					<td class="<?php if($member->kd < '1.00'): echo 'red'; elseif($member->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $member->kd; ?></td>
 					<td><?php echo anchor('account/profile/' . $this->users->user_slug($member->user_name), img(array('src' => THEME_URL . 'images/stats.png', 'alt' => $member->user_name . "'s stats", 'title' => $member->user_name . "'s stats"))); ?></td>
 				</tr>
 				<?php endforeach; ?>

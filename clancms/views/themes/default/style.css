@@ -24,6 +24,14 @@ img {
 	border: 0px;
 }
 
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
 .orange {
 	color: #ee2d00;
 	text-decoration: underline;
@@ -177,29 +185,29 @@ ul.newsticker a {
 	float:left;
 }
 
-#header #navigation  li {
+#header #navigation ul li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	float:left;
 }
 
-#header #navigation  li a {
+#header #navigation ul li a {
 	color: #ffffff;
 	text-decoration: none;
-	padding: 0 10px 0 10px;
 	float: left;
+	padding: 0 10px 0 10px;
 	font-weight: bold;
 }
 
-#header #navigation  li .left {
+#header #navigation ul li .left {
 	Background: url('images/navigation_left.gif') no-repeat;
 	width: 4px;
 	height: 30px;
 	float: left;
 }
 
-#header #navigation  li .middle {
+#header #navigation ul li .middle {
 	Background: url('images/navigation_middle.gif') repeat-x;
 	height: 30px;
 	float: left;
@@ -207,14 +215,14 @@ ul.newsticker a {
 	text-align: center;
 }
 
-#header #navigation  li .right {
+#header #navigation ul li .right {
 	Background: url('images/navigation_right.gif') no-repeat;
 	width: 4px;
 	height: 30px;
 	float: left;
 }
 
-#header #navigation  li:hover a, #header #navigation  li.selected a  {
+#header #navigation ul li:hover span a, #header #navigation ul li.selected span a  {
 	color: #ffd800;
 	text-decoration: none;
 	padding: 0 10px 0 10px;
@@ -222,14 +230,14 @@ ul.newsticker a {
 	font-weight: bold;
 }
 
-#header #navigation  li:hover .left, #header #navigation  li.selected .left {
+#header #navigation ul li:hover .left, #header #navigation ul li.selected .left {
 	Background: url('images/navigation_left_selected.gif') no-repeat;
 	width: 4px;
 	height: 30px;
 	float: left;
 }
 
-#header #navigation  li:hover .middle, #header #navigation  li.selected  .middle {
+#header #navigation ul li:hover .middle, #header #navigation ul li.selected  .middle {
 	Background: url('images/navigation_middle_selected.gif') repeat-x;
 	height: 30px;
 	float: left;
@@ -237,51 +245,59 @@ ul.newsticker a {
 	text-align: center;
 }
 
-#header #navigation  li:hover .right, #header #navigation  li.selected  .right {
+#header #navigation ul li:hover .right, #header #navigation ul li.selected  .right {
 	Background: url('images/navigation_right_selected.gif') no-repeat;
 	width: 4px;
 	height: 30px;
 	float: left;
 }
 
+#header #navigation ul li ul a {
+	width: 100%;
+}
 
-#header #navigation li ul {
+#header #navigation ul li ul {
 	position:absolute;
 	border-bottom-width: 0;
 	line-height:20px;
 	width: 191px;
-	padding: 18px 0 0 0;
+	margin-top: 30px;
+	padding: 0 0 0 0;
 	text-align: left;
+	list-style: none;
 }
 
-#header #navigation li ul li a.menu {
+#header #navigation ul li ul li {
 	width: 191px;
 	height: 22px;
 	display: block;	
 	text-decoration: none;
 	background-color: #151515;
-	color: #ffffff;
 	border: 1px solid #0F0F0F;
 	padding: 2px 10px 2px 10px;
+	color: #ffffff;
 }
 
-#header #navigation li ul li a.menu:hover, #header #navigation li ul li a.selected {
+#header #navigation ul li ul li:hover, #header #navigation ul li ul li.selected {
 	width: 191px;
 	height: 22px;
 	display: block;	
 	text-decoration: none;
 	background-color: #0f0f0f;
-	color: #ffd800;
 	border: 1px solid #0F0F0F;
 	padding: 2px 10px 2px 10px;
 }
 
-#header #navigation li:hover ul
+#header #navigation ul li ul li:hover a, #header #navigation ul li ul li.selected a {
+	color: #ffd800;
+}
+
+#header #navigation ul li:hover ul
 {
 	display: block;
 }
 
-#header #navigation li ul
+#header #navigation ul li ul
 {
 	display: none;
 }
@@ -775,6 +791,55 @@ ul.newsticker a {
 
 #main .box .content .inside table tbody tr td{
 	border-bottom: 2px groove #2a2a2a;
+}
+
+/*---
+	MISC
+----------------------------*/
+
+#avatar {
+	background: url('images/avatar.png');
+	height: 61px;
+	width: 61px;
+}
+
+#avatar img {
+	padding: 2px;
+}
+
+#login {
+	padding: 0 0 0 5px;
+	float: left;
+}
+
+.comment {
+	float: left;
+	padding: 0 0 0 10px;
+	width: 90%;
+}
+
+/*---
+	NEW USERS
+----------------------------*/
+
+#newusers {
+	background: url('images/new_users.png');
+	height: 96px;
+	width: 741px;
+	overflow: hidden;
+}
+
+#newusers .user {
+	float: left;
+	padding: 10px 2px 0 10px;
+}
+
+#newusers .username {
+	float: left;
+	padding-top: 5px;
+	text-align: center;
+	width: 100%;
+	overflow: hidden;
 }
 
 /*---

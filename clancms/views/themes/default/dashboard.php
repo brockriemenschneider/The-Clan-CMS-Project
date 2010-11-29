@@ -4,6 +4,8 @@
 
 <div id="main">
 	
+<?php $this->load->widget('new_users'); ?>
+
 <?php if($articles): ?>
 	<?php foreach($articles as $article): ?>
 	<div class="box">

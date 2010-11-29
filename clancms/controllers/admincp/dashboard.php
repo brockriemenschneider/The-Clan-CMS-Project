@@ -156,13 +156,17 @@ class Dashboard extends Controller {
 			redirect(ADMINCP);
 		}
 		
+		// Save the old version
+		$this->session->set_userdata('CLANCMS_VERSION', CLANCMS_VERSION);
+		
 		// Load the file helper
 		$this->load->helper('file');
 		
 		// Define the path to important files
 		$important_files = array(
 			'./clancms/config/config.php',
-			'./clancms/config/database.php'
+			'./clancms/config/database.php',
+			'.htaccess'
 		);
 		
 		// Loop through the important files
@@ -196,6 +200,9 @@ class Dashboard extends Controller {
 		
 		// Install the update
 		$this->update->install();
+		
+		// Remove the old version
+		$this->session->unset_userdata('CLANCMS_VERSION');
 		
 		// Delete the update package
 		$this->update->self_destruct();

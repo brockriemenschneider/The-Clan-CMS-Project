@@ -23,7 +23,7 @@ $(function() {
 });		
 </script> 
 
-<?php echo form_open(ADMINCP . 'users/add'); ?>
+<?php echo form_open_multipart(ADMINCP . 'users/add'); ?>
 <div id="main">
 
 	<div class="box">
@@ -43,6 +43,12 @@ $(function() {
 				<?php if(validation_errors()): ?>
 				<div class="alert">
 					<?php echo validation_errors(); ?>
+				</div>
+				<?php endif; ?>
+					
+				<?php if(isset($upload->errors)): ?>
+				<div class="alert">
+					<?php echo $upload->errors; ?>
 				</div>
 				<?php endif; ?>
 				
@@ -149,6 +155,18 @@ $(function() {
 				<div class="subheader">
 						<?php echo heading('Preferences', 4); ?>
 				</div>
+				
+				<div class="label">Avatar</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'avatar',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_upload($data); ?>
+				<?php echo br(); ?>
 				
 				<div class="label required">Timezone</div> 
 				<?php echo timezone_menu(set_value('timezone', $this->ClanCMS->get_setting('default_timezone')), 'input select', 'timezone'); ?>

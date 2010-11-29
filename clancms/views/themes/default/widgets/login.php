@@ -4,9 +4,20 @@
 			<div class="inside">
 				
 				<?php if($this->user->logged_in()): ?>
-				Welcome back, <?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), $this->session->userdata('username')); ?>!
-				<?php echo br(); ?>
-				<?php if($this->user->is_administrator()): echo anchor(ADMINCP, 'Admin CP') . ' | '; endif; ?> <?php echo anchor('account', 'My Account'); ?> | <?php echo anchor('account/logout', 'Logout'); ?>
+				<div id="avatar" class="left">
+					<?php if($user->user_avatar): ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php else: ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php endif; ?>
+				</div>
+				<div id="login">
+					<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), $this->session->userdata('username')); ?>
+					<?php echo br(2); ?>
+					<?php if($this->user->is_administrator()): echo anchor(ADMINCP, 'Admin CP') . br(); endif; ?>
+					<?php echo anchor('account', 'My Account'); ?> | <?php echo anchor('account/logout', 'Logout'); ?>
+				</div>
+				<div class="clear"></div>
 				<?php else: ?>
 				<?php echo form_open('account/login'); ?>
 				<div class="label">Username:</div>

@@ -71,7 +71,7 @@
 				<?php echo br(); ?>
 				<div class="description">The link to the sponsor's website</div>
 				
-				<div class="label <?php if($sponsor->sponsor_image): echo ''; else: echo 'selected'; endif; ?>">Image</div>
+				<div class="label <?php if($sponsor->sponsor_image): echo ''; else: echo 'required'; endif; ?>">Image</div>
 				
 				<?php 
 				$data = array(
@@ -83,7 +83,7 @@
 				echo form_upload($data); ?>
 				<?php echo br(); ?>
 				<?php if($sponsor->sponsor_image): ?>
-					<div class="description"><?php echo img(IMAGES . $sponsor->sponsor_image); ?></div>
+					<div class="description"><?php echo img(array('src' => IMAGES . 'sponsors/' . $sponsor->sponsor_image, 'alt' => $sponsor->sponsor_title, 'title' => $sponsor->sponsor_title)); ?></div>
 				<?php endif; ?>
 				<div class="description">The sponsor's logo</div>
 				<?php echo br(); ?>

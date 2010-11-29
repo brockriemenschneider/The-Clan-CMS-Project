@@ -46,6 +46,7 @@ $route['scaffolding_trigger'] = "";
 // Set custom routes for pages
 $route['(:any)/page/(:num)'] = "$1/index/$2";
 $route['admincp/(:any)/page/(:num)'] = "admincp/$1/index/$2";
+$route['page/(:any)'] = "dashboard/page/$1";
 
 /* End of file routes.php */
 /* Location: ./clancms/config/routes.php */

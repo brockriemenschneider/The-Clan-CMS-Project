@@ -48,7 +48,7 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (5, 'Can manage sponsors?', 'sponsors', 16),
 (6, 'Can manage users?', 'users', 32),
 (7, 'Can manage usergroups?', 'usergroups', 64),
-(8, 'Can manage themes?', 'themes', 128);
+(8, 'Can manage pages?', 'pages', 128);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__matches` (
   `match_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -84,6 +84,18 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_players` (
   PRIMARY KEY (`player_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__pages` (
+  `page_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `page_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `page_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `page_content` text COLLATE utf8_unicode_ci NOT NULL,
+  `page_priority` int(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`page_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+-- command split --
+INSERT INTO `__DBPREFIX__pages` (`page_id`, `page_title`, `page_slug`, `page_content`, `page_priority`) VALUES
+(1, 'About Us', 'aboutus', 'Put your clan description here\n\nXcel Gaming\ncontactus@xcelgaming.com', 1);
+-- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__sessions` (
   `session_id` varchar(40) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `ip_address` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -103,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__settings` (
   `setting_description` text NOT NULL,
   `setting_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 -- command split --
 INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`, `setting_slug`, `setting_value`, `setting_type`, `setting_description`, `setting_priority`) VALUES
 (1, 1, 'Clan Name', 'clan_name', '', 'input', 'Put your clan name here.', 1),
@@ -111,10 +123,9 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (3, 3, 'Default Timezone', 'default_timezone', '', 'timezone', 'The default timezone for entire site', 1),
 (4, 1, 'Site Email', 'site_email', '', 'input', 'The site''s main email', 4),
 (5, 3, 'Daylight Savings', 'daylight_savings', '0', 'dropdown', 'Is it daylight savings?', 2),
-(6, 1, 'About Us', 'about_us', 'Put your clan description here\n\nXcel Gaming\ncontactus@xcelgaming.com', 'textarea', 'A description of your clan', 5),
-(8, 1, 'Forum Link', 'forum_link', '', 'input', 'The link to your forums', 3),
-(9, 1, 'Clan Slogan', 'clan_slogan', '', 'input', 'Put your clan slogan here', 2),
-(10, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2);
+(6, 1, 'Forum Link', 'forum_link', '', 'input', 'The link to your forums', 3),
+(7, 1, 'Clan Slogan', 'clan_slogan', '', 'input', 'Put your clan slogan here', 2),
+(8, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__setting_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -168,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_daylight_savings` tinyint(1) NOT NULL DEFAULT '0',
   `user_ipaddress` varchar(50) NOT NULL,
   `user_joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_avatar` varchar(200) NOT NULL,
   `user_activation` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

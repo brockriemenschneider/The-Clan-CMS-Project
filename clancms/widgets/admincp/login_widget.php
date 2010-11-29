@@ -50,8 +50,14 @@ class Login_widget extends Widget {
 	 */
 	function index()
 	{
+		// Retrieve the user
+		$user = $this->CI->users->get_user(array('user_id' => $this->CI->session->userdata('user_id')));
+		
+		// Create a reference to user
+		$this->data->user = $user;
+		
 		// Load the admincp login widget view
-		$this->CI->load->view(ADMINCP . 'widgets/login');
+		$this->CI->load->view(ADMINCP . 'widgets/login', $this->data);
 	}
 	
 }

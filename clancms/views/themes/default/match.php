@@ -102,7 +102,7 @@
 							<td><?php if($player->member_title): echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->user_name); endif; ?></td>
 							<td><?php echo $player->kills; ?></td>
 							<td><?php echo $player->deaths; ?></td>
-							<td><?php echo $player->kd; ?></td>
+							<td class="<?php if($player->kd < '1.00'): echo 'red'; elseif($player->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $player->kd; ?></td>
 							<td><?php echo anchor('account/profile/' . $this->users->user_slug($player->user_name), img(array('src' => THEME_URL . 'images/stats.png', 'alt' => $player->user_name . "'s stats")), array('title' => $player->user_name . "'s stats")); ?></td>
 						</tr>
 						<?php endforeach; ?>
@@ -186,7 +186,16 @@
 				<?php endif; ?>
 					<?php echo heading(anchor('account/profile/' . $comment->author, $comment->author) . ' Posted ' . mdate("%M %d, %Y at %h:%i %a", $comment->date) . $actions, 4); ?>
 				</div>
-			<?php echo $comment->comment_title; ?><br /><br />
+		<div id="avatar" class="left">
+		<?php if($comment->avatar): ?>
+			<?php echo anchor('account/profile/' . $this->users->user_slug($comment->author), img(array('src' => IMAGES . 'avatars/' . $comment->avatar, 'title' => $comment->author, 'alt' => $comment->author, 'width' => '57', 'height' => '57'))); ?>
+		<?php else: ?>
+			<?php echo anchor('account/profile/' . $this->users->user_slug($comment->author), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $comment->author, 'alt' => $comment->author, 'width' => '57', 'height' => '57'))); ?>
+		<?php endif; ?>
+		</div>
+		<p class="comment"><?php echo $comment->comment_title; ?></p>
+		<div class="clear"></div>
+		<?php echo br(); ?>
 			
 			<?php endforeach; ?>
 			<?php else: ?>

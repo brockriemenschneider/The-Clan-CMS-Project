@@ -17,7 +17,7 @@
 				<div class="subheader">
 					<?php echo heading($sponsor->sponsor_title, 4); ?>
 				</div>
-					<?php if($sponsor->sponsor_link): echo anchor($sponsor->sponsor_link, img(array('src' => IMAGES . $sponsor->sponsor_image, 'alt' => $sponsor->sponsor_title, 'title' => $sponsor->sponsor_title))); else: echo img(array('src' => IMAGES . $sponsor->sponsor_image, 'alt' => $sponsor->sponsor_title, 'title' => $sponsor->sponsor_title)); endif; ?>
+					<?php if($sponsor->sponsor_link): echo anchor($sponsor->sponsor_link, img(array('src' => IMAGES . 'sponsors/' . $sponsor->sponsor_image, 'alt' => $sponsor->sponsor_title, 'title' => $sponsor->sponsor_title))); else: echo img(array('src' => IMAGES . 'sponsors/' . $sponsor->sponsor_image, 'alt' => $sponsor->sponsor_title, 'title' => $sponsor->sponsor_title)); endif; ?>
 				<?php echo $sponsor->sponsor_description; ?>
 				<?php endforeach; ?>
 			<?php else: ?>

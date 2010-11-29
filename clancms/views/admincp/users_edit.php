@@ -23,7 +23,7 @@ $(function() {
 });		
 </script> 
 
-<?php echo form_open(ADMINCP . 'users/edit/' . $user->user_id); ?>
+<?php echo form_open_multipart(ADMINCP . 'users/edit/' . $user->user_id); ?>
 <div id="main">
 
 	<div class="box">
@@ -50,6 +50,12 @@ $(function() {
 				<?php if($this->session->flashdata('message')): ?>
 				<div class="alert">
 					<?php echo $this->session->flashdata('message'); ?>
+				</div>
+				<?php endif; ?>
+				
+				<?php if(isset($upload->errors)): ?>
+				<div class="alert">
+					<?php echo $upload->errors; ?>
 				</div>
 				<?php endif; ?>
 				
@@ -153,6 +159,29 @@ $(function() {
 				<div class="subheader">
 						<?php echo heading('Preferences', 4); ?>
 				</div>
+				
+				<?php echo form_open_multipart('account'); ?>
+				<div class="label">Avatar</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'avatar',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_upload($data); ?>
+				<?php echo br(); ?>
+				<div class="description">
+					<div id="avatar">
+					<?php if($user->user_avatar): ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php else: ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => ADMINCP_URL . 'images/avatar_none.png', 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php endif; ?>
+					</div>
+				</div>
+				<?php echo br(); ?>
 				
 				<div class="label required">Timezone</div> 
 				<?php echo timezone_menu(set_value('timezone', $this->ClanCMS->get_setting('default_timezone'), $user->user_timezone), 'input select', 'timezone'); ?>

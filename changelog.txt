@@ -3,6 +3,33 @@
                              Clan CMS Change Log
 ============================================================================================
 
+-----0.5.4-----
+Fixed Installation css
+Deleted message view and replaced with page view
+Updated Admin CP Site Stats Widget
+Fixed Admin CP Users Controller
+Fixed Error views
+Added Color code for wins, losses, ties, kd on Default theme
+Added New Users Widget
+Updated My Account to Register when not logged in
+Updated the logos to a link
+Added drop down menus
+Added support for query string
+Added User Avatars
+Added custom pages
+Updated sponsor image location
+Deleted uncessary files
+
+-----0.5.3-----
+Updated Download function in Admin CP dashboard
+Changed Upgrade to Update in Admin CP dashboard
+Changed Upgrade library to Update Library
+Added Admin CP Stats Widget
+Added Admin CP Users Online Widget
+Fixed Admin CP Squads Add View
+Fixed Installation controller
+Fixed Installation Step 2 View
+
 -----0.5.2-----
 Added upgrade library
 Added download function to Admin CP dashboard

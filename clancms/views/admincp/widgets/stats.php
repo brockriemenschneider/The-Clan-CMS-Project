@@ -18,7 +18,8 @@
 			<?php echo br(); ?>
 			User Groups: <?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_default . ' Default'); ?>, <?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_custom . ' Custom'); ?>
 			<?php echo br(); ?>
-			
+			Pages: <?php echo anchor(ADMINCP . 'pages', $total_pages . ' Pages'); ?>
+			<?php echo br(); ?>
 		</div>
 	</div>
 	<div class="footer"></div>

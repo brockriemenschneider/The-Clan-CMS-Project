@@ -71,7 +71,7 @@
 						<tr id="sponsor_<?php echo $sponsor->sponsor_id; ?>" class="move">
 							<td><?php echo anchor(ADMINCP . 'sponsors/edit/' . $sponsor->sponsor_id, $sponsor->sponsor_title); ?></td>
 							<td><?php echo anchor($sponsor->sponsor_link, $sponsor->sponsor_link); ?></td>
-							<td><?php echo img(array('src' =>  IMAGES . $sponsor->sponsor_image, 'title' => $sponsor->sponsor_title, 'alt' => $sponsor->sponsor_title)); ?></td>
+							<td><?php echo img(array('src' =>  IMAGES . 'sponsors/' . $sponsor->sponsor_image, 'title' => $sponsor->sponsor_title, 'alt' => $sponsor->sponsor_title)); ?></td>
 							<td><?php echo anchor(ADMINCP . 'sponsors/edit/' . $sponsor->sponsor_id, img(ADMINCP_URL . 'images/edit.png', array('alt' => 'Edit')), array('title' => 'Edit')); ?> <?php echo anchor(ADMINCP . 'sponsors/delete/' . $sponsor->sponsor_id, img(array('src' => ADMINCP_URL . 'images/delete.png', 'alt' => 'Delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?></td>
 						</tr>
 						<?php endforeach; ?>

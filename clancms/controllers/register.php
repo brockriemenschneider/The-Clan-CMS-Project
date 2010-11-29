@@ -79,6 +79,7 @@ class Register extends Controller {
 				'user_timezone'				=> $this->input->post('timezone'),
 				'user_daylight_savings'		=> $this->input->post('daylight_savings'),
 				'user_ipaddress'			=> $this->input->ip_address(),
+				'user_avatar'				=> '',
 				'user_activation'			=> $this->session->userdata('session_id'),
 				'user_joined'				=> mdate('%Y-%m-%d %H:%i:%s', now())
 			);
@@ -98,12 +99,17 @@ class Register extends Controller {
 			// Email the user
 			$this->email->send();
 
-			// Set up the message
-			$this->data->title = 'Registration Success!';
-			$this->data->message = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			// Assign page title
+			$page->title = 'Registration Success!';
 			
-			// Load the message view
-			$this->load->view(THEME . 'message', $this->data);
+			// Assign page content
+			$page->content = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			
+			// Create a reference to page
+			$this->data->page =& $page;
+			
+			// Load the page view
+			$this->load->view(THEME . 'page', $this->data);
 		}
 		else
 		{

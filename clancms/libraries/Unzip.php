@@ -49,7 +49,7 @@ class Unzip {
 	 * @param	string
 	 * @return	void
 	 */
-	function extract($file, $destination)
+	function extract($file, $destination = '')
 	{
 		// Check if the file exists
 		if(file_exists($file) === TRUE)

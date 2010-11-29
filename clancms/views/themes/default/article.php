@@ -106,7 +106,6 @@
 		</div>
 		<div class="content">
 			<div class="inside">
-			
 			<?php if($comments): ?>
 			<?php foreach($comments as $comment): ?>
 				<div class="subheader">
@@ -117,7 +116,16 @@
 				<?php endif; ?>
 					<?php echo heading(anchor('account/profile/' . $this->users->user_slug($comment->author), $comment->author) . ' Posted ' . mdate("%M %d, %Y at %h:%i %a", $comment->date) . $actions, 4); ?>
 				</div>
-			<?php echo $comment->comment_title; ?><br /><br />
+		<div id="avatar" class="left">
+		<?php if($comment->avatar): ?>
+			<?php echo anchor('account/profile/' . $this->users->user_slug($comment->author), img(array('src' => IMAGES . 'avatars/' . $comment->avatar, 'title' => $comment->author, 'alt' => $comment->author, 'width' => '57', 'height' => '57'))); ?>
+		<?php else: ?>
+			<?php echo anchor('account/profile/' . $this->users->user_slug($comment->author), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $comment->author, 'alt' => $comment->author, 'width' => '57', 'height' => '57'))); ?>
+		<?php endif; ?>
+		</div>
+		<p class="comment"><?php echo $comment->comment_title; ?></p>
+		<div class="clear"></div>
+		<?php echo br(); ?>
 			
 			<?php endforeach; ?>
 			<?php else: ?>

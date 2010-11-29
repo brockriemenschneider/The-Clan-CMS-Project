@@ -36,17 +36,17 @@
 		</div>
 
 	</div>
-	<div id="banner"><?php if((bool) $this->ClanCMS->get_setting('logo')): ?><?php echo img(array('src' => THEME_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo')); ?><?php else: ?><h1><?php echo CLAN_NAME; ?></h1><h2><?php echo $this->ClanCMS->get_Setting('clan_slogan'); ?></h2><?php endif; ?></div>
+	<div id="banner"><?php if((bool) $this->ClanCMS->get_setting('logo')): ?><?php echo anchor('', img(array('src' => THEME_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo'))); ?><?php else: ?><?php echo anchor('', '<h1>' . CLAN_NAME . '</h1><h2>' . $this->ClanCMS->get_Setting('clan_slogan') . '</h2>'); ?><?php endif; ?></div>
 	<div id="navigation">
 	<ul>
 		<li <?php if($this->uri->segment(1) == ''): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('', 'Home'); ?></span><span class="right"></span></li>
-		<li <?php if($this->uri->segment(1) == 'account' OR $this->uri->segment(1) == 'register'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php if($this->user->logged_in()): echo anchor('account', 'My Account'); else: echo anchor('register', 'My Account'); endif; ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(1) == 'account' OR $this->uri->segment(1) == 'register'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php if($this->user->logged_in()): echo anchor('account', 'My Account'); else: echo anchor('register', 'Register'); endif; ?></span><span class="right"></span></li>
 		<?php if($this->ClanCMS->get_setting('forum_link')): ?><li><span class="left"></span><span class="middle"><?php echo anchor($this->ClanCMS->get_setting('forum_link'), 'Forums'); ?></span><span class="right"></span></li><?php endif; ?>
 		<li <?php if($this->uri->segment(1) == 'articles'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles', 'News Articles'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'roster'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('roster', 'Team Roster'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'matches'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Matches'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
-		<li <?php if($this->uri->segment(1) == 'about'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('about', 'About ' . CLAN_NAME); ?></span><span class="right"></span></li>		
+		<?php $this->load->widget('pages'); ?>		
 	</ul>
 	</div>
 </div>

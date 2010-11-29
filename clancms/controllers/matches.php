@@ -370,7 +370,21 @@ class Matches extends Controller {
 				// Comments exist, loop through each comment
 				foreach($comments as $comment)
 				{
-					$comment->author = $this->users->get_user(array('user_id' => $comment->user_id))->user_name;
+					// Retrieve the user
+					if($user = $this->users->get_user(array('user_id' => $comment->user_id)))
+					{
+						// User exists, assign comment author & comment avatar
+						$comment->author = $user->user_name;
+						$comment->avatar = $user->user_avatar;
+					}
+					else
+					{
+						// User doesn't exist, assign comment author & comment avatar
+						$comment->author = '';
+						$comment->avatar = '';
+					}
+					
+					// Format and assign the comment date
 					$comment->date = $this->ClanCMS->timezone($comment->comment_date);
 				}
 			}

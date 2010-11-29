@@ -23,6 +23,18 @@
 				<div class="subheader">
 					<?php echo heading('Personal Information', 4); ?>
 				</div>
+					
+				<div class="label"></div>
+				<div class="details">
+					<div id="avatar">
+						<?php if($user->user_avatar): ?>
+							<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+						<?php else: ?>
+							<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+						<?php endif; ?>
+					</div>
+				</div>
+				<div class="clear"></div>
 				
 				<div class="label">Username:</div>
 				<div class="details"><?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), $user->user_name); ?></div>
@@ -71,12 +83,12 @@
 				<tr>
 					<td><?php echo anchor('roster/squad/' . $member->squad_slug, $member->squad_title); ?></td>
 					<td><?php echo $member->total_matches_played; ?> out of <?php echo $member->total_matches; ?> (<?php echo $member->matches_percent; ?>%)</td>
-					<td><?php echo $member->total_wins; ?></td>
-					<td><?php echo $member->total_losses; ?></td>
-					<td><?php echo $member->total_ties; ?></td>
+					<td class="green"><?php echo $member->total_wins; ?></td>
+					<td class="red"><?php echo $member->total_losses; ?></td>
+					<td class="yellow"><?php echo $member->total_ties; ?></td>
 					<td><?php echo $member->total_kills; ?></td>
 					<td><?php echo $member->total_deaths; ?></td>
-					<td><?php echo $member->kd; ?></td>
+					<td class="<?php if($member->kd < '1.00'): echo 'red'; elseif($member->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $member->kd; ?></td>
 				</tr>
 				<?php endforeach; ?>
 			</tbody>
@@ -118,7 +130,7 @@
 					<td><?php echo anchor('roster/squad/' . $match->squad_slug, $match->squad); ?></td>
 					<td><?php echo $match->kills; ?></td>
 					<td><?php echo $match->deaths; ?></td>
-					<td><?php echo $member->kd; ?></td>
+					<td class="<?php if($member->kd < '1.00'): echo 'red'; elseif($member->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $member->kd; ?></td>
 					<td><?php echo anchor('matches/view/' . $match->match_slug, img(array('src' => THEME_URL . 'images/view.png', 'alt' => 'View Match', 'title' => 'View Match'))); ?></td>
 				</tr>
 				<?php endforeach; ?>

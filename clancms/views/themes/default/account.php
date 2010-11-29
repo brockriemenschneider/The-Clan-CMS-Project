@@ -30,6 +30,12 @@
 				</div>
 				<?php endif; ?>
 				
+				<?php if(isset($upload->errors)): ?>
+				<div class="alert">
+					<?php echo $upload->errors; ?>
+				</div>
+				<?php endif; ?>
+				
 				<div class="required-field required">Required Field</div>
 				<?php echo br(); ?>
 				<div class="subheader">
@@ -132,7 +138,29 @@
 						<?php echo heading('Preferences', 4); ?>
 				</div>
 				
-				<?php echo form_open('account'); ?>
+				<?php echo form_open_multipart('account'); ?>
+				<div class="label">Avatar</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'avatar',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_upload($data); ?>
+				<?php echo br(); ?>
+				<div class="description">
+					<div id="avatar">
+					<?php if($user->user_avatar): ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php else: ?>
+						<?php echo anchor('account/profile/' . $this->users->user_slug($this->session->userdata('username')), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $this->session->userdata('username'), 'alt' => $this->session->userdata('username'), 'width' => '57', 'height' => '57'))); ?>
+					<?php endif; ?>
+					</div>
+				</div>
+				<?php echo br(); ?>
+				
 				<div class="label required">Timezone</div> 
 				<?php echo timezone_menu(set_value('timezone', $user->user_timezone), 'input select', 'timezone'); ?>
 				<?php echo br(); ?>

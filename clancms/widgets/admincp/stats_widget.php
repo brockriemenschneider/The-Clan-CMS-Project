@@ -86,6 +86,12 @@ class Stats_widget extends Widget {
 		// Retrieve the total number of custom usergroups
 		$this->data->total_usergroups_custom = $this->CI->users->count_groups(array('group_default' => 0));
 		
+		// Load the Pages model
+		$this->CI->load->model('Pages_model', 'pages');
+		
+		// Retrieve the total number of pages
+		$this->data->total_pages = $this->CI->pages->count_pages();
+		
 		// Load the admincp stats widget view
 		$this->CI->load->view(ADMINCP . 'widgets/stats', $this->data);
 	}

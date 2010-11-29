@@ -95,7 +95,7 @@ class Users_Online_widget extends Widget {
 		// Create a reference to users online
 		$this->data->users_online =& $users_online;
 	
-		// Load the admincp users online widget view
+		// Load the admin cp users online widget view
 		$this->CI->load->view(ADMINCP . 'widgets/users_online', $this->data);
 	}
 	

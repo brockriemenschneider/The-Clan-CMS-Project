@@ -105,7 +105,7 @@ class Sponsors extends Controller {
 			if (!$this->form_validation->run() == FALSE)
 			{	
 				// Set up upload config
-				$config['upload_path'] = UPLOAD;
+				$config['upload_path'] = UPLOAD . 'sponsors';
 				$config['allowed_types'] = 'gif|jpg|png';
 				$config['encrypt_name'] = TRUE;
 				
@@ -212,8 +212,8 @@ class Sponsors extends Controller {
 				if($_FILES['image']['name'])
 				{
 					// Set up upload config
-					$config['upload_path'] = UPLOAD;
-					$config['allowed_types'] = 'gif|jpg|png';
+					$config['upload_path'] = UPLOAD . 'sponsors';
+					$config['allowed_types'] = 'gif|jpg|png|bmp';
 					$config['encrypt_name'] = TRUE;
 				
 					// Image exists, load the upload library
@@ -235,10 +235,10 @@ class Sponsors extends Controller {
 					$image = $data['upload_data']['file_name'];
 
 					// Check if image exists
-					if(file_exists(IMAGES . $sponsor->sponsor_image))
+					if(file_exists(UPLOAD . 'sponsors/' . $sponsor->sponsor_image))
 					{
 						// Image eixsts, remove the image
-						unlink(IMAGES . $sponsor->sponsor_image);
+						unlink(UPLOAD . 'sponsors/' . $sponsor->sponsor_image);
 					}
 				}
 				else
@@ -300,10 +300,10 @@ class Sponsors extends Controller {
 		}
 		
 		// Check if image exists
-		if(file_exists(UPLOAD . $sponsor->sponsor_image))
+		if(file_exists(UPLOAD . 'sponsors/' . $sponsor->sponsor_image))
 		{
 			// Image eixsts, remove the image
-			unlink(UPLOAD . $sponsor->sponsor_image);
+			unlink(UPLOAD . 'sponsors/' . $sponsor->sponsor_image);
 		}
 				
 		// Delete the sponsor from the database

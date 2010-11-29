@@ -170,12 +170,45 @@ class Users extends Controller {
 			}
 			
 			// Set form validation rules
+			$this->form_validation->set_rules('avatar', 'Avatar', 'trim');
 			$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
 			$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
 			
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{
+				// Check if avatar exists
+				if($_FILES['avatar']['name'])
+				{
+					// Set up upload config
+					$config['upload_path'] = UPLOAD . 'avatars';
+					$config['allowed_types'] = 'gif|jpg|png|bmp';
+					$config['encrypt_name'] = TRUE;
+				
+					// Avatar exists, load the upload library
+					$this->load->library('upload', $config);
+			
+					// Check to see if the avatar was uploaded
+					if(!$this->upload->do_upload('avatar'))
+					{
+						// Avatar wasn't uploaded, display errors
+						$upload->errors = $this->upload->display_errors();
+					}
+					else
+					{
+						// Upload was successful, retrieve the data
+						$data = array('upload_data' => $this->upload->data());
+					}
+				
+					// Assign avatar
+					$avatar = $data['upload_data']['file_name'];
+				}
+				else
+				{
+					// Assign avatar
+					$avatar = '';
+				}
+					
 				// Retrieve salt
 				$salt = $this->user->_salt();
 			
@@ -188,7 +221,8 @@ class Users extends Controller {
 				}
 				else
 				{
-					// Don't generate a password, assign password
+					// Don't generate a password, assign generated password & password
+					$generated_password = $this->input->post('password');
 					$password = $this->encrypt->sha1($salt . $this->encrypt->sha1($this->input->post('password')));
 				}
 				
@@ -197,6 +231,18 @@ class Users extends Controller {
 				{
 					// User is activated, assign activation
 					$activation = 1;
+					
+					// Load the email library
+					$this->load->library('email');
+			
+					// Set up the email
+					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
+					$this->email->to($this->input->post('email'));
+					$this->email->subject('Account Info for your account on ' . CLAN_NAME);
+					$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $generated_password . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+
+					// Email the user
+					$this->email->send();
 				}
 				else
 				{
@@ -226,7 +272,8 @@ class Users extends Controller {
 					'user_timezone'				=> $this->input->post('timezone'),
 					'user_daylight_savings'		=> $this->input->post('daylight_savings'),
 					'user_ipaddress'			=> $this->input->ip_address(),
-					'user_activation'			=> $activation,
+					'user_avatar'				=> $avatar,
+					'user_activation'			=> $activation
 				);
 			
 				// Insert the user in the database
@@ -309,6 +356,7 @@ class Users extends Controller {
 			}
 			
 			// Set form validation rules
+			$this->form_validation->set_rules('avatar', 'Avatar', 'trim');
 			$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
 			$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
 			$this->form_validation->set_rules('ipaddress', 'IP Address', 'trim|required|valid_ip');
@@ -316,6 +364,45 @@ class Users extends Controller {
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{
+				// Check if avatar exists
+				if($_FILES['avatar']['name'])
+				{
+					// Set up upload config
+					$config['upload_path'] = UPLOAD . 'avatars';
+					$config['allowed_types'] = 'gif|jpg|png|bmp';
+					$config['encrypt_name'] = TRUE;
+				
+					// Avatar exists, load the upload library
+					$this->load->library('upload', $config);
+			
+					// Check to see if the avatar was uploaded
+					if(!$this->upload->do_upload('avatar'))
+					{
+						// Avatar wasn't uploaded, display errors
+						$upload->errors = $this->upload->display_errors();
+					}
+					else
+					{
+						// Upload was successful, retrieve the data
+						$data = array('upload_data' => $this->upload->data());
+					}
+				
+					// Change the avatar
+					$avatar = $data['upload_data']['file_name'];
+
+					// Check if avatar exists
+					if(file_exists(UPLOAD . 'avatars/' . $user->user_avatar))
+					{
+						// Avatar eixsts, remove the avatar
+						unlink(UPLOAD . 'avatars/' . $user->user_avatar);
+					}
+				}
+				else
+				{
+					// Keep avatar the same
+					$avatar = $user->user_avatar;
+				}
+				
 				// Check if email changed
 				if($this->input->post('new_email'))
 				{
@@ -357,11 +444,6 @@ class Users extends Controller {
 				{
 					// User name changed, assign user name
 					$user_name = $this->input->post('new_username');
-				}
-				else
-				{	
-					// User name didn't change, assign user name
-					$user_name = $user->user_name;
 					
 					// Load the email library
 					$this->load->library('email');
@@ -375,11 +457,16 @@ class Users extends Controller {
 					// Email the user
 					$this->email->send();
 				}
+				else
+				{	
+					// User name didn't change, assign user name
+					$user_name = $user->user_name;
+				}
 				
 				// Check if password changed
 				if($this->input->post('new_password') == 2)
 				{
-					// Generate a password, assign userpassword
+					// Generate a password, assign user password
 					$generated_password = $this->user->_salt(8);
 					$user_password = $this->encrypt->sha1($user->user_salt . $this->encrypt->sha1($generated_password));
 					
@@ -426,7 +513,8 @@ class Users extends Controller {
 					'user_email'				=> $user_email,
 					'user_timezone'				=> $this->input->post('timezone'),
 					'user_daylight_savings'		=> $this->input->post('daylight_savings'),
-					'user_activation'			=> $activation,
+					'user_avatar'				=> $avatar,
+					'user_activation'			=> $activation
 				);
 				
 				// Insert the user in the database
@@ -543,6 +631,13 @@ class Users extends Controller {
 			}
 		}
 		
+		// Check if avatar exists
+		if(file_exists(UPLOAD . 'avatars/' . $user->user_avatar))
+		{
+			// Avatar eixsts, remove the avatar
+			unlink(UPLOAD . 'avatars/' . $user->user_avatar);
+		}
+					
 		// Delete the user from the database
 		$this->users->delete_user($user->user_id);
 				

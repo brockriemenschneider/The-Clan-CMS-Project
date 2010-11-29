@@ -126,16 +126,57 @@ class Account extends Controller {
 		if($update_preferences)
 		{
 			// Set form validation rules
+			$this->form_validation->set_rules('avatar', 'Avatar', 'trim');
 			$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
 			$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
 		
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{
+				// Check if avatar exists
+				if($_FILES['avatar']['name'])
+				{
+					// Set up upload config
+					$config['upload_path'] = UPLOAD . 'avatars';
+					$config['allowed_types'] = 'gif|jpg|png|bmp';
+					$config['encrypt_name'] = TRUE;
+				
+					// Avatar exists, load the upload library
+					$this->load->library('upload', $config);
+			
+					// Check to see if the avatar was uploaded
+					if(!$this->upload->do_upload('avatar'))
+					{
+						// Avatar wasn't uploaded, display errors
+						$upload->errors = $this->upload->display_errors();
+					}
+					else
+					{
+						// Upload was successful, retrieve the data
+						$data = array('upload_data' => $this->upload->data());
+					}
+				
+					// Change the avatar
+					$avatar = $data['upload_data']['file_name'];
+
+					// Check if avatar exists
+					if(file_exists(UPLOAD . 'avatars/' . $user->user_avatar))
+					{
+						// Avatar eixsts, remove the avatar
+						unlink(UPLOAD . 'avatars/' . $user->user_avatar);
+					}
+				}
+				else
+				{
+					// Keep avatar the same
+					$avatar = $user->user_avatar;
+				}
+				
 				// Set up the data
 				$data = array (
 					'user_timezone'				=> $this->input->post('timezone'),
-					'user_daylight_savings'		=> $this->input->post('daylight_savings')
+					'user_daylight_savings'		=> $this->input->post('daylight_savings'),
+					'user_avatar'				=> $avatar
 				);
 			
 				// Update the user in the database
@@ -423,21 +464,31 @@ class Account extends Controller {
 			// Update the user in the database
 			$this->users->update_user($user->user_id, $data);
 			
-			// Set up message data
-			$this->data->title = 'Activation Success';
-			$this->data->message = 'Your account has been activated!' . br(2) . 'You should now be able to ' . anchor('account/login', 'login') . ' and interact with the site.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			// Assign page title
+			$page->title = "Activation Success";
+		
+			// Assign page content
+			$page->content = 'Your account has been activated!' . br(2) . 'You should now be able to ' . anchor('account/login', 'login') . ' and interact with the site.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
 			
-			// Load the message view
-			$this->load->view(THEME . 'message', $this->data);
+			// Create a reference to page
+			$this->data->page =& $page;
+		
+			// Load the page view
+			$this->load->view(THEME . 'page', $this->data);
 		}
 		else
 		{
-			// Set up the message data
-			$this->data->title = 'Activation Error';
-			$this->data->message = 'This is an invalid activation link!' . br(2) . 'Please try again. If you are still having issues please ' . anchor('about', 'contact a site administrator') . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			// Assign page title
+			$page->title = "Activation Error";
+		
+			// Assign page content
+			$page->content = 'This is an invalid activation link!' . br(2) . 'Please try again. If you are still having issues please ' . anchor('about', 'contact a site administrator') . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
 			
-			// Load the message view
-			$this->load->view(THEME . 'message', $this->data);
+			// Create a reference to page
+			$this->data->page =& $page;
+			
+			// Load the page view
+			$this->load->view(THEME . 'page', $this->data);
 		}
 	}
 	
@@ -481,12 +532,17 @@ class Account extends Controller {
 				// Email the user the activation code
 				$this->email->send();
 			
-				// Set up message data
-				$this->data->title = 'Account Information Sent';
-				$this->data->message = 'An email containing your username and instructions on changing your password has been sent to your email address.'. br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
-			
-				// Load the message view
-				$this->load->view(THEME . 'message', $this->data);
+				// Assign page title
+				$page->title = "Account Information Sent";
+		
+				// Assign page content
+				$page->content = 'An email containing your username and instructions on changing your password has been sent to your email address.'. br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+	
+				// Create a reference to page
+				$this->data->page =& $page;
+				
+				// Load the page view
+				$this->load->view(THEME . 'page', $this->data);
 			}
 		}
 		else
@@ -555,12 +611,17 @@ class Account extends Controller {
 				// Email the user the activation code
 				$this->email->send();
 		
-				// Set up message data
-				$this->data->title = 'Password Reset';
-				$this->data->message = 'You have sucessfully reset your password!' . br(2) . 'An email containing your account infromation has been sent to you in case you forget again.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+				// Assign page title
+				$page->title = 'Password Reset';
+				
+				// Assign page content
+				$page->content = 'You have sucessfully reset your password!' . br(2) . 'An email containing your account infromation has been sent to you in case you forget again.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
 			
-				// Load the message view
-				$this->load->view(THEME . 'message', $this->data);
+				// Create a reference to page
+				$this->data->page =& $page;
+				
+				// Load the page view
+				$this->load->view(THEME . 'page', $this->data);
 			}
 			else
 			{
@@ -573,12 +634,17 @@ class Account extends Controller {
 		}
 		else
 		{
-			// Set up message data
-			$this->data->title = 'Invalid Reset Code';
-			$this->data->message = 'This is not a valid password reset code!';
+			// Assign page title
+			$page->title = 'Invalid Reset Code';
 			
-			// Load the message view
-			$this->load->view(THEME . 'message', $this->data);
+			// Assign page content
+			$page->content = 'This is not a valid password reset code!';
+			
+			// Create a reference to page
+			$this->data->page =& $page;
+		
+			// Load the page view
+			$this->load->view(THEME . 'page', $this->data);
 		}
 	}
 	
