@@ -95,7 +95,7 @@ class Polls_model extends Model {
 		
 		// Retrieve the query from the database
 		$query = $this->db
-						->order_by('poll_id', 'asc')
+						->order_by('poll_id', 'desc')
 						->where($data)
 						->get('polls');
 		
