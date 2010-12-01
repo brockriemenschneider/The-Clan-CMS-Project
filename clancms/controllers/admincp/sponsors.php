@@ -124,6 +124,29 @@ class Sponsors extends Controller {
 					// Upload was successful, retrieve the data
 					$data = array('upload_data' => $this->upload->data());
 	
+					// Retrieve image properties
+					$original_width = $data['upload_data']['image_width'];
+					$original_height = $data['upload_data']['image_height'];
+					
+					// Assign new image properties
+					$new_width = $this->ClanCMS->get_setting('sponsor_width');
+					$new_height = $new_width * $original_height / $original_width;
+					
+					// Set up image config
+					$config['image_library'] = 'gd2';
+					$config['source_image']	= UPLOAD . 'sponsors/' . $data['upload_data']['file_name'];
+					$config['maintain_ratio'] = TRUE;
+					$config['quality'] = '100%';
+					$config['width'] = $new_width;
+					$config['height'] = $new_height;
+					$config['new_image'] = UPLOAD . 'sponsors/' . $data['upload_data']['file_name'];
+
+					// Load the image library
+					$this->load->library('image_lib', $config); 
+
+					// Resize the image
+					$this->image_lib->resize();
+					
 					// Set up the data
 					$data = array (
 						'sponsor_title'			=> $this->input->post('title'),
@@ -229,6 +252,29 @@ class Sponsors extends Controller {
 					{
 						// Upload was successful, retrieve the data
 						$data = array('upload_data' => $this->upload->data());
+						
+						// Retrieve image properties
+						$original_width = $data['upload_data']['image_width'];
+						$original_height = $data['upload_data']['image_height'];
+					
+						// Assign new image properties
+						$new_width = $this->ClanCMS->get_setting('sponsor_width');
+						$new_height = $new_width * $original_height / $original_width;
+					
+						// Set up image config
+						$config['image_library'] = 'gd2';
+						$config['source_image']	= UPLOAD . 'sponsors/' . $data['upload_data']['file_name'];
+						$config['maintain_ratio'] = TRUE;
+						$config['quality'] = '100%';
+						$config['width'] = $new_width;
+						$config['height'] = $new_height;
+						$config['new_image'] = UPLOAD . 'sponsors/' . $data['upload_data']['file_name'];
+
+						// Load the image library
+						$this->load->library('image_lib', $config); 
+
+						// Resize the image
+						$this->image_lib->resize();
 					}
 				
 					// Change the image
