@@ -96,6 +96,29 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__pages` (
 INSERT INTO `__DBPREFIX__pages` (`page_id`, `page_title`, `page_slug`, `page_content`, `page_priority`) VALUES
 (1, 'About Us', 'aboutus', 'Put your clan description here\n\nXcel Gaming\ncontactus@xcelgaming.com', 1);
 -- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__polls` (
+  `poll_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `poll_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `poll_active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`poll_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__poll_options` (
+  `option_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `poll_id` bigint(20) NOT NULL DEFAULT '0',
+  `option_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `option_priority` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`option_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__poll_votes` (
+  `vote_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `poll_id` bigint(20) NOT NULL DEFAULT '0',
+  `option_id` bigint(20) NOT NULL DEFAULT '0',
+  `user_id` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`vote_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__sessions` (
   `session_id` varchar(40) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `ip_address` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',

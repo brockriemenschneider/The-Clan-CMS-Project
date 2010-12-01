@@ -818,6 +818,17 @@ ul.newsticker a {
 	width: 90%;
 }
 
+.poll {
+	width: 100%;
+	height: 15px;
+	background-color: #ee2d00;
+}
+
+.percent {
+	text-align: center;
+	border: 1px solid #070707;
+}
+
 /*---
 	NEW USERS
 ----------------------------*/

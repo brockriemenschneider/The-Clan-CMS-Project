@@ -86,6 +86,12 @@ class Stats_widget extends Widget {
 		// Retrieve the total number of custom usergroups
 		$this->data->total_usergroups_custom = $this->CI->users->count_groups(array('group_default' => 0));
 		
+		// Load the Polls model
+		$this->CI->load->model('Polls_model', 'polls');
+		
+		// Retrieve the total number of polls
+		$this->data->total_polls = $this->CI->polls->count_polls();
+		
 		// Load the Pages model
 		$this->CI->load->model('Pages_model', 'pages');
 		

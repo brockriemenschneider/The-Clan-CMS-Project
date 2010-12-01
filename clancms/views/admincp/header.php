@@ -71,6 +71,11 @@
 				<li <?php if($this->uri->segment(2, '') == 'usergroups' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'usergroups/add', 'Add User Group'); ?></li>
 			</ul>
 		</li>
+		<li <?php if($this->uri->segment(2, '') == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'polls', 'Polls'); ?></span><span class="right"></span>
+			<ul>
+				<li <?php if($this->uri->segment(2, '') == 'polls' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'polls/add', 'Add Poll'); ?></li>
+			</ul>
+		</li>
 		<li <?php if($this->uri->segment(2, '') == 'pages' OR $this->uri->segment(2, '') == 'themes' OR $this->uri->segment(2, '') == 'widgets'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(uri_string() . '#', 'Customize'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2, '') == 'pages'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'pages', 'Pages'); ?>
