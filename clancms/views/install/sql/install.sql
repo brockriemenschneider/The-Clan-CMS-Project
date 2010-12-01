@@ -148,7 +148,8 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (5, 3, 'Daylight Savings', 'daylight_savings', '0', 'dropdown', 'Is it daylight savings?', 2),
 (6, 1, 'Forum Link', 'forum_link', '', 'input', 'The link to your forums', 3),
 (7, 1, 'Clan Slogan', 'clan_slogan', '', 'input', 'Put your clan slogan here', 2),
-(8, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2);
+(8, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2),
+(9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'input', 'The width of sponsor images in pixels', 3);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__setting_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
