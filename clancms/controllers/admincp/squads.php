@@ -120,6 +120,7 @@ class Squads extends Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
+			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 		
 			// Form validation passed, so continue
@@ -128,6 +129,7 @@ class Squads extends Controller {
 				// Set up our data
 				$data = array (
 					'squad_title'			=> $this->input->post('title'),
+					'squad_status'			=> $this->input->post('status'),
 					'squad_priority'		=> $this->input->post('priority')
 				);
 			
@@ -191,6 +193,7 @@ class Squads extends Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
+			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 			
 			// Loop through each member
@@ -208,6 +211,7 @@ class Squads extends Controller {
 				$data = array (
 					'squad_title'		=> $this->input->post('title'),
 					'squad_slug'		=> $squad->squad_id . '-' . url_title($this->input->post('title')),
+					'squad_status'		=> $this->input->post('status'),
 					'squad_priority'	=> $this->input->post('priority')
 				);
 			

@@ -45,6 +45,17 @@
 				<?php echo br(); ?>
 				<div class="description">The name of your squad</div>
 		
+				<div class="label required">Status</div>
+				<?php
+					$options = array(
+						'0' => 'Inactive',
+						'1'	=> 'Active'
+					);
+					
+				echo form_dropdown('status', $options, set_value('status', 1), 'class="input"'); ?>
+				<?php echo br(); ?>
+				<div class="description">The status of the squad</div>
+				
 				<div class="label required">Priority</div>
 				
 				<?php 

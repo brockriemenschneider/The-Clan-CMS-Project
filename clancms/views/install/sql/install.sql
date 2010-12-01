@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squads` (
   `squad_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `squad_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `squad_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `squad_status` tinyint(1) NOT NULL DEFAULT '0',
   `squad_priority` int(10) NOT NULL,
   PRIMARY KEY (`squad_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

@@ -57,7 +57,7 @@ class Roster extends Controller {
 	function index()
 	{
 		// Retrieve the squads
-		$squads = $this->squads->get_squads();
+		$squads = $this->squads->get_squads(array('squad_status' => 1));
 		
 		// Check if squads exist
 		if($squads)
@@ -137,7 +137,7 @@ class Roster extends Controller {
 		$squad_slug = $this->uri->segment(3, '');
 		
 		// Retrieve the squad or show 404
-		($squad = $this->squads->get_squad(array('squad_slug' => $squad_slug))) or show_404();
+		($squad = $this->squads->get_squad(array('squad_slug' => $squad_slug, 'squad_status' => 1))) or show_404();
 		
 		// Retrieve the squad members
 		$squad->members = $this->squads->get_members(array('squad_id' => $squad->squad_id));
