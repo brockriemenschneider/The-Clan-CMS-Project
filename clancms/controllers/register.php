@@ -33,6 +33,9 @@ class Register extends Controller {
 	{
 		// Call the Controller constructor
 		parent::Controller();
+		
+		// Load the array helper
+		$this->load->helper('array');
 	}
 	
 	// --------------------------------------------------------------------
@@ -62,6 +65,7 @@ class Register extends Controller {
 		$this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'trim|required|matches[password]');
 		$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
 		$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
+		$this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback__check_captcha');
 					
 		// Form validation passed, so continue
 		if (!$this->form_validation->run() == FALSE)
@@ -113,8 +117,39 @@ class Register extends Controller {
 		}
 		else
 		{
+			// Load the image library
+			$this->load->library('image_lib');
+			
+			// Load the captcha helper
+			$this->load->helper('captcha');
+			
+			// Retrieve the word bank
+			$word_bank = explode("\n", $this->ClanCMS->get_setting('captcha_words'));
+			
+			// Choose a word from the word bank
+			$word = random_element($word_bank);
+			
+			// Assign the word to the session
+			$this->session->set_userdata('captcha', $word);
+			
+			// Set up the data
+			$data = array(
+				'word'	 	 => $word,
+				'img_path'	 => UPLOAD . 'captcha',
+				'img_url'	 => IMAGES . 'captcha',
+				'img_width'	 => 150,
+				'img_height' => 50,
+				'expiration' => 0
+			);
+		
+			// Create the captcha
+			$captcha = create_captcha($data);
+		
+			// Create a reference to captcha
+			$this->data->captcha =& $captcha;
+			
 			// Load the register view
-			$this->load->view(THEME . 'register');
+			$this->load->view(THEME . 'register', $this->data);
 		}
 
 	}
@@ -209,7 +244,33 @@ class Register extends Controller {
 			return FALSE;
 		}
 	}
+			
+	// --------------------------------------------------------------------
 	
+	/**
+	 * Check Captcha
+	 *
+	 * Check's to see if a captcha matches
+	 *
+	 * @access	private
+	 * @param	string
+	 * @return	bool
+	 */
+	function _check_captcha($user_captcha = '')
+	{
+		// Check if the captcha matches
+		if(strtolower($user_captcha) == strtolower($this->session->userdata('captcha')))
+		{
+			// Captcha matches, return TRUE
+			return TRUE;
+		}
+		else
+		{
+			// Captcha doesn't match, alert the user & return FALSE
+			$this->form_validation->set_message('_check_captcha', 'The CAPTCHA word(s) are incorrect.');
+			return FALSE;
+		}
+	}
 }
 
 /* End of file register.php */
