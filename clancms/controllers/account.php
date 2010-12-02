@@ -302,11 +302,14 @@ class Account extends Controller {
 		}
 		
 		// Retrieve matches
-		if($matches = $this->matches->get_matches(5))
+		if($matches = $this->matches->get_matches())
 		{
 			// Assign recent matches
 			$recent_matches = array();
 				
+			// Assign matches count
+			$matches_count = 0;
+			
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
@@ -346,8 +349,15 @@ class Account extends Controller {
 								$match->kd = number_format(($match->kills / $match->deaths), 2, '.', '');
 							}
 				
-							// Player exists, assign recent matches
-							$recent_matches = array_merge($recent_matches, array($match));
+							// Check if matches count is less then 5
+							if($matches_count < 5)
+							{
+								// Matches count it less then 5, player exists & assign recent matches
+								$recent_matches = array_merge($recent_matches, array($match));
+							}
+							
+							// Itterate matches count
+							$matches_count =+ 1;
 						}
 					}
 				}
