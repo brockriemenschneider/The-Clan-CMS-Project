@@ -46,6 +46,7 @@
 		<li <?php if($this->uri->segment(1) == 'roster'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('roster', 'Team Roster'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'matches'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Matches'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(1) == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('polls', 'Polls'); ?></span><span class="right"></span></li>
 		<?php $this->load->widget('pages'); ?>		
 	</ul>
 	</div>

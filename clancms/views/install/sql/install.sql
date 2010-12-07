@@ -49,7 +49,7 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (6, 'Can manage users?', 'users', 32),
 (7, 'Can manage usergroups?', 'usergroups', 64),
 (8, 'Can manage pages?', 'pages', 128),
-(8, 'Can manage polls?', 'polls', 256);
+(9, 'Can manage polls?', 'polls', 256);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__matches` (
   `match_id` bigint(20) NOT NULL AUTO_INCREMENT,

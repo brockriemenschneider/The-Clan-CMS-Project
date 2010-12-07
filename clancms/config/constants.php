@@ -45,7 +45,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 | The current version of the Clan CMS that is running
 |
 */
-define('CLANCMS_VERSION', '0.5.4');
+define('CLANCMS_VERSION', '0.5.5');
 
 /* End of file constants.php */
 /* Location: ./clancms/config/constants.php */
