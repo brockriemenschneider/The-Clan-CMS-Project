@@ -65,7 +65,7 @@
 				<div class="clear"></div>
 				
 				<div class="label">Report:</div>
-				<div class="details"><?php if($match->match_report): echo $match->match_report; else: echo '-'; endif; ?></div>
+				<div class="details"><?php if($match->report): echo $match->report; else: echo '-'; endif; ?></div>
 				<div class="clear"></div>
 				
 			</div>

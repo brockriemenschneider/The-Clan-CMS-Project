@@ -46,6 +46,9 @@ class Dashboard extends Controller {
 		// Load the typography library
 		$this->load->library('typography');
 		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
 		// Load the text helper
 		$this->load->helper('text');
 	}
@@ -108,7 +111,7 @@ class Dashboard extends Controller {
 				}
 				
 				// Limit the article's words, format the text, create links, and assign it to article summary
-				$article->summary = auto_link($this->typography->auto_typography(word_limiter($article->article_content, 100)));
+				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
 		}
 
@@ -138,7 +141,7 @@ class Dashboard extends Controller {
 		$page->title = $page->page_title;
 				
 		// Format the text, create links, and assign page content
-		$page->content = auto_link($this->typography->auto_typography($page->page_content));
+		$page->content = auto_link($this->typography->auto_typography($this->bbcode->to_html($page->page_content)), 'url');
 		
 		// Create a reference to page
 		$this->data->page =& $page;

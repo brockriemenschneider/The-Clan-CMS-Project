@@ -63,10 +63,10 @@
 				<?php echo br(); ?>
 				<div class="description">The link to the page</div>
 				
-				<div class="label">Content</div>
 				<?php
 				$data = array(
 					'name'		=> 'content',
+					'id'		=> 'wysiwyg',
 					'rows'		=> '20',
 					'cols'		=> '50'
 				);

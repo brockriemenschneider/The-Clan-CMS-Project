@@ -78,10 +78,10 @@
 				<div class="description">The sponsor's logo</div>
 				<?php echo br(); ?>
 				
-				<div class="label">Description</div>
 				<?php
 				$data = array(
 					'name'		=> 'description',
+					'id'		=> 'wysiwyg',
 					'rows'		=> '10',
 					'cols'		=> '50'
 				);

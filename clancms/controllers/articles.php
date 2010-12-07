@@ -43,6 +43,9 @@ class Articles extends Controller {
 		// Load the typography library
 		$this->load->library('typography');
 		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
 		// Load the text helper
 		$this->load->helper('text');
 	}
@@ -137,7 +140,7 @@ class Articles extends Controller {
 				}
 				
 				// Limit the article's words, format the text, create links, and assign it to article summary
-				$article->summary = auto_link($this->typography->auto_typography(word_limiter($article->article_content, 100)));
+				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
 		}
 
@@ -228,7 +231,7 @@ class Articles extends Controller {
 		}
 		
 		// Configure the article
-		$article->article = auto_link($this->typography->auto_typography($article->article_content));
+		$article->article = auto_link($this->typography->auto_typography($this->bbcode->to_html($article->article_content)), 'url');
 		
 		// Retrieve the user
 		$user = $this->users->get_user(array('user_id' => $article->user_id));

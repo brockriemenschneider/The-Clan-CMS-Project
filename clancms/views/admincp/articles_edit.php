@@ -96,10 +96,10 @@
 				<?php echo br(); ?>
 				<div class="description">The subject of the article</div>
 				
-				<div class="label required">Article</div>
 				<?php
 				$data = array(
 					'name'		=> 'article',
+					'id'		=> 'wysiwyg',
 					'rows'		=> '20',
 					'cols'		=> '50'
 				);

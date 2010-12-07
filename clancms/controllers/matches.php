@@ -39,6 +39,13 @@ class Matches extends Controller {
 		
 		// Load the squads model
 		$this->load->model('Squads_model', 'squads');
+		
+		// Load the typography library
+		$this->load->library('typography');
+		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
 	}
 	
 	// --------------------------------------------------------------------
@@ -304,6 +311,9 @@ class Matches extends Controller {
 			$match->squad = '';
 			$match->squad_slug = '';
 		}
+		
+		// Format the text, create links, and assign match report
+		$match->report = auto_link($this->typography->auto_typography($this->bbcode->to_html($match->match_report)), 'url');
 		
 		// Retrieve the players
 		$players = $this->matches->get_players(array('match_id' => $match->match_id));

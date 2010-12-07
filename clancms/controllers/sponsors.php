@@ -37,6 +37,9 @@ class Sponsors extends Controller {
 		// Load the Sponsors model
 		$this->load->model('Sponsors_model', 'sponsors');
 		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
 		// Load the typography library
 		$this->load->library('typography');
 	}
@@ -63,7 +66,7 @@ class Sponsors extends Controller {
 			foreach($sponsors as $sponsor)
 			{
 				// Format html, create links & assign sponsor description
-				$sponsor->sponsor_description = auto_link($this->typography->auto_typography($sponsor->sponsor_description));
+				$sponsor->sponsor_description = auto_link($this->typography->auto_typography($this->bbcode->to_html($sponsor->sponsor_description)), 'url');
 			}
 		}
 		

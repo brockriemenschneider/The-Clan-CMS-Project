@@ -261,10 +261,10 @@
 				<?php echo br(); ?>
 				<div class="description">The time the match was played</div>
 				
-				<div class="label">Report</div>
 				<?php
 				$data = array(
 					'name'		=> 'report',
+					'id'		=> 'wysiwyg',
 					'rows'		=> '10',
 					'cols'		=> '50'
 				);

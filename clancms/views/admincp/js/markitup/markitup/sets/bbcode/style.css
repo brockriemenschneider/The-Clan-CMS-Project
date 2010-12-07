@@ -1,0 +1,171 @@
+/* -------------------------------------------------------------------
+// markItUp!
+// By Jay Salvat - http://markitup.jaysalvat.com/
+// ------------------------------------------------------------------*/
+.markItUp .bold a	{
+	background-image:url(images/bold.png);
+}
+.markItUp .italic a	{
+	background-image:url(images/italic.png);
+}
+.markItUp .underline a	{
+	background-image:url(images/underline.png);
+}
+.markItUp .strike_through a	{
+	background-image:url(images/strike_through.png);
+}
+
+.markItUp .align_left a	{
+	background-image:url(images/align_left.png);
+}
+.markItUp .align_center a	{
+	background-image:url(images/align_center.png);
+}
+.markItUp .align_right a	{
+	background-image:url(images/align_right.png);
+}
+
+.markItUp .super_script a	{
+	background-image:url(images/super_script.png);
+}
+.markItUp .sub_script a	{
+	background-image:url(images/sub_script.png);
+}
+
+.markItUp .uppercase a	{
+	background-image:url(images/uppercase.png);
+}
+.markItUp .lowercase a	{
+	background-image:url(images/lowercase.png);
+}
+
+.markItUp .picture a	{
+	background-image:url(images/picture.png);
+}
+.markItUp .link a	{
+	background-image:url(images/link.png);
+}
+.markItUp .email a	{
+	background-image:url(images/email.png);
+}
+.markItUp .size a	{
+	background-image:url(images/fonts.png);
+}
+.markItUp .bulleted_list a	{
+	background-image:url(images/list-bullet.png);
+}
+.markItUp .numeric_list a	{
+	background-image:url(images/list-numeric.png);
+}
+.markItUp .list_item a	{
+	background-image:url(images/list-item.png);
+}
+
+.markItUp .quotes a	{
+	background-image:url(images/quotes.png);
+}
+.markItUp .code a	{
+	background-image:url(images/code.png);
+}
+	
+.markItUp .clean a {
+	background-image:url(images/clean.png);
+}
+.markItUp .preview a {
+	background-image:url(images/preview.png);
+}
+
+.markItUp .colors a {
+	background-image:url(images/colors.png);
+}
+	.markItUp .colors ul {
+		width:81px;
+		padding:1px;	
+	}
+	.markItUp .colors  li {
+		border:1px solid white;
+		width:25px;	height:25px;
+		overflow:hidden;
+		padding:0px; margin:0px;
+		float:left;
+	}
+	.markItUp .colors ul a {
+		width:25px;	height:25px;
+	}
+	.markItUp .colors ul a:hover {
+		background-color:none;
+	}
+	
+	.markItUp .colors .col1-1 a {
+		background:yellow;
+	}
+	.markItUp .colors .col1-2 a {
+		background:orange;
+	}
+	.markItUp .colors .col1-3 a {
+		background:red;
+	}
+	
+	.markItUp .colors .col2-1 a {
+		background:blue;
+	}
+	.markItUp .colors .col2-2 a {
+		background:purple;
+	}
+	.markItUp .colors .col2-3 a {
+		background:green;
+	}
+	
+	.markItUp .colors .col3-1 a {
+		background:white;
+	}
+	.markItUp .colors .col3-2 a {
+		background:gray;
+	}
+	.markItUp .colors .col3-3 a {
+		background:black;
+	}
+	
+	.markItUp .dateoftheday a {
+	background-image:url(images/date.png);
+	}
+	
+.markItUp .youtube a {
+	background-image:url(images/youtube.png);
+}
+
+.markItUp .happy a {
+	background-image:url(images/emoticon_happy.png);
+}
+
+.markItUp .sad a {
+	background-image:url(images/emoticon_sad.png);
+}
+
+.markItUp .surprised a {
+	background-image:url(images/emoticon_surprised.png);
+}
+
+.markItUp .tongue a {
+	background-image:url(images/emoticon_tongue.png);
+}
+
+.markItUp .wink a {
+	background-image:url(images/emoticon_wink.png);
+}
+
+.markItUp .smile a {
+	background-image:url(images/emoticon_smile.png);
+}
+
+.markItUp .curlylips a {
+	background-image:url(images/emoticon_curlylips.png);
+}
+
+.markItUp .evilgrin a {
+	background-image:url(images/emoticon_evilgrin.png);
+}
+
+.markItUp .heart a {
+	background-image:url(images/emoticon_heart.png);
+}
