@@ -250,7 +250,7 @@ class Update {
 		);
 		
 		// Add user avatar column to the squads table in the database
-		$this->CI->dbforge->add_column('squads', $fields, 'squad_status');
+		$this->CI->dbforge->add_column('squads', $fields, 'squad_slug');
 
 		// Set up the fields
 		$fields = array(
@@ -366,7 +366,7 @@ class Update {
 		
 		// Set up the data
 		$data = array(
-			'category_id'			=> $this->db->insert_id(),
+			'category_id'			=> $this->CI->db->insert_id(),
 			'setting_title'			=> 'CAPTCHA Words',
 			'setting_slug'			=> 'captcha_words',
 			'setting_value'			=> 'Xcel Gaming',
