@@ -109,6 +109,25 @@
 				echo form_dropdown('daylight_savings', $options, set_value('daylight_savings'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				
+				<div class="subheader">
+						<?php echo heading('Image Verification', 4); ?>
+				</div>
+				
+				<div class="label required">Please enter the words to help prevent spam and fake registrations. This is NOT case sensitive.</div>
+				<div class="details"><?php echo $captcha["image"]; ?></div>
+				<div class="clear"></div>
+				
+				<div class="label required">Captcha:</div>
+				<?php 
+				$data = array(
+					'name'		=> 'captcha',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('captcha')); ?>
+				<?php echo br(); ?>
+				
 				<?php 
 					$data = array(
 						'name'		=> 'register',

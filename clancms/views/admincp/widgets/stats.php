@@ -18,6 +18,8 @@
 			<?php echo br(); ?>
 			User Groups: <?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_default . ' Default'); ?>, <?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_custom . ' Custom'); ?>
 			<?php echo br(); ?>
+			Polls: <?php echo anchor(ADMINCP . 'polls', $total_polls . ' Polls'); ?>
+			<?php echo br(); ?>
 			Pages: <?php echo anchor(ADMINCP . 'pages', $total_pages . ' Pages'); ?>
 			<?php echo br(); ?>
 		</div>

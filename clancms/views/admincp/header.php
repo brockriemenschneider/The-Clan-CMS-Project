@@ -4,6 +4,8 @@
 <head> 
 	<title><?php echo CLAN_NAME; ?> Admin CP - Powered By Clan CMS v<?php echo CLANCMS_VERSION; ?></title>
 	<?php echo link_tag('favicon.ico', 'shortcut icon', 'image/ico'); ?>
+	<?php echo link_tag(ADMINCP_URL . 'js/markitup/markitup/skins/simple/style.css'); ?> 
+	<?php echo link_tag(ADMINCP_URL . 'js/markitup/markitup/sets/bbcode/style.css'); ?> 
 	<?php echo link_tag(ADMINCP_URL . 'style.css'); ?>
 	<?php echo link_tag(ADMINCP_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/jquery-1.4.2.min.js"></script> 
