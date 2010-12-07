@@ -3,6 +3,8 @@
                              Clan CMS Change Log
 ============================================================================================
 
+-----0.5.5-----
+
 -----0.5.4-----
 Fixed Installation css
 Deleted message view and replaced with page view

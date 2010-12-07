@@ -64,6 +64,13 @@ class Update {
 			// Update to 0.5.4
 			$this->update_054();
 		}
+		
+		// Check if we need to update to 0.5.5
+		if(CLANCMS_VERSION < '0.5.5')
+		{
+			// Update to 0.5.5
+			$this->update_055();
+		}
 	}
 	
 	// --------------------------------------------------------------------
@@ -213,6 +220,194 @@ class Update {
 			// Set up the data
 			$data = array(
 				'group_permissions'		=> '255'
+			);
+			
+			// Update the administrators user group in the database
+			$this->CI->users->update_group($group->group_id, $data);
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+    /**
+	 * update_055
+	 *
+	 * Update for v0.5.5
+	 *
+	 * @access	public
+     * @return	bool
+	 */
+    function update_055()
+    {
+		// Set up the fields
+		$fields = array(
+			'squad_status' => array(
+								'type' 			=> 'TINYINT',
+								'constraint' 	=> '1',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add user avatar column to the squads table in the database
+		$this->CI->dbforge->add_column('squads', $fields, 'squad_status');
+
+		// Set up the fields
+		$fields = array(
+			'poll_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'poll_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'poll_active' => array(
+								'type' 			=> 'TINYINT',
+								'constraint' 	=> '1',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to poll id
+		$this->CI->dbforge->add_key('poll_id');
+		
+		// Create the polls table in the database
+		$this->CI->dbforge->create_table('polls');
+		
+		// Set up the fields
+		$fields = array(
+			'option_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'poll_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							),
+			'option_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'option_priority' => array(
+								'type' 			=> 'BIGINT',
+								'constraint' 	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to option id
+		$this->CI->dbforge->add_key('option_id');
+		
+		// Create the poll options table in the database
+		$this->CI->dbforge->create_table('poll_options');
+		
+		// Set up the fields
+		$fields = array(
+			'vote_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'poll_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							),
+			'option_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'		=> FALSE,
+								'default'		=> '0'
+							),
+			'user_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to vote id
+		$this->CI->dbforge->add_key('vote_id');
+		
+		// Create the poll votes table in the database
+		$this->CI->dbforge->create_table('poll_votes');
+		
+		// Load the Settings model
+		$this->CI->load->model('Settings_model', 'settings');
+		
+		// Set up the data
+		$data = array(
+			'category_title'	=> 'Security',
+			'category_priority'	=> '4'
+		);
+		
+		// Insert the setting category into the database
+		$this->CI->settings->insert_category($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $this->db->insert_id();,
+			'setting_title'			=> 'CAPTCHA Words',
+			'setting_slug'			=> 'captcha_words',
+			'setting_value'			=> 'Xcel Gaming',
+			'setting_type'			=> 'textarea',
+			'setting_description'	=> 'Word Bank for CAPTCHA. Seperate each word on a new line.',
+			'setting_priority'		=> '1'
+		);
+		
+		// Insert the setting into the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> '2',
+			'setting_title'			=> 'Sponsor Image Width',
+			'setting_slug'			=> 'sponsor_width',
+			'setting_value'			=> '209',
+			'setting_type'			=> 'input',
+			'setting_description'	=> 'The width of sponsor images in pixels',
+			'setting_priority'		=> '3'
+		);
+		
+		// Insert the setting into the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'permission_title'		=> 'Can manage polls?',
+			'permission_slug'		=> 'polls',
+			'permission_value'		=> '256'
+		);
+		
+		// Insert the permission into the database
+		$this->CI->users->insert_permission($data);
+		
+		// Retrieve the administrators user group
+		if($group = $this->CI->users->get_group(array('group_id' => '2')))
+		{
+			// Set up the data
+			$data = array(
+				'group_permissions'		=> '511'
 			);
 			
 			// Update the administrators user group in the database

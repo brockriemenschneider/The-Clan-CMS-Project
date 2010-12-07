@@ -48,7 +48,8 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (5, 'Can manage sponsors?', 'sponsors', 16),
 (6, 'Can manage users?', 'users', 32),
 (7, 'Can manage usergroups?', 'usergroups', 64),
-(8, 'Can manage pages?', 'pages', 128);
+(8, 'Can manage pages?', 'pages', 128),
+(8, 'Can manage polls?', 'polls', 256);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__matches` (
   `match_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -225,6 +226,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_groups` (
 -- command split --
 INSERT INTO `__DBPREFIX__user_groups` (`group_id`, `group_title`, `group_user_title`, `group_default`, `group_administrator`, `group_clan`, `group_banned`, `group_permissions`) VALUES
 (1, 'Registered Users', 'Registered User', 1, 0, 0, 0, 0),
-(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 255),
+(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 511),
 (3, 'Team Members', 'Team Member', 1, 0, 1, 0, 0),
 (4, 'Banned Users', 'Banned', 1, 0, 0, 1, 0);

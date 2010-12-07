@@ -13,7 +13,7 @@ http://xcelgaming.com
 
 -----REQUIREMENTS-----
 
-PHP version 4.3.2 or greater
+PHP version 5.0.0 or greater
 MySQL version 4.1 or greater
 The mod_rewrite Apache module
 
@@ -36,7 +36,8 @@ by manually deleting the "clancms/controllers/install.php", "clancms/libraries/I
 
 2) Rename the zip to Update.zip and upload the the root of the installation.
 
-3) OPEN clancms/libraries/Unzip.php
+3) If you version is less then 0.5.4 then do the following, otherwise go to step 4:
+OPEN clancms/libraries/Unzip.php
 FIND function extract($file, $destination)
 REPLACE WITH function extract($file, $destination = '')
 SAVE AND CLOSE
@@ -60,3 +61,8 @@ RewriteRule ^(.*)$ ./index.php/$1 [L,QSA]
 REPLACE WITH 
 RewriteRule ^(.*)$ ./index.php?/$1 [L,QSA]
 SAVE AND CLOSE
+
+Q: I can't even get to the installation process?
+
+A: We are aware that some people are having issues installing. We believe this is because their server requirements are not specific enough howevever
+we are also looking into possible fixes we can do to help out.
