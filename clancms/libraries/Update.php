@@ -366,7 +366,7 @@ class Update {
 		
 		// Set up the data
 		$data = array(
-			'category_id'			=> $this->db->insert_id();,
+			'category_id'			=> $this->db->insert_id(),
 			'setting_title'			=> 'CAPTCHA Words',
 			'setting_slug'			=> 'captcha_words',
 			'setting_value'			=> 'Xcel Gaming',
