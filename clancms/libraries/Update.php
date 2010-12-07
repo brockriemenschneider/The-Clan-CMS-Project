@@ -332,7 +332,7 @@ class Update {
 			'option_id' => array(
 								'type' 			=> 'BIGINT',
 								'constraint'	=> '20',
-								'null'		=> FALSE,
+								'null'			=> FALSE,
 								'default'		=> '0'
 							),
 			'user_id' => array(
