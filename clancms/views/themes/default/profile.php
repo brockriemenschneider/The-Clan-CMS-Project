@@ -28,9 +28,9 @@
 				<div class="details">
 					<div id="avatar">
 						<?php if($user->user_avatar): ?>
-							<?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), $user->user_name), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $user->user_name, 'alt' => $user->user_name, 'width' => '57', 'height' => '57'))); ?>
+							<?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), img(array('src' => IMAGES . 'avatars/' . $user->user_avatar, 'title' => $user->user_name, 'alt' => $user->user_name, 'width' => '57', 'height' => '57'))); ?>
 						<?php else: ?>
-							<?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), $user->user_name), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $user->user_name, 'alt' => $user->user_name, 'width' => '57', 'height' => '57'))); ?>
+							<?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), img(array('src' => THEME_URL . 'images/avatar_none.png', 'title' => $user->user_name, 'alt' => $user->user_name, 'width' => '57', 'height' => '57'))); ?>
 						<?php endif; ?>
 					</div>
 				</div>
