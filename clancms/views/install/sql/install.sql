@@ -151,7 +151,7 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (7, 1, 'Clan Slogan', 'clan_slogan', '', 'input', 'Put your clan slogan here', 2),
 (8, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2),
 (9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'input', 'The width of sponsor images in pixels', 3),
-(10, 2, 'CAPTCHA Words', 'captcha_words', 'Clan CMS', 'textarea', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 1);
+(10, 4, 'CAPTCHA Words', 'captcha_words', 'Clan CMS', 'textarea', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 1);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__setting_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
