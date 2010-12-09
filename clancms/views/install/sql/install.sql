@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `article_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `article_status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`article_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 -- command split --
 INSERT INTO `__DBPREFIX__articles` (`article_id`, `squad_id`, `article_title`, `article_slug`, `article_content`, `article_comments`, `user_id`, `article_date`, `article_status`) VALUES
 (1, 0, 'Welcome to Clan CMS!', '1-Welcome-to-Clan-CMS', 'Welcome to your new Clan CMS brought to you by Xcel Gaming!\n\nIf you are seeing this message then you have installed Clan CMS successfully!\n\nPlease take some time to familiarize yourself with the Admin CP to take advantage of all the aspects that Clan CMS has to offer! \n\nThank you & Good Luck,\nXcel Gaming\nhttp://www.xcelgaming.com', 1, 1, '2010-10-10 10:10:10', 1);
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__group_permissions` (
   `permission_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `permission_value` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`permission_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 -- command split --
 INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`, `permission_slug`, `permission_value`) VALUES
 (1, 'Can manage settings?', 'settings', 1),
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__settings` (
   `setting_description` text NOT NULL,
   `setting_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 -- command split --
 INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`, `setting_slug`, `setting_value`, `setting_type`, `setting_description`, `setting_priority`) VALUES
 (1, 1, 'Clan Name', 'clan_name', '', 'input', 'Put your clan name here.', 1),
@@ -177,7 +177,7 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (7, 1, 'Clan Slogan', 'clan_slogan', '', 'input', 'Put your clan slogan here', 2),
 (8, 2, 'Theme Logo', 'logo', '0', 'dropdown', 'Use the logo image? Otherwise it will use text', 2),
 (9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'input', 'The width of sponsor images in pixels', 3),
-(10, 4, 'Allow Registration', 'allow_registration', '1', 'input', 'Allow users to register on the site?', 1);
+(10, 4, 'Allow Registration', 'allow_registration', '1', 'input', 'Allow users to register on the site?', 1),
 (11, 4, 'CAPTCHA Words', 'captcha_words', 'Clan CMS', 'textarea', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 2);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__setting_categories` (
   `category_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `category_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 -- command split --
 INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `category_priority`) VALUES
 (1, 'General Settings', 1),

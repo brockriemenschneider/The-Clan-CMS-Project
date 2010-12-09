@@ -15,7 +15,6 @@ Added Polls
 Fixed sponsor image resizing and link issue
 Added option for squads to be inactive
 Added CAPTCHA for registration
-Added Tournaments
 Updated Credits for Development Team
 Fixed matches pages in admincp
 Fixed articles status in admincp
