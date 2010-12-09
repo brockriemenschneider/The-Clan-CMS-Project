@@ -109,7 +109,7 @@
 				
 				<tr class="row">
 					<td>Support Staff</td>
-					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=5', 'Austin Marks'); ?></td>
+					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=5', 'Austin Marks'); ?>, <?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=68', 'Rich Giles'); ?></td>
 				</tr>
 			</tbody>
 		</table>
