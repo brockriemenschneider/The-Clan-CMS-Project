@@ -9,7 +9,8 @@
 		<?php echo anchor('articles', 'News Articles'); ?> | 
 		<?php echo anchor('roster', 'Team Roster'); ?> | 
 		<?php echo anchor('matches', 'Matches'); ?> | 
-		<?php echo anchor('sponsors', 'Sponsors'); ?>
+		<?php echo anchor('sponsors', 'Sponsors'); ?> |
+		<?php echo anchor('polls', 'Polls'); ?>
 	</div> 
 </div> 
 

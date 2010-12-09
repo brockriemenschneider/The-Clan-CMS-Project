@@ -373,7 +373,7 @@ class Update {
 			'setting_title'			=> 'Allow Registration',
 			'setting_slug'			=> 'allow_registration',
 			'setting_value'			=> '1',
-			'setting_type'			=> 'input',
+			'setting_type'			=> 'dropdown',
 			'setting_description'	=> 'Allow users to register on the site?',
 			'setting_priority'		=> '1'
 		);

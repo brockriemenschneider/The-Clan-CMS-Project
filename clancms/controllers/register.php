@@ -64,66 +64,7 @@ class Register extends Controller {
 			$page->title = 'Registration is not allowed!';
 			
 			// Assign page content
-			$page->content = 'Sorry, but registration has been disabled by an administrator.' . br(2) . 'Please try again later,' . br() . CLAN_NAME . br() . anchor(base_url());
-			
-			// Create a reference to page
-			$this->data->page =& $page;
-			
-			// Load the page view
-			$this->load->view(THEME . 'page', $this->data);
-		}
-		
-		// Set form validation rules
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback__alpha_dash_space|callback__check_username');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback__check_email');
-		$this->form_validation->set_rules('email_confirmation', 'Email Confirmation', 'trim|required|matches[email]');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-		$this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'trim|required|matches[password]');
-		$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
-		$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
-		$this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback__check_captcha');
-					
-		// Form validation passed, so continue
-		if (!$this->form_validation->run() == FALSE)
-		{
-			// Retrieve salt
-			$salt = $this->user->_salt();
-			
-			// Set up the data
-			$data = array(
-				'group_id'					=> 1,
-				'user_name'					=> $this->input->post('username'),
-				'user_password'				=> $this->encrypt->sha1($salt . $this->encrypt->sha1($this->input->post('password'))),
-				'user_salt'					=> $salt,
-				'user_email'				=> $this->input->post('email'),
-				'user_timezone'				=> $this->input->post('timezone'),
-				'user_daylight_savings'		=> $this->input->post('daylight_savings'),
-				'user_ipaddress'			=> $this->input->ip_address(),
-				'user_avatar'				=> '',
-				'user_activation'			=> $this->session->userdata('session_id'),
-				'user_joined'				=> mdate('%Y-%m-%d %H:%i:%s', now())
-			);
-			
-			// Insert the user in the database
-			$this->users->insert_user($data);
-			
-			// Load the email library
-			$this->load->library('email');
-			
-			// Set up the email
-			$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
-			$this->email->to($this->input->post('email'));
-			$this->email->subject('Activation link for your account on ' . CLAN_NAME);
-			$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . base_url() . "account/activate/" . $this->session->userdata('session_id') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
-
-			// Email the user
-			$this->email->send();
-
-			// Assign page title
-			$page->title = 'Registration Success!';
-			
-			// Assign page content
-			$page->content = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			$page->content = 'Sorry, but registration has been disabled by an administrator. Please try again later.' . br(2) . 'Thanks,' . br() . CLAN_NAME . br() . anchor(base_url());
 			
 			// Create a reference to page
 			$this->data->page =& $page;
@@ -133,41 +74,101 @@ class Register extends Controller {
 		}
 		else
 		{
-			// Load the image library
-			$this->load->library('image_lib');
-			
-			// Load the captcha helper
-			$this->load->helper('captcha');
-			
-			// Retrieve the word bank
-			$word_bank = explode("\n", $this->ClanCMS->get_setting('captcha_words'));
-			
-			// Choose a word from the word bank
-			$word = random_element($word_bank);
-			
-			// Assign the word to the session
-			$this->session->set_userdata('captcha', $word);
-			
-			// Set up the data
-			$data = array(
-				'word'	 	 => $word,
-				'img_path'	 => UPLOAD . 'captcha',
-				'img_url'	 => IMAGES . 'captcha',
-				'img_width'	 => 150,
-				'img_height' => 50,
-				'expiration' => 0
-			);
-		
-			// Create the captcha
-			$captcha = create_captcha($data);
-		
-			// Create a reference to captcha
-			$this->data->captcha =& $captcha;
-			
-			// Load the register view
-			$this->load->view(THEME . 'register', $this->data);
-		}
+			// Set form validation rules
+			$this->form_validation->set_rules('username', 'Username', 'trim|required|callback__alpha_dash_space|callback__check_username');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback__check_email');
+			$this->form_validation->set_rules('email_confirmation', 'Email Confirmation', 'trim|required|matches[email]');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+			$this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'trim|required|matches[password]');
+			$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
+			$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
+			$this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback__check_captcha');
+						
+			// Form validation passed, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{
+				// Retrieve salt
+				$salt = $this->user->_salt();
+				
+				// Set up the data
+				$data = array(
+					'group_id'					=> 1,
+					'user_name'					=> $this->input->post('username'),
+					'user_password'				=> $this->encrypt->sha1($salt . $this->encrypt->sha1($this->input->post('password'))),
+					'user_salt'					=> $salt,
+					'user_email'				=> $this->input->post('email'),
+					'user_timezone'				=> $this->input->post('timezone'),
+					'user_daylight_savings'		=> $this->input->post('daylight_savings'),
+					'user_ipaddress'			=> $this->input->ip_address(),
+					'user_avatar'				=> '',
+					'user_activation'			=> $this->session->userdata('session_id'),
+					'user_joined'				=> mdate('%Y-%m-%d %H:%i:%s', now())
+				);
+				
+				// Insert the user in the database
+				$this->users->insert_user($data);
+				
+				// Load the email library
+				$this->load->library('email');
+				
+				// Set up the email
+				$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
+				$this->email->to($this->input->post('email'));
+				$this->email->subject('Activation link for your account on ' . CLAN_NAME);
+				$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . base_url() . "account/activate/" . $this->session->userdata('session_id') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
 
+				// Email the user
+				$this->email->send();
+
+				// Assign page title
+				$page->title = 'Registration Success!';
+				
+				// Assign page content
+				$page->content = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+				
+				// Create a reference to page
+				$this->data->page =& $page;
+				
+				// Load the page view
+				$this->load->view(THEME . 'page', $this->data);
+			}
+			else
+			{
+				// Load the image library
+				$this->load->library('image_lib');
+				
+				// Load the captcha helper
+				$this->load->helper('captcha');
+				
+				// Retrieve the word bank
+				$word_bank = explode("\n", $this->ClanCMS->get_setting('captcha_words'));
+				
+				// Choose a word from the word bank
+				$word = random_element($word_bank);
+				
+				// Assign the word to the session
+				$this->session->set_userdata('captcha', $word);
+				
+				// Set up the data
+				$data = array(
+					'word'	 	 => $word,
+					'img_path'	 => UPLOAD . 'captcha',
+					'img_url'	 => IMAGES . 'captcha',
+					'img_width'	 => 150,
+					'img_height' => 50,
+					'expiration' => 0
+				);
+			
+				// Create the captcha
+				$captcha = create_captcha($data);
+			
+				// Create a reference to captcha
+				$this->data->captcha =& $captcha;
+				
+				// Load the register view
+				$this->load->view(THEME . 'register', $this->data);
+			}
+		}
 	}
 		
 	// --------------------------------------------------------------------
