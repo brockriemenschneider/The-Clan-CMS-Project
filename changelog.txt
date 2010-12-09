@@ -4,6 +4,21 @@
 ============================================================================================
 
 -----0.5.5-----
+Fixed new users widget for only clan members
+Fixed installation issue that would add multiple same users
+Added the option to disable registration
+Added a Advanced text editor with BB Code support
+Fixed recent matches for user profiles
+Fixed KDR for profiles
+Fixed use profile link
+Added Polls
+Fixed sponsor image resizing and link issue
+Added option for squads to be inactive
+Added CAPTCHA for registration
+Added Tournaments
+Updated Credits for Development Team
+Fixed matches pages in admincp
+Fixed articles status in admincp
 
 -----0.5.4-----
 Fixed Installation css

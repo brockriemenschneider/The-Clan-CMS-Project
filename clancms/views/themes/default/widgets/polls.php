@@ -48,7 +48,7 @@
 					<?php endif; ?>
 				<?php echo form_close(); ?>
 			<?php else: ?>
-				<?php echo CLAN_NAME; ?> currently has no active polls.
+				<?php echo CLAN_NAME; ?> currently has no active poll.
 			<?php endif; ?>
 				
 		</div>

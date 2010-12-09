@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__pages` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 -- command split --
 INSERT INTO `__DBPREFIX__pages` (`page_id`, `page_title`, `page_slug`, `page_content`, `page_priority`) VALUES
-(1, 'About Us', 'aboutus', 'Put your clan description here\n\nXcel Gaming\nsupport@xcelgaming.com', 1);
+(1, 'About Us', 'aboutus', 'Put your clan description here.', 1);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__polls`;
 -- command split --

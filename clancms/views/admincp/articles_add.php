@@ -41,7 +41,7 @@
 						'1' => 'Published'
 					);
 					
-				echo form_dropdown('status', $options, set_value('squad'), 'class="input select"'); ?>
+				echo form_dropdown('status', $options, set_value('status'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What is the status of this article?</div>
 				

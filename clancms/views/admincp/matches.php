@@ -74,6 +74,7 @@
 		<div class="footer"></div>
 	</div>
 	
+	<?php if($pages): ?>
 	<div class="space"></div>
 	
 	<div class="box">
@@ -81,6 +82,7 @@
 			<?php echo heading($pages, 4); ?>
 		</div>
 	</div>
+	<?php endif; ?>
 </div>
 
 
