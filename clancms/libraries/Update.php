@@ -357,22 +357,39 @@ class Update {
 		
 		// Set up the data
 		$data = array(
-			'category_title'	=> 'Security',
+			'category_title'	=> 'Registration Settings',
 			'category_priority'	=> '4'
 		);
 		
 		// Insert the setting category into the database
 		$this->CI->settings->insert_category($data);
 		
+		// Get the registration settings setting category id
+		$registration_setting_id = $this->CI->db->insert_id();
+		
 		// Set up the data
 		$data = array(
-			'category_id'			=> $this->CI->db->insert_id(),
+			'category_id'			=> $registration_setting_id,
+			'setting_title'			=> 'Allow Registration',
+			'setting_slug'			=> 'allow_registration',
+			'setting_value'			=> '1',
+			'setting_type'			=> 'input',
+			'setting_description'	=> 'Allow users to register on the site?',
+			'setting_priority'		=> '1'
+		);
+		
+		// Insert the setting into the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $registration_setting_id,
 			'setting_title'			=> 'CAPTCHA Words',
 			'setting_slug'			=> 'captcha_words',
 			'setting_value'			=> 'Xcel Gaming',
 			'setting_type'			=> 'textarea',
 			'setting_description'	=> 'Word Bank for CAPTCHA. Seperate each word on a new line.',
-			'setting_priority'		=> '1'
+			'setting_priority'		=> '2'
 		);
 		
 		// Insert the setting into the database
@@ -402,6 +419,9 @@ class Update {
 		// Insert the permission into the database
 		$this->CI->users->insert_permission($data);
 		
+		// Load the Users model
+		$this->CI->load->model('Users_model', 'users');
+		
 		// Retrieve the administrators user group
 		if($group = $this->CI->users->get_group(array('group_id' => '2')))
 		{
@@ -412,6 +432,25 @@ class Update {
 			
 			// Update the administrators user group in the database
 			$this->CI->users->update_group($group->group_id, $data);
+		}
+		
+		// Load the Squads model
+		$this->CI->load->model('Squads_model', 'squads');
+		
+		// Retrieve the squads
+		if($squads = $this->CI->squads->get_squads())
+		{
+			// Squads exist, loop through each squad
+			foreach($squads as $squad)
+			{
+				// Set up the data
+				$data = array(
+					'squad_status'		=> '1'
+				);
+			
+				// Update the squad in the database
+				$this->CI->squads->update_squad($squad->squad_id, $data);
+			}
 		}
 	}
 	

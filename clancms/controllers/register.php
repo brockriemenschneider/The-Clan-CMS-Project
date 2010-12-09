@@ -57,6 +57,22 @@ class Register extends Controller {
 			redirect('account');
 		}
 		
+		// Check if registration is allowed
+		if((bool) !$this->ClanCMS->get_setting('allow_registration'))
+		{
+			// Assign page title
+			$page->title = 'Registration is not allowed!';
+			
+			// Assign page content
+			$page->content = 'Sorry, but registration has been disabled by an administrator.' . br(2) . 'Please try again later,' . br() . CLAN_NAME . br() . anchor(base_url());
+			
+			// Create a reference to page
+			$this->data->page =& $page;
+			
+			// Load the page view
+			$this->load->view(THEME . 'page', $this->data);
+		}
+		
 		// Set form validation rules
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback__alpha_dash_space|callback__check_username');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback__check_email');

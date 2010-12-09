@@ -36,6 +36,9 @@ class New_Users_widget extends Widget {
 		
 		// Create a instance to CI
 		$CI =& get_instance();
+		
+		// Load the text helper
+		$this->CI->load->helper('text');
 	}
 	
 	// --------------------------------------------------------------------
@@ -53,8 +56,38 @@ class New_Users_widget extends Widget {
 		// Load the text helper
 		$this->CI->load->helper('text');
 		
-		// Retrieve the new users
-		$new_users = $this->CI->users->get_users(9);
+		// Retrieve the users
+		if($users = $this->CI->users->get_users())
+		{
+			// Assign new users
+			$new_users = array();
+			
+			// Assign users count
+			$users_count = 0;
+			
+			// Users exist, loop through each user
+			foreach($users as $user)
+			{
+				// Retrieve the users group
+				if($group = $this->CI->users->get_group(array('group_id' => $user->group_id)))
+				{
+					// Check if the group is in the clan
+					if((bool) $group->group_clan)
+					{
+						// Group is in the clan, check if users count is less then 10
+						if($users_count < 10)
+						{
+							// Users count it less then 10, assign new users
+							$new_users = array_merge($new_users, array($user));
+						}
+							
+						// Itterate users count
+						$users_count =+ 1;
+					}
+				}
+	
+			}	
+		}
 		
 		// Create a reference to new users
 		$this->data->new_users =& $new_users;
