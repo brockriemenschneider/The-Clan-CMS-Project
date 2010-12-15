@@ -36,7 +36,7 @@
 		</div>
 
 	</div>
-	<div id="banner"><?php if((bool) $this->ClanCMS->get_setting('logo')): ?><?php echo anchor('', img(array('src' => THEME_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo'))); ?><?php else: ?><?php echo anchor('', '<h1>' . CLAN_NAME . '</h1><h2>' . $this->ClanCMS->get_Setting('clan_slogan') . '</h2>'); ?><?php endif; ?></div>
+	<div id="banner"><?php if((bool) $this->ClanCMS->get_setting('logo')): ?><?php echo anchor('', img(array('src' => THEME_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo'))); ?><?php else: ?><?php echo anchor('', '<h1>' . CLAN_NAME . '</h1><h2>' . $this->ClanCMS->get_setting('clan_slogan') . '</h2>'); ?><?php endif; ?></div>
 	<div id="navigation">
 	<ul>
 		<li <?php if($this->uri->segment(1) == ''): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('', 'Home'); ?></span><span class="right"></span></li>
