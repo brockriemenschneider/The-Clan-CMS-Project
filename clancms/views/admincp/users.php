@@ -2,6 +2,18 @@
 
 <?php $this->load->view(ADMINCP . 'sidebar'); ?>
 
+<script type="text/javascript">
+	function deleteConfirm()
+	{
+    	var answer = confirm("Are you sure you want to delete this user? Once deleted there will be no way to recover the user and their stats!")
+    	if (answer)
+		{
+        	document.messages.submit();
+    	}
+    
+    	return false;  
+	} 
+</script> 
 <div id="main">
 
 	<div class="box">
@@ -43,7 +55,7 @@
 						<td><?php echo anchor(ADMINCP . 'usergroups/edit/' . $user->group_id, $user->group); ?></td>
 						<td><?php echo safe_mailto($user->user_email); ?></td>
 						<td><?php echo $user->user_ipaddress; ?></td>
-						<td><?php if(($user->user_id != SUPERADMINISTRATOR OR ($user->user_id == SUPERADMINISTRATOR && $user->user_id == $this->session->userdata('user_id')))): echo anchor(ADMINCP . 'users/edit/' . $user->user_id, img(array('src' => ADMINCP_URL . 'images/edit.png', 'alt' => 'Edit')), array('title' => 'Edit')); ?> <?php echo anchor(ADMINCP . 'users/delete/' . $user->user_id, img(array('src' => ADMINCP_URL . 'images/delete.png', 'alt' => 'Delete')), array('title' => 'Delete')); endif; ?></td>
+						<td><?php if(($user->user_id != SUPERADMINISTRATOR OR ($user->user_id == SUPERADMINISTRATOR && $user->user_id == $this->session->userdata('user_id')))): echo anchor(ADMINCP . 'users/edit/' . $user->user_id, img(array('src' => ADMINCP_URL . 'images/edit.png', 'alt' => 'Edit')), array('title' => 'Edit')); endif; ?><?php if($user->user_id != SUPERADMINISTRATOR): echo anchor(ADMINCP . 'users/delete/' . $user->user_id, img(array('src' => ADMINCP_URL . 'images/delete.png', 'alt' => 'Delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); endif; ?></td>
 					</tr>
 					<?php endforeach; ?>
 				<?php else: ?>

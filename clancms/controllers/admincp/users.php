@@ -567,7 +567,7 @@ class Users extends Controller {
 		}
 		
 		// Check if the user is a Super Administrator
-		if(($user->user_id == SUPERADMINISTRATOR && $user->user_id != $this->session->userdata('user_id')))
+		if($user->user_id == SUPERADMINISTRATOR)
 		{
 			// Alert the adminstrator
 			$this->session->set_flashdata('message', 'This user is protected!');
