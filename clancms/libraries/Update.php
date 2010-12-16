@@ -71,6 +71,13 @@ class Update {
 			// Update to 0.5.5
 			$this->update_055();
 		}
+		
+		// Check if we need to update to 0.6.0
+		if(CLANCMS_VERSION < '0.6.0')
+		{
+			// Update to 0.6.0
+			$this->update_600();
+		}
 	}
 	
 	// --------------------------------------------------------------------
@@ -452,6 +459,37 @@ class Update {
 				$this->CI->squads->update_squad($squad->squad_id, $data);
 			}
 		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+    /**
+	 * update_600
+	 *
+	 * Update for v6.0.0
+	 *
+	 * @access	public
+     * @return	bool
+	 */
+    function update_600()
+    {
+		// Old files
+		$old_files = array(
+			'./clancms/controllers/about.php',
+			'./clancms/views/themes/default/about.php'
+		);
+		
+		// Loop through each old file
+		foreach($old_files as $old_file)
+		{
+			// Check if the file exists
+			if(file_exists($old_file))
+			{
+				// File exists, delete the old file
+				unlink($old_file);
+			}
+		}
+		
 	}
 	
 	// --------------------------------------------------------------------
