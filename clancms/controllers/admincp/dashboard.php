@@ -354,7 +354,7 @@ class Dashboard extends Controller {
 				$this->alerts->insert_alert($data);
 			}
 		}
-		elseif($latest_version != CLANCMS_VERSION)
+		elseif((bool) version_compare(CLANCMS_VERSION, $latest_version, '<'))
 		{
 			// Set up the data
 			$data = array(
