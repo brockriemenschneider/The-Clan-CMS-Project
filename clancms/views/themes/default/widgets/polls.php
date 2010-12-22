@@ -1,4 +1,3 @@
-<div class="space"></div>
 <div class="widget">
 
 	<div class="header"></div>
