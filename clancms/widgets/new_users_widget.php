@@ -82,7 +82,7 @@ class New_Users_widget extends Widget {
 						}
 							
 						// Itterate users count
-						$users_count =+ 1;
+						$users_count++;
 					}
 				}
 	
