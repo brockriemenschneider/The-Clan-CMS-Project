@@ -59,11 +59,33 @@
 	</div>
 	
 	<?php if($matches): ?>
-	<div class="space"></div>
-	
 	<div class="box">
 		<div class="pages">
-			<?php echo heading($pages, 4); ?>
+		<ul>
+			<?php if($pages): ?>
+			<?php if($this->uri->segment(2, '') == 'upcoming'): $pages->upcoming = 'upcoming/'; else: $pages->upcoming = ''; endif; ?>
+				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . $pages->current_page, 'Page ' . $pages->current_page . ' of ' . $pages->total_pages); ?></span><span class="right"></span></li>
+					<?php if($pages->first): ?><li><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/1', '<<'); ?></span><span class="right"></span></li><?php endif; ?>
+					<?php if($pages->previous): ?><li><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . ($pages->current_page - 1), '<'); ?></span><span class="right"></span></li><?php endif; ?>
+				
+				<?php if($pages->before): ?>
+					<?php foreach($pages->before as $before): ?>
+						<li <?php if($pages->current_page == $before): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . $before, $before); ?></span><span class="right"></span></li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				
+				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . $pages->current_page, $pages->current_page); ?></span><span class="right"></span></li>
+				
+				<?php if($pages->after): ?>
+					<?php foreach($pages->after as $after): ?>
+						<li <?php if($pages->current_page == $after): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . $after, $after); ?></span><span class="right"></span></li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				
+					<?php if($pages->next): ?><li><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . ($pages->current_page + 1), '>'); ?></span><span class="right"></span></li><?php endif; ?>
+					<?php if($pages->last): ?><li><span class="left"></span><span class="middle"><?php echo anchor('matches/' .  $pages->upcoming . 'page/' . $pages->total_pages, '>>'); ?></span><span class="right"></span></li><?php endif; ?>
+			<?php endif; ?>
+		</ul>
 		</div>
 	</div>
 	<?php endif; ?>

@@ -49,11 +49,36 @@
 	</div>
 	<div class="space"></div>
 <?php endif; ?>
+<?php if($articles): ?>
 	<div class="box">
 		<div class="pages">
-			<?php echo heading($pages, 4); ?>
+		<ul>
+			<?php if($pages): ?>
+				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . $pages->current_page, 'Page ' . $pages->current_page . ' of ' . $pages->total_pages); ?></span><span class="right"></span></li>
+					<?php if($pages->first): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/page/1', '<<'); ?></span><span class="right"></span></li><?php endif; ?>
+					<?php if($pages->previous): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . ($pages->current_page - 1), '<'); ?></span><span class="right"></span></li><?php endif; ?>
+				
+				<?php if($pages->before): ?>
+					<?php foreach($pages->before as $before): ?>
+						<li <?php if($pages->current_page == $before): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . $before, $before); ?></span><span class="right"></span></li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				
+				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . $pages->current_page, $pages->current_page); ?></span><span class="right"></span></li>
+				
+				<?php if($pages->after): ?>
+					<?php foreach($pages->after as $after): ?>
+						<li <?php if($pages->current_page == $after): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . $after, $after); ?></span><span class="right"></span></li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				
+					<?php if($pages->next): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . ($pages->current_page + 1), '>'); ?></span><span class="right"></span></li><?php endif; ?>
+					<?php if($pages->last): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/page/' . $pages->total_pages, '>>'); ?></span><span class="right"></span></li><?php endif; ?>
+			<?php endif; ?>
+		</ul>
 		</div>
 	</div>
+<?php endif; ?>
 </div>
 
 <?php $this->load->view(THEME . 'footer'); ?>

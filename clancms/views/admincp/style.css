@@ -760,6 +760,89 @@ ul.newsticker a {
 	font-weight: bold;
 }
 
+#main .box .pages {	
+	height: 33px;
+	width: 741px;
+}
+
+#main .box .pages ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#main .box .pages li {
+	list-style: none;
+}
+
+#main .box .pages li a {
+	color: #ffffff;
+	text-decoration: none;
+	padding: 0 5px 0 5px;
+	float: left;
+	font-weight: bold;
+}
+
+#main .box .pages li .left {
+	Background: url('images/pages_tab_left.gif') no-repeat;
+	width: 5px;
+	height: 32px;
+	float: left;
+	margin-top: 1px;
+}
+
+#main .box .pages li .middle {
+	Background: url('images/pages_tab_middle.gif') repeat-x;
+	height: 32px;
+	float: left;
+	line-height: 32px;
+	text-align: center;
+	margin-top: 1px;
+}
+
+#main .box .pages li .right {
+	Background: url('images/pages_tab_right.gif') no-repeat;
+	width: 5px;
+	height: 32px;
+	float: left;
+	margin-top: 1px;
+	margin-right: 1px;
+}
+
+#main .box .pages li:hover a, #main .box .pages li.selected a {
+	color: #ffd800;
+	text-decoration: none;
+	padding: 0 5px 0 5px;
+	float: left;
+	font-weight: bold;
+}
+
+#main .box .pages li:hover .left, #main .box .pages li.selected .left {
+	Background: url('images/pages_tab_left_selected.gif') no-repeat;
+	width: 5px;
+	height: 33px;
+	float: left;
+	margin-top: 0px;
+}
+
+#main .box .pages li:hover .middle, #main .box .pages li.selected .middle {
+	Background: url('images/pages_tab_middle_selected.gif');
+	height: 33px;
+	float: left;
+	line-height: 35px;
+	text-align: center;
+	margin-top: 0px;
+}
+
+#main .box .pages li:hover .right, #main .box .pages li.selected .right {
+	Background: url('images/pages_tab_right_selected.gif') no-repeat;
+	width: 5px;
+	height: 33px;
+	float: left;
+	margin-right: 1px;
+	margin-top: 0px;
+}
+
 /*---
 	FORM
 ----------------------------*/

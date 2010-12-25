@@ -76,23 +76,61 @@ class Articles extends Controller {
 		$per_page = 5;
 		$total_results = $this->articles->count_articles(array('article_status' => 1));
 		$offset = ($page - 1) * $per_page;
-		$pages = '';
+		$pages->total_pages = 0;
 		
 		// Create the pages
 		for($i = 1; $i < ($total_results / $per_page) + 1; $i++)
 		{
-			// Check current page
-			if($page == $i)
+			// Itterate pages
+			$pages->total_pages++;
+		}
+		
+		// Set up pages
+		$pages->current_page = $page;
+		$pages->pages_left = 9;
+		$pages->first = (bool) ($pages->current_page > 5);
+		$pages->previous = (bool) ($pages->current_page > '1');
+		$pages->next = (bool) ($pages->current_page != $pages->total_pages);
+		$pages->before = array();
+		$pages->after = array();
+		
+		// Check if the current page is towards the end
+		if(($pages->current_page + 5) < $pages->total_pages)
+		{
+			// Current page is not towards the end, assign start
+			$start = $pages->current_page - 4;
+		}
+		else
+		{
+			// Current page is towards the end, assign start
+			$start = $pages->current_page - $pages->pages_left + ($pages->total_pages - $pages->current_page);
+		}
+		
+		// Assign end
+		$end = $pages->current_page + 1;
+		
+		// Loop through pages before the current page
+		for($page = $start; ($page < $pages->current_page); $page++)
+		{
+			// Check if the page is vaild
+			if($page > 0)
 			{
-				// Create current page link
-				$pages.= '[' . $i . '] ';
-			}
-			else
-			{
-				// Create other pages links
-				$pages.= anchor('articles/page/' . $i, $i) . ' ';
+				// Page is valid, add it the pages before, increment pages left
+				$pages->before = array_merge($pages->before, array($page));
+				$pages->pages_left--;
 			}
 		}
+		
+		// Loop through pages after the current page
+		for($page = $end; ($pages->pages_left > 0 && $page <= $pages->total_pages); $page++)
+		{
+			// Add the page to pages after, increment pages left
+			$pages->after = array_merge($pages->after, array($page));
+			$pages->pages_left--;
+		}
+		
+		// Set up pages
+		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
 		
 		// Retrieve the articles
 		$articles = $this->articles->get_articles($per_page, $offset, array('article_status' => 1));
@@ -212,23 +250,61 @@ class Articles extends Controller {
 		$per_page = 10;
 		$total_results = $this->articles->count_comments(array('article_id' => $article->article_id));
 		$offset = ($page - 1) * $per_page;
-		$pages = '';
+		$pages->total_pages = 0;
 		
 		// Create the pages
 		for($i = 1; $i < ($total_results / $per_page) + 1; $i++)
 		{
-			// Check current page
-			if($page == $i)
+			// Itterate pages
+			$pages->total_pages++;
+		}
+		
+		// Set up pages
+		$pages->current_page = $page;
+		$pages->pages_left = 9;
+		$pages->first = (bool) ($pages->current_page > 5);
+		$pages->previous = (bool) ($pages->current_page > '1');
+		$pages->next = (bool) ($pages->current_page != $pages->total_pages);
+		$pages->before = array();
+		$pages->after = array();
+		
+		// Check if the current page is towards the end
+		if(($pages->current_page + 5) < $pages->total_pages)
+		{
+			// Current page is not towards the end, assign start
+			$start = $pages->current_page - 4;
+		}
+		else
+		{
+			// Current page is towards the end, assign start
+			$start = $pages->current_page - $pages->pages_left + ($pages->total_pages - $pages->current_page);
+		}
+		
+		// Assign end
+		$end = $pages->current_page + 1;
+		
+		// Loop through pages before the current page
+		for($page = $start; ($page < $pages->current_page); $page++)
+		{
+			// Check if the page is vaild
+			if($page > 0)
 			{
-				// Create current page link
-				$pages.= '[' . $i . '] ';
-			}
-			else
-			{
-				// Create other pages links
-				$pages.= anchor('/articles/view/' . $article->article_slug . '/page/' . $i . '#comments', $i) . ' ';
+				// Page is valid, add it the pages before, increment pages left
+				$pages->before = array_merge($pages->before, array($page));
+				$pages->pages_left--;
 			}
 		}
+		
+		// Loop through pages after the current page
+		for($page = $end; ($pages->pages_left > 0 && $page <= $pages->total_pages); $page++)
+		{
+			// Add the page to pages after, increment pages left
+			$pages->after = array_merge($pages->after, array($page));
+			$pages->pages_left--;
+		}
+		
+		// Set up pages
+		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
 		
 		// Configure the article
 		$article->article = auto_link($this->typography->auto_typography($this->bbcode->to_html($article->article_content)), 'url');
