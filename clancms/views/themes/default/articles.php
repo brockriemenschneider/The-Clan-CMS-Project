@@ -5,7 +5,12 @@
 <div id="main">
 	
 <?php if($articles): ?>
+<?php $article_count = 0; ?>
 	<?php foreach($articles as $article): ?>
+	<?php $article_count++; ?>
+	<?php if($article_count > 1): ?>
+		<div class="space"></div>
+	<?php endif; ?>
 	<div class="box">
 		<div class="tabs">
 		<ul>
@@ -33,7 +38,6 @@
 		</div>
 		<div class="footer"></div>
 	</div>
-	<div class="space"></div>
 	<?php endforeach; ?>
 <?php else: ?>
 	<div class="box">
@@ -47,7 +51,6 @@
 		</div>
 		<div class="footer"></div>
 	</div>
-	<div class="space"></div>
 <?php endif; ?>
 <?php if($articles): ?>
 	<div class="box">

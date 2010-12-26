@@ -209,7 +209,6 @@
 		</div>
 		<div class="footer"></div>
 	</div>
-	<div class="space"></div>
 	
 	<?php if($comments): ?>
 	<div class="box">

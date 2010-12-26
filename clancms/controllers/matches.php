@@ -82,6 +82,13 @@ class Matches extends Controller {
 			// Itterate pages
 			$pages->total_pages++;
 		}
+				
+		// Check if there are no results
+		if($total_results == 0)
+		{
+			// Assign total pages
+			$pages->total_pages = 1;
+		}
 		
 		// Set up pages
 		$pages->current_page = $page;
@@ -200,6 +207,13 @@ class Matches extends Controller {
 		{
 			// Itterate pages
 			$pages->total_pages++;
+		}
+				
+		// Check if there are no results
+		if($total_results == 0)
+		{
+			// Assign total pages
+			$pages->total_pages = 1;
 		}
 		
 		// Set up pages
@@ -360,6 +374,13 @@ class Matches extends Controller {
 		{
 			// Itterate pages
 			$pages->total_pages++;
+		}
+				
+		// Check if there are no results
+		if($total_results == 0)
+		{
+			// Assign total pages
+			$pages->total_pages = 1;
 		}
 		
 		// Set up pages
