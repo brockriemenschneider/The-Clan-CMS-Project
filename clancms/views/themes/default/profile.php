@@ -130,7 +130,7 @@
 					<td><?php echo anchor('roster/squad/' . $match->squad_slug, $match->squad); ?></td>
 					<td><?php echo $match->kills; ?></td>
 					<td><?php echo $match->deaths; ?></td>
-					<td class="<?php if($member->kd < '1.00'): echo 'red'; elseif($member->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $member->kd; ?></td>
+					<td class="<?php if($match->kd < '1.00'): echo 'red'; elseif($match->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $match->kd; ?></td>
 					<td><?php echo anchor('matches/view/' . $match->match_slug, img(array('src' => THEME_URL . 'images/view.png', 'alt' => 'View Match', 'title' => 'View Match'))); ?></td>
 				</tr>
 				<?php endforeach; ?>

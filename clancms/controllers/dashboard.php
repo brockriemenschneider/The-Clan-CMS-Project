@@ -118,7 +118,7 @@ class Dashboard extends Controller {
 		// Create a reference to articles
 		$this->data->articles =& $articles;
 	
-		// Load the dahboard view
+		// Load the dashboard view
 		$this->load->view(THEME . 'dashboard', $this->data);
 	}
 	
