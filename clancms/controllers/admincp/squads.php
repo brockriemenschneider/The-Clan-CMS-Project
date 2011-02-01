@@ -345,7 +345,7 @@ class Squads extends Controller {
 		}
 		
 		// Retrieve all of the squad's matches
-		$matches = $this->matches->get_matches(array('squad_id' => $squad->squad_id));
+		$matches = $this->matches->get_matches('', '', array('squad_id' => $squad->squad_id));
 		
 		// Check if matches exist
 		if($matches)

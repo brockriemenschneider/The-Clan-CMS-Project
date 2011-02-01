@@ -14,7 +14,7 @@
 		</div>
 		
 		<div class="header">
-			<?php echo heading('Add News Page', 4); ?>
+			<?php echo heading('Add Page', 4); ?>
 		</div>
 		<div class="content">
 			<div class="inside">
