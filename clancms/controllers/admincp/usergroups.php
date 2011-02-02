@@ -440,35 +440,31 @@ class Usergroups extends Controller {
 			// Users exist, loop through each user
 			foreach($users as $user)
 			{
-				// Users exist, loop through each user
-				foreach($users as $user)
-				{
-					// Retrieve the squad members
-					$members = $this->squads->get_members(array('user_id' => $user->user_id));
+				// Retrieve the squad members
+				$members = $this->squads->get_members(array('user_id' => $user->user_id));
 							
-					// Check if members exist
-					if($members)
+				// Check if members exist
+				if($members)
+				{
+					// Members exist, loop through each member
+					foreach($members as $member)
 					{
-						// Members exist, loop through each member
-						foreach($members as $member)
+						// Retrive the match players
+						$players = $this->matches->get_players(array('member_id' => $member->member_id));
+									
+						// Check if players exist
+						if($players)
 						{
-							// Retrive the match players
-							$players = $this->matches->get_players(array('member_id' => $member->member_id));
-									
-							// Check if players exist
-							if($players)
+							// Players exist loop throug each player
+							foreach($players as $player)
 							{
-								// Players exist loop throug each player
-								foreach($players as $player)
-								{
-									// Delete each match player
-									$this->matches->delete_player($player->player_id);
-								}
+								// Delete each match player
+								$this->matches->delete_player($player->player_id);
 							}
-									
-							// Delete each squad member
-							$this->squads->delete_member($member->member_id);
 						}
+									
+						// Delete each squad member
+						$this->squads->delete_member($member->member_id);
 					}
 				}
 						
