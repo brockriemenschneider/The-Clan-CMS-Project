@@ -44,7 +44,11 @@
 		<?php if($this->ClanCMS->get_setting('forum_link')): ?><li><span class="left"></span><span class="middle"><?php echo anchor($this->ClanCMS->get_setting('forum_link'), 'Forums'); ?></span><span class="right"></span></li><?php endif; ?>
 		<li <?php if($this->uri->segment(1) == 'articles'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles', 'News Articles'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'roster'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('roster', 'Team Roster'); ?></span><span class="right"></span></li>
-		<li <?php if($this->uri->segment(1) == 'matches'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Matches'); ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(1) == 'matches' OR $this->uri->segment(1) == 'opponents'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Matches'); ?></span><span class="right"></span>
+			<ul>
+				<li <?php if($this->uri->segment(1) == 'opponents'): echo 'class="selected"'; endif; ?>><?php echo anchor('opponents', 'Opponents'); ?></li>
+			</ul>
+		</li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('polls', 'Polls'); ?></span><span class="right"></span></li>
 		<?php $this->load->widget('pages'); ?>		

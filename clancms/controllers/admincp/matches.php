@@ -158,6 +158,21 @@ class Matches extends Controller {
 				// Format each matches date
 				$match->date = $this->ClanCMS->timezone($match->match_date);
 				
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+				// Check if opponent exists
+				if($opponent)
+				{
+					// Opponent exists, assign match opponent
+					$match->opponent = $opponent->opponent_title;
+				}
+				else
+				{
+					// Opponent doesn't exist, don't assign it
+					$match->opponent = "";
+				}
+				
 				// Retrieve the squad
 				$squad = $this->squads->get_squad(array('squad_id' => $match->squad_id));
 				
@@ -201,14 +216,31 @@ class Matches extends Controller {
 		// Check if add match has been posted
 		if($add_match)
 		{
+			
+			// Set form validation rules
+			$this->form_validation->set_rules('new_opponent', 'New Opponent', 'trim|required');
+			
+			// Check if we need to create a new opponent
+			if((bool) $this->input->post('new_opponent'))
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('opponent', 'Opponent', 'trim|required');
+				$this->form_validation->set_rules('opponent_link', 'Opponent Link', 'trim|prep_url');
+				$this->form_validation->set_rules('opponent_tag', 'Opponent Tag', 'trim');
+			}
+			else
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('opponent_id', 'Opponent', 'trim');
+			}
+			
 			// Set form validation rules
 			$this->form_validation->set_rules('squad', 'Squad', 'trim|required');
-			$this->form_validation->set_rules('opponent', 'Opponent', 'trim|required');
-			$this->form_validation->set_rules('opponent_link', 'Opponent Link', 'trim|prep_url');
 			$this->form_validation->set_rules('type', 'Type', 'trim');
 			$this->form_validation->set_rules('players', 'Players', 'trim');
-			$this->form_validation->set_rules('score', 'Score', 'trim|required');
-			$this->form_validation->set_rules('opponent_score', 'Opponent Score', 'trim|required');
+			$this->form_validation->set_rules('score', 'Score', 'trim|integer');
+			$this->form_validation->set_rules('opponent_score', 'Opponent Score', 'trim|integer');
+			$this->form_validation->set_rules('maps', 'Maps', 'trim');
 			$this->form_validation->set_rules('date', 'Date', 'trim|required');
 			$this->form_validation->set_rules('hour', 'Hour', 'trim|required');
 			$this->form_validation->set_rules('minutes', 'Minutes', 'trim|required');
@@ -219,18 +251,51 @@ class Matches extends Controller {
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{
+				// Check if we need to create a new opponent
+				if((bool) $this->input->post('new_opponent'))
+				{
+					// Set up the data
+					$data = array (
+						'opponent_title'	=> $this->input->post('opponent'),
+						'opponent_link'		=> $this->input->post('opponent_link'),
+						'opponent_tag'		=> $this->input->post('opponent_tag')
+					);
+			
+					// Insert the opponent into the database
+					$this->matches->insert_opponent($data);
+					
+					// Retrieve the opponent id
+					$opponent_id = $this->db->insert_id();
+					
+					// Set up our data
+					$data = array (
+						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('title'))
+					);
+				
+					// Update the opponent into the database
+					$this->matches->update_opponent($opponent_id, $data);
+				}
+				else
+				{
+					// Assign opponent id
+					$opponent_id = $this->input->post('opponent_id');
+				}
+				
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $opponent_id));
+				
 				// Assign match date
 				$match_date = mdate('%Y-%m-%d %H:%i:%s' , local_to_gmt(human_to_unix($this->input->post('date') . ' ' . $this->input->post('hour') . ':' . $this->input->post('minutes') . ':00 ' . $this->input->post('ampm'))));
 	
 				// Set up our data
 				$data = array (
 					'squad_id'				=> $this->input->post('squad'),
-					'match_opponent'		=> $this->input->post('opponent'),
-					'match_opponent_link'	=> $this->input->post('opponent_link'),
+					'opponent_id'			=> $opponent_id,
 					'match_type'			=> $this->input->post('type'),
 					'match_players'			=> $this->input->post('players'),
 					'match_score'			=> $this->input->post('score'),
 					'match_opponent_score'	=> $this->input->post('opponent_score'),
+					'match_maps'			=> $this->input->post('maps'),
 					'match_report'			=> $this->input->post('report'),
 					'match_date'			=> $match_date,
 					'match_comments'		=> $this->input->post('comments')
@@ -247,7 +312,7 @@ class Matches extends Controller {
 				
 				// Set up our data
 				$data = array (
-					'match_slug'		=> $match_id . '-' . url_title($squad->squad_title) . '-vs-' . url_title($this->input->post('opponent'))
+					'match_slug'		=> $match_id . '-' . url_title($squad->squad_title) . '-vs-' . url_title($opponent->opponent_title)
 				);
 				
 				// Update the match into the database
@@ -260,6 +325,9 @@ class Matches extends Controller {
 				redirect(ADMINCP . 'matches/edit/' . $match_id);
 			}
 		}
+		
+		// Retrieve the opponents
+		$opponents = $this->matches->get_opponents();
 		
 		// Retrieve the squads
 		$squads = $this->squads->get_squads();
@@ -293,7 +361,8 @@ class Matches extends Controller {
 			}
 		}
 		
-		// Create a reference to squads
+		// Create a reference to opponents & squads
+		$this->data->opponents =& $opponents;
 		$this->data->squads =& $squads;
 		
 		// Load the squads add view
@@ -412,12 +481,28 @@ class Matches extends Controller {
 		if($update_match)
 		{
 			// Set form validation rules
-			$this->form_validation->set_rules('opponent', 'Opponent', 'trim|required');
-			$this->form_validation->set_rules('opponent_link', 'Opponent Link', 'trim|prep_url');
+			$this->form_validation->set_rules('new_opponent', 'New Opponent', 'trim|required');
+			
+			// Check if we need to create a new opponent
+			if((bool) $this->input->post('new_opponent'))
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('opponent', 'Opponent', 'trim|required');
+				$this->form_validation->set_rules('opponent_link', 'Opponent Link', 'trim|prep_url');
+				$this->form_validation->set_rules('opponent_tag', 'Opponent Tag', 'trim');
+			}
+			else
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('opponent_id', 'Opponent', 'trim');
+			}
+			
+			// Set form validation rules
 			$this->form_validation->set_rules('type', 'Type', 'trim');
 			$this->form_validation->set_rules('players', 'Players', 'trim');
-			$this->form_validation->set_rules('score', 'Score', 'trim|required');
-			$this->form_validation->set_rules('opponent_score', 'Opponent Score', 'trim|required');
+			$this->form_validation->set_rules('score', 'Score', 'trim');
+			$this->form_validation->set_rules('opponent_score', 'Opponent Score', 'trim');
+			$this->form_validation->set_rules('maps', 'Maps', 'trim');
 			$this->form_validation->set_rules('date', 'Date', 'trim|required');
 			$this->form_validation->set_rules('hour', 'Hour', 'trim|required');
 			$this->form_validation->set_rules('minutes', 'Minutes', 'trim|required');
@@ -440,17 +525,54 @@ class Matches extends Controller {
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{
+				// Check if we need to create a new opponent
+				if((bool) $this->input->post('new_opponent'))
+				{
+					// Set up the data
+					$data = array (
+						'opponent_title'	=> $this->input->post('opponent'),
+						'opponent_link'		=> $this->input->post('opponent_link'),
+						'opponent_tag'		=> $this->input->post('opponent_tag')
+					);
+			
+					// Insert the opponent into the database
+					$this->matches->insert_opponent($data);
+					
+					// Retrieve the opponent id
+					$opponent_id = $this->db->insert_id();
+					
+					// Set up our data
+					$data = array (
+						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('title'))
+					);
+				
+					// Update the opponent into the database
+					$this->matches->update_opponent($opponent_id, $data);
+				}
+				else
+				{
+					// Assign opponent id
+					$opponent_id = $this->input->post('opponent_id');
+				}
+				
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $opponent_id));
+				
+				// Retrieve the squad
+				$squad = $this->squads->get_squad(array('squad_id' => $match->squad_id));
+				
 				// Assign match date
 				$match_date = mdate('%Y-%m-%d %H:%i:%s' , local_to_gmt(human_to_unix($this->input->post('date') . ' ' . $this->input->post('hour') . ':' . $this->input->post('minutes') . ':00 ' . $this->input->post('ampm'))));
 	
 				// Set up our data
 				$data = array (
-					'match_opponent'		=> $this->input->post('opponent'),
-					'match_opponent_link'	=> $this->input->post('opponent_link'),
+					'match_slug'			=> $match->match_id . '-' . url_title($squad->squad_title) . '-vs-' . url_title($opponent->opponent_title),
+					'opponent_id'			=> $opponent_id,
 					'match_type'			=> $this->input->post('type'),
 					'match_players'			=> $this->input->post('players'),
 					'match_score'			=> $this->input->post('score'),
 					'match_opponent_score'	=> $this->input->post('opponent_score'),
+					'match_maps'			=> $this->input->post('maps'),
 					'match_report'			=> $this->input->post('report'),
 					'match_date'			=> $match_date,
 					'match_comments'		=> $this->input->post('comments')
@@ -484,7 +606,25 @@ class Matches extends Controller {
 			}
 		}
 		
-		// Retrieve the squads
+		// Retrieve the opponent
+		$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+		// Check if opponent exists
+		if($opponent)
+		{
+			// Opponent exists, assign match opponent
+			$match->opponent = $opponent->opponent_title;
+		}
+		else
+		{
+			// Opponent doesn't exist, don't assign it
+			$match->opponent = "";
+		}
+				
+		// Retrieve the opponents
+		$opponents = $this->matches->get_opponents();
+		
+		// Retrieve the squad
 		if($squad = $this->squads->get_squad(array('squad_id' => $match->squad_id)))
 		{
 			// Squad exists, assign match squad
@@ -610,8 +750,9 @@ class Matches extends Controller {
 			}
 		}
 		
-		// Create a reference to match, players, members, comments & pages
+		// Create a reference to match, opponents, players, members, comments & pages
 		$this->data->match =& $match;
+		$this->data->opponents =& $opponents;
 		$this->data->players =& $players;
 		$this->data->members =& $available_members;
 		$this->data->comments =& $comments;

@@ -5,6 +5,24 @@
  <script type="text/javascript">
  $(function() {
 	
+	$("input[name='new_opponent']").change( function() {
+		if($("input[name='new_opponent']:checked").val() == 1)
+		{
+			$('#opponents').hide();
+			$('#new_opponent').show();
+		}
+		else
+		{
+			$('#opponents').show();
+			$('#new_opponent').hide();
+		}
+	});
+	
+	if($("input[name='new_opponent']:checked").val() == 0)
+	{
+		$('#new_opponent').hide();
+	}
+	
 	$("input[name=players]").keyup(function() {
 		var vs = $(this).val();
 		var length = vs.length;
@@ -46,6 +64,78 @@
 				<?php echo br(); ?>
 				
 				<div class="subheader">
+					<?php echo heading('Opponent Information', 4); ?>
+				</div>
+		
+				<div class="label required">New Opponent?</div>
+				
+				Yes
+				<input type="radio" name="new_opponent" value="1" <?php echo set_radio('new_opponent', '1'); ?> class="input" />
+				No
+				<input type="radio" name="new_opponent" value="0" <?php echo set_radio('new_opponent', '0', TRUE); ?> class="input" />
+				
+				<?php echo br(); ?>
+				<div class="description">Do you want to create a new opponent?</div>
+				
+				<div id="opponents">
+				<div class="label">Opponent</div>
+				<?php
+					
+					$options = array('0' => '',);
+					if($opponents):
+						foreach($opponents as $opponent):
+							$options = $options + array($opponent->opponent_id	=>	$opponent->opponent_title);
+						endforeach;
+					endif;
+					
+				echo form_dropdown('opponent_id', $options, set_value('opponent_id'), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">What opponent played this match?</div>
+				</div>
+				
+				<div id="new_opponent">
+				<div class="label required">Opponent</div> 
+				<?php 
+				$data = array(
+					'name'		=> 'opponent',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data); ?>
+				<?php echo br(); ?>
+				<div class="description">Your opponent's team name</div>
+				
+				<div class="label">Opponent's Link</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'opponent_link',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('opponent_link')); ?>
+				<?php echo br(); ?>
+				<div class="description">The link to your opponent</div>
+				
+				<div class="label">Opponent's Tag</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'opponent_tag',
+					'size'		=> '10',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('opponent_tag')); ?>
+				<?php echo br(); ?>
+				<div class="description">The opponent's clan tag</div>
+				
+				</div>
+				<?php echo br(); ?>
+				
+				<div class="subheader">
 					<?php echo heading('Match Information', 4); ?>
 				</div>
 		
@@ -62,32 +152,6 @@
 				echo form_dropdown('squad', $options, set_value('squad'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What squad played this match?</div>
-				
-				<div class="label required">Opponent</div>
-				
-				<?php 
-				$data = array(
-					'name'		=> 'opponent',
-					'size'		=> '30',
-					'class'		=> 'input'
-				);
-
-				echo form_input($data, set_value('opponent')); ?>
-				<?php echo br(); ?>
-				<div class="description">Your opponent's team name</div>
-				
-				<div class="label">Opponent's Link</div>
-				
-				<?php 
-				$data = array(
-					'name'		=> 'opponent_link',
-					'size'		=> '30',
-					'class'		=> 'input'
-				);
-
-				echo form_input($data, set_value('opponent_link')); ?>
-				<?php echo br(); ?>
-				<div class="description">The link to your opponent</div>
 				
 				<div class="label">Type</div>
 				
@@ -114,7 +178,7 @@
 				echo form_input($data, set_value('players'), 'onkeypress="return integer(event)"'); ?> v <span id="players"></span>
 				<div class="description">The number of players on each team</div>
 				
-				<div class="label required">Score</div>
+				<div class="label">Score</div>
 				
 				<?php 
 				$data = array(
@@ -127,7 +191,7 @@
 				<?php echo br(); ?>
 				<div class="description">Your squad's score</div>
 				
-				<div class="label required">Opponent's Score</div>
+				<div class="label">Opponent's Score</div>
 				
 				<?php 
 				$data = array(
@@ -139,6 +203,19 @@
 				echo form_input($data, set_value('opponent_score')); ?>
 				<?php echo br(); ?>
 				<div class="description">Your opponent's score</div>
+				
+				<div class="label">Maps</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'maps',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('maps')); ?>
+				<?php echo br(); ?>
+				<div class="description">The maps that were played</div>
 				
 				<div class="label required">Date</div>
 				

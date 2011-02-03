@@ -313,6 +313,23 @@ class Account extends Controller {
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+				// Check if opponent exists
+				if($opponent)
+				{
+					// Opponent exists, assign opponent & opponent slug
+					$match->opponent = $opponent->opponent_title;
+					$match->opponent_slug = $opponent->opponent_slug;
+				}
+				else
+				{
+					// Opponent doesn't exist, don't assign it
+					$match->opponent = "";
+					$match->opponent_slug = "";
+				}
+		
 				// Retrieve the squad
 				$squad = $this->squads->get_squad(array('squad_id' => $match->squad_id));
 				

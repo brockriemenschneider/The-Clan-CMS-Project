@@ -22,12 +22,12 @@
 		<ul>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Latest Matches'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('matches/upcoming', 'Upcoming Matches'); ?></span><span class="right"></span></li>
-			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('matches/view/' . $match->match_slug, $match->squad . ' vs ' . $match->match_opponent); ?></span><span class="right"></span></li>
+			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('matches/view/' . $match->match_slug, $match->squad . ' vs ' . $match->opponent); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 	
 		<div class="header">
-			<?php echo heading($match->squad . ' vs ' . $match->match_opponent, 4); ?>
+			<?php echo heading($match->squad . ' vs ' . $match->opponent, 4); ?>
 		</div>
 		<div class="content">
 			<div class="inside">
@@ -41,7 +41,7 @@
 				<div class="clear"></div>
 				
 				<div class="label">Opponent:</div>
-				<div class="details"><?php if($match->match_opponent_link): echo anchor($match->match_opponent_link, $match->match_opponent); else: echo $match->match_opponent; endif; ?></div>
+				<div class="details"><?php if($match->opponent): echo anchor('opponents/view/' . $match->opponent_slug, $match->opponent); else: echo 'N/A'; endif; ?></div>
 				<div class="clear"></div>
 				
 				<div class="label">Date &amp; Time:</div>
@@ -57,11 +57,15 @@
 				<div class="clear"></div>
 				
 				<div class="label">Result:</div>
-				<div class="details <?php if($match->match_score > $match->match_opponent_score): echo 'green"'; elseif($match->match_score < $match->match_opponent_score): echo 'red"'; else: echo 'yellow"'; endif;?>><?php if($match->match_score > $match->match_opponent_score): echo 'Win'; elseif($match->match_score < $match->match_opponent_score): echo 'Loss'; else: echo 'Tie'; endif;?></div>
+				<div class="details <?php if($match->match_score > $match->match_opponent_score): echo 'green"'; elseif($match->match_score < $match->match_opponent_score): echo 'red"'; elseif($match->match_score == $match->match_opponent_score && $match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo 'yellow"'; else: echo '"'; endif;?>><?php if($match->match_score > $match->match_opponent_score): echo 'Win'; elseif($match->match_score < $match->match_opponent_score): echo 'Loss'; elseif($match->match_score == $match->match_opponent_score && $match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo 'Tie'; else: echo '-'; endif;?></div>
 				<div class="clear"></div>
 				
 				<div class="label">Score:</div>
-				<div class="details <?php if($match->match_score > $match->match_opponent_score): echo 'green"'; elseif($match->match_score < $match->match_opponent_score): echo 'red"'; else: echo 'yellow"'; endif;?>><?php echo $match->match_score . ' - ' . $match->match_opponent_score; ?></div>
+				<div class="details <?php if($match->match_score > $match->match_opponent_score): echo 'green"'; elseif($match->match_score < $match->match_opponent_score): echo 'red"'; elseif($match->match_score == $match->match_opponent_score && $match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo 'yellow"'; else: echo '"'; endif;?>><?php if($match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo $match->match_score . ' - ' . $match->match_opponent_score; else: echo '-'; endif; ?></div>
+				<div class="clear"></div>
+				
+				<div class="label">Maps:</div>
+				<div class="details"><?php if($match->match_maps): echo $match->match_maps; else: echo '-'; endif; ?></div>
 				<div class="clear"></div>
 				
 				<div class="label">Report:</div>

@@ -54,7 +54,7 @@
 				<?php if($matches): ?>
 				<?php foreach($matches as $match): ?>
 				<tr>
-					<td><?php if($match->match_opponent_link): echo anchor($match->match_opponent_link, $match->match_opponent); else: echo $match->match_opponent; endif; ?></td>
+					<td><?php if($match->opponent): echo anchor(ADMINCP . 'opponents/edit/' . $match->opponent_id, $match->opponent); else: echo 'N/A'; endif; ?></td>
 					<td <?php if($match->match_score > $match->match_opponent_score): echo 'class="green"'; elseif($match->match_score < $match->match_opponent_score): echo 'class="red"'; else: echo 'class="yellow"'; endif;?>><?php echo $match->match_score . ' - ' . $match->match_opponent_score; ?></td>
 					<td><?php echo anchor(ADMINCP . 'squads/edit/' . $match->squad_id, $match->squad); ?></td>
 					<td><?php echo mdate("%M %d, %Y", $match->date); ?></td>

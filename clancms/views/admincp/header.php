@@ -58,9 +58,14 @@
 				<li <?php if($this->uri->segment(2, '') == 'articles' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></li>
 			</ul>
 		</li>
-		<li <?php if($this->uri->segment(2, '') == 'matches'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches', 'Matches'); ?></span><span class="right"></span>
+		<li <?php if($this->uri->segment(2, '') == 'matches' OR $this->uri->segment(2, '') == 'opponents'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches', 'Matches'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2, '') == 'matches' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'matches/add', 'Add Match'); ?></li>
+				<li <?php if($this->uri->segment(2, '') == 'opponents'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'opponents', 'Opponents'); ?>
+					<ul class="subnav">
+						<li <?php if($this->uri->segment(2, '') == 'opponents' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'opponents/add', 'Add Opponent'); ?>
+					</ul>
+				</li>
 			</ul>
 		</li>
 		<li <?php if($this->uri->segment(2, '') == 'squads'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'squads', 'Squads'); ?></span><span class="right"></span>

@@ -57,7 +57,8 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (6, 'Can manage users?', 'users', 32),
 (7, 'Can manage usergroups?', 'usergroups', 64),
 (8, 'Can manage pages?', 'pages', 128),
-(9, 'Can manage polls?', 'polls', 256);
+(9, 'Can manage polls?', 'polls', 256),
+(10, 'Can manage opponents?', 'opponents', 512);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__matches`;
 -- command split --
@@ -65,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__matches` (
   `match_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `squad_id` bigint(20) NOT NULL DEFAULT '0',
   `match_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `match_opponent` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `match_opponent_link` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `opponent_id` bigint(20) NOT NULL DEFAULT '0',
   `match_type` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `match_players` bigint(20) NOT NULL DEFAULT '0',
   `match_score` int(10) NOT NULL DEFAULT '0',
   `match_opponent_score` int(10) NOT NULL DEFAULT '0',
+  `match_maps` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `match_report` text COLLATE utf8_unicode_ci NOT NULL,
   `match_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `match_comments` tinyint(1) NOT NULL DEFAULT '0',
@@ -87,6 +88,15 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_comments` (
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_opponents` (
+  `opponent_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `opponent_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `opponent_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `opponent_link` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `opponent_tag` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`opponent_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__match_players`;
 -- command split --
@@ -265,6 +275,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_groups` (
 -- command split --
 INSERT INTO `__DBPREFIX__user_groups` (`group_id`, `group_title`, `group_user_title`, `group_default`, `group_administrator`, `group_clan`, `group_banned`, `group_permissions`) VALUES
 (1, 'Registered Users', 'Registered User', 1, 0, 0, 0, 0),
-(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 511),
+(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 1023),
 (3, 'Team Members', 'Team Member', 1, 0, 1, 0, 0),
 (4, 'Banned Users', 'Banned', 1, 0, 0, 1, 0);

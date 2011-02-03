@@ -126,7 +126,7 @@
 				<?php if($matches): ?>
 				<?php foreach($matches as $match): ?>
 				<tr>
-					<td><?php if($match->match_opponent_link): echo anchor($match->match_opponent_link, $match->match_opponent); else: echo $match->match_opponent; endif; ?></td>
+					<td><?php if($match->opponent): echo anchor('opponents/view/' . $match->opponent_slug, $match->opponent); else: echo 'N/A'; endif; ?></td>
 					<td><?php echo anchor('roster/squad/' . $match->squad_slug, $match->squad); ?></td>
 					<td><?php echo $match->kills; ?></td>
 					<td><?php echo $match->deaths; ?></td>

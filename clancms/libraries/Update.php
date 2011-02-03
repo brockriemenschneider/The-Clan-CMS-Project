@@ -72,11 +72,11 @@ class Update {
 			$this->update_055();
 		}
 		
-		// Check if we need to update to 0.6.0
-		if(CLANCMS_VERSION < '0.6.0')
+		// Check if we need to update to 0.5.6
+		if(CLANCMS_VERSION < '0.5.6')
 		{
-			// Update to 0.6.0
-			$this->update_600();
+			// Update to 0.5.6
+			$this->update_056();
 		}
 	}
 	
@@ -256,7 +256,7 @@ class Update {
 							)
 		);
 		
-		// Add user avatar column to the squads table in the database
+		// Add squad slug column to the squads table in the database
 		$this->CI->dbforge->add_column('squads', $fields, 'squad_slug');
 
 		// Set up the fields
@@ -464,14 +464,14 @@ class Update {
 	// --------------------------------------------------------------------
 	
     /**
-	 * update_600
+	 * update_566
 	 *
-	 * Update for v6.0.0
+	 * Update for v0.5.6
 	 *
 	 * @access	public
      * @return	bool
 	 */
-    function update_600()
+    function update_056()
     {
 		// Old files
 		$old_files = array(
@@ -490,6 +490,154 @@ class Update {
 			}
 		}
 		
+		// Set up the fields
+		$fields = array(
+			'opponent_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'opponent_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'opponent_slug' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'opponent_link' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'opponent_tag' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to opponent id
+		$this->CI->dbforge->add_key('opponent_id');
+		
+		// Create the opponents table in the database
+		$this->CI->dbforge->create_table('match_opponents');
+		
+		// Load the Users model
+		$this->CI->load->model('Users_model', 'users');
+		
+		// Set up the data
+		$data = array(
+			'permission_title'		=> 'Can manage opponents?',
+			'permission_slug'		=> 'opponents',
+			'permission_value'		=> '512'
+		);
+		
+		// Insert the permission into the database
+		$this->CI->users->insert_permission($data);
+		
+		// Retrieve the administrators user group
+		if($group = $this->CI->users->get_group(array('group_id' => '2')))
+		{
+			// Set up the data
+			$data = array(
+				'group_permissions'		=> '1023'
+			);
+			
+			// Update the administrators user group in the database
+			$this->CI->users->update_group($group->group_id, $data);
+		}
+		
+		// Set up the fields
+		$fields = array(
+			'opponent_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint' 	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add opponent id column to the matches table in the database
+		$this->CI->dbforge->add_column('matches', $fields, 'match_slug');
+		
+		// Set up the fields
+		$fields = array(
+			'match_maps' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							)
+		);
+		
+		// Add match ma[s column to the matches table in the database
+		$this->CI->dbforge->add_column('matches', $fields, 'match_opponent_score');
+		
+		// Load the Matches model
+		$this->CI->load->model('Matches_model', 'matches');
+		
+		// Retrieve the matches
+		if($matches = $this->CI->matches->get_matches())
+		{
+			// Matches exist, loop through each match
+			foreach($matches as $match)
+			{
+				// Retrieve the opponent
+				$opponent = $this->CI->matches->get_opponent(array('opponent_title' => $match->match_opponent));
+				
+				// Check if the opponent exists
+				if($opponent)
+				{
+					// Set up our data
+					$data = array (
+						'opponent_id'			=> $opponent->opponent_id
+					);
+		
+					// Update the match into the database
+					$this->matches->update_match($match->match_id, $data);
+				}
+				else
+				{
+					// Set up the data
+					$data = array (
+						'opponent_title'	=> $match->match_opponent,
+						'opponent_link'		=> $match->match_opponent_link,
+						'opponent_tag'		=> ''
+					);
+			
+					// Insert the opponent into the database
+					$this->matches->insert_opponent($data);
+					
+					// Retrieve the opponent id
+					$opponent_id = $this->db->insert_id();
+				
+					// Set up our data
+					$data = array (
+						'opponent_slug'		=> $opponent_id . '-' . url_title($match->match_opponent)
+					);
+				
+					// Update the opponent into the database
+					$this->matches->update_opponent($opponent_id, $data);
+				
+					// Set up our data
+					$data = array (
+						'opponent_id'			=> $opponent_id
+					);
+		
+					// Update the match into the database
+					$this->matches->update_match($match->match_id, $data);
+				}
+			}
+		}
+		
+		// Drop depricated matches columns
+		$this->dbforge->drop_column('matches', 'match_opponent');
+		$this->dbforge->drop_column('matches', 'match_opponent_link');
 	}
 	
 	// --------------------------------------------------------------------

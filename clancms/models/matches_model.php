@@ -38,6 +38,210 @@ class Matches_model extends Model {
 	// --------------------------------------------------------------------
 	
 	/**
+	 * Get Opponent
+	 *
+	 * Retrieves a match opponent from the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function get_opponent($data = array())
+	{	
+		// Check for valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->where($data)
+						->get('match_opponents', 1);
+		
+		// Check if query row exists
+		if($query->row())
+		{
+			// Query row exists, return query row
+			return $query->row();
+		}
+		else
+		{
+			// Query row doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Get Opponents
+	 *
+	 * Retrieves all match opponents from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	int
+	 * @param	array
+	 * @return	array
+	 */
+	function get_opponents($limit = 0, $offset = 0, $data = array())
+	{
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Check if limit exists
+		if($limit == 0)
+		{
+			// Limit doesn't exist, assign limit
+			$limit = '';
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->order_by('opponent_id', 'desc')
+						->limit($limit, $offset)
+						->where($data)
+						->get('match_opponents');
+		
+		// Check if query result exists
+		if($query->result())
+		{
+			// Query result exists, return query result
+			return $query->result();
+		}
+		else
+		{
+			// Query result doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Count Opponents
+	 *
+	 * Count the number of match opponents in the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function count_opponents($data = array())
+	{	
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->from('match_opponents')
+						->where($data)
+						->count_all_results();
+						
+		// Return query
+		return $query;
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Insert Opponent
+	 *
+	 * Inserts a match opponent into the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	bool
+	 */
+	function insert_opponent($data = array())
+	{
+		// Check to see if we have valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, insert the data in the database
+		return $this->db->insert('match_opponents', $data);
+	}
+	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Update Opponent
+	 *
+	 * Updates a match opponent in the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	array
+	 * @return	bool
+	 */
+	function update_opponent($opponent_id = 0, $data = array())
+	{
+		// Check to see if we have valid data
+		if($opponent_id == 0 OR empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if opponent exists
+		if(!$opponent = $this->get_opponent(array('opponent_id' => $opponent_id)))
+		{
+			// Opponent doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, opponent exists, update the data in the database
+		return $this->db->update('match_opponents', $data, array('opponent_id' => $opponent_id));
+	}
+
+	// --------------------------------------------------------------------
+	
+    /**
+	 * Delete Opponent
+	 *
+	 * Deletes a match opponent from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	bool
+	 */
+	function delete_opponent($opponent_id = 0)
+	{	
+		// Check to see if we have valid data
+		if($opponent_id == 0)
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if opponent exists
+		if(!$opponent = $this->get_opponent(array('opponent_id' => $opponent_id)))
+		{
+			// Opponent doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, opponent exists, delete the data from the database
+		return $this->db->delete('match_opponents', array('opponent_id' => $opponent_id));
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
 	 * Get Comment
 	 *
 	 * Retrieves a match comment from the database

@@ -5,6 +5,25 @@
  <script type="text/javascript">
 	$(function() {
 	
+	$("input[name='new_opponent']").change( function() {
+		if($("input[name='new_opponent']:checked").val() == 1)
+		{
+			$('#opponents').hide();
+			$('#new_opponent').show();
+		}
+		else
+		{
+			$('#opponents').show();
+			$('#new_opponent').hide();
+		}
+	});
+	
+	if($("input[name='new_opponent']:checked").val() == 0)
+	{
+		$('#new_opponent').hide();
+	}
+	
+	
 		$("input[name=players]").keyup(function() {
 			var vs = $(this).val();
 			var length = vs.length;
@@ -95,12 +114,12 @@
 		<ul>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches', 'Matches'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches/add', 'Add Match'); ?></span><span class="right"></span></li>
-			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches/edit/' . $match->match_id, 'Edit Match: ' . $match->squad . ' vs ' . $match->match_opponent); ?></span><span class="right"></span></li>
+			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'matches/edit/' . $match->match_id, 'Edit Match: ' . $match->squad . ' vs ' . $match->opponent); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
 		<div class="header">
-			<?php echo heading('Edit Match: ' . $match->squad . ' vs ' . $match->match_opponent, 4); ?>
+			<?php echo heading('Edit Match: ' . $match->squad . ' vs ' . $match->opponent, 4); ?>
 		</div>
 		<div class="content">
 			<div class="inside">
@@ -121,15 +140,37 @@
 				<?php echo br(); ?>
 				
 				<div class="subheader">
-					<?php echo heading('Match Information', 4); ?>
+					<?php echo heading('Opponent Information', 4); ?>
 				</div>
 		
-				<div class="label required">Squad</div>
-				<div class="details"><?php echo anchor(ADMINCP . 'squads/edit/' . $match->squad_id, $match->squad); ?></div>
-				<div class="clear"></div>
+				<div class="label required">New Opponent?</div>
 				
-				<div class="label required">Opponent</div>
+				Yes
+				<input type="radio" name="new_opponent" value="1" <?php echo set_radio('new_opponent', '1'); ?> class="input" />
+				No
+				<input type="radio" name="new_opponent" value="0" <?php echo set_radio('new_opponent', '0', TRUE); ?> class="input" />
 				
+				<?php echo br(); ?>
+				<div class="description">Do you want to create a new opponent?</div>
+				
+				<div id="opponents">
+				<div class="label">Opponent</div>
+				<?php
+					
+					$options = array('0' => '',);
+					if($opponents):
+						foreach($opponents as $opponent):
+							$options = $options + array($opponent->opponent_id	=>	$opponent->opponent_title);
+						endforeach;
+					endif;
+					
+				echo form_dropdown('opponent_id', $options, set_value('opponent_id', $match->opponent_id), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">What opponent played this match?</div>
+				</div>
+				
+				<div id="new_opponent">
+				<div class="label required">Opponent</div> 
 				<?php 
 				$data = array(
 					'name'		=> 'opponent',
@@ -137,7 +178,7 @@
 					'class'		=> 'input'
 				);
 
-				echo form_input($data, set_value('opponent', $match->match_opponent)); ?>
+				echo form_input($data); ?>
 				<?php echo br(); ?>
 				<div class="description">Your opponent's team name</div>
 				
@@ -150,9 +191,33 @@
 					'class'		=> 'input'
 				);
 
-				echo form_input($data, set_value('opponent_link', $match->match_opponent_link)); ?>
+				echo form_input($data, set_value('opponent_link')); ?>
 				<?php echo br(); ?>
 				<div class="description">The link to your opponent</div>
+				
+				<div class="label">Opponent's Tag</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'opponent_tag',
+					'size'		=> '10',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('opponent_tag')); ?>
+				<?php echo br(); ?>
+				<div class="description">The opponent's clan tag</div>
+				
+				</div>
+				<?php echo br(); ?>
+				
+				<div class="subheader">
+					<?php echo heading('Match Information', 4); ?>
+				</div>
+		
+				<div class="label required">Squad</div>
+				<div class="details"><?php echo anchor(ADMINCP . 'squads/edit/' . $match->squad_id, $match->squad); ?></div>
+				<div class="clear"></div>
 				
 				<div class="label">Type</div>
 				
@@ -179,7 +244,7 @@
 				echo form_input($data, set_value('players', $match->match_players), 'onkeypress="return integer(event)"'); ?> v <span id="players"><?php echo $match->match_players; ?></span>
 				<div class="description">The number of players on each team</div>
 				
-				<div class="label required">Score</div>
+				<div class="label">Score</div>
 				
 				<?php 
 				$data = array(
@@ -192,7 +257,7 @@
 				<?php echo br(); ?>
 				<div class="description">Your squad's score</div>
 				
-				<div class="label required">Opponent's Score</div>
+				<div class="label">Opponent's Score</div>
 				
 				<?php 
 				$data = array(
@@ -204,6 +269,19 @@
 				echo form_input($data, set_value('opponent_score', $match->match_opponent_score)); ?>
 				<?php echo br(); ?>
 				<div class="description">Your opponent's score</div>
+				
+				<div class="label">Maps</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'maps',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('maps', $match->match_maps)); ?>
+				<?php echo br(); ?>
+				<div class="description">The maps that were played</div>
 				
 				<div class="label required">Date</div>
 				

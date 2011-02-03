@@ -146,6 +146,23 @@ class Matches extends Controller {
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+				// Check if opponent exists
+				if($opponent)
+				{
+					// Opponent exists, assign opponent & opponent slug
+					$match->opponent = $opponent->opponent_title;
+					$match->opponent_slug = $opponent->opponent_slug;
+				}
+				else
+				{
+					// Opponent doesn't exist, don't assign it
+					$match->opponent = "";
+					$match->opponent_slug = "";
+				}
+				
 				// Format each matches date
 				$match->date = $this->ClanCMS->timezone($match->match_date);
 				
@@ -272,6 +289,23 @@ class Matches extends Controller {
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
+				// Retrieve the opponent
+				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+				// Check if opponent exists
+				if($opponent)
+				{
+					// Opponent exists, assign opponent & opponent slug
+					$match->opponent = $opponent->opponent_title;
+					$match->opponent_slug = $opponent->opponent_slug;
+				}
+				else
+				{
+					// Opponent doesn't exist, don't assign it
+					$match->opponent = "";
+					$match->opponent_slug = "";
+				}
+				
 				// Format each matches date
 				$match->date = $this->ClanCMS->timezone($match->match_date);
 				
@@ -319,6 +353,23 @@ class Matches extends Controller {
 			redirect('matches');
 		}
 		
+		// Retrieve the opponent
+		$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				
+		// Check if opponent exists
+		if($opponent)
+		{
+			// Opponent exists, assign opponent & opponent slug
+			$match->opponent = $opponent->opponent_title;
+			$match->opponent_slug = $opponent->opponent_slug;
+		}
+		else
+		{
+			// Opponent doesn't exist, don't assign it
+			$match->opponent = "";
+			$match->opponent_slug = "";
+		}
+				
 		// Configure match date
 		$match->date = $this->ClanCMS->timezone($match->match_date);
 		
