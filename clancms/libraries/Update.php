@@ -616,7 +616,7 @@ class Update {
 					$this->CI->matches->insert_opponent($data);
 					
 					// Retrieve the opponent id
-					$opponent_id = $this->db->insert_id();
+					$opponent_id = $this->CI->db->insert_id();
 				
 					// Set up our data
 					$data = array (
@@ -638,8 +638,8 @@ class Update {
 		}
 		
 		// Drop depricated matches columns
-		$this->dbforge->drop_column('matches', 'match_opponent');
-		$this->dbforge->drop_column('matches', 'match_opponent_link');
+		$this->CI->dbforge->drop_column('matches', 'match_opponent');
+		$this->CI->dbforge->drop_column('matches', 'match_opponent_link');
 		
 		// Set up the fields
 		$fields = array(
