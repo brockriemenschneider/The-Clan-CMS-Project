@@ -23,7 +23,7 @@
 				</div>
 				
 				<div class="label">Tag:</div>
-				<div class="details"><?php echo $opponent->opponent_tag; ?></div>
+				<div class="details"><?php if($opponent->opponent_tag): echo $opponent->opponent_tag; else: echo 'N/A'; endif; ?></div>
 				<div class="clear"></div>
 				
 				<div class="label">Website:</div>
