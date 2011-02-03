@@ -601,7 +601,7 @@ class Update {
 					);
 		
 					// Update the match into the database
-					$this->matches->update_match($match->match_id, $data);
+					$this->CI->matches->update_match($match->match_id, $data);
 				}
 				else
 				{
@@ -613,7 +613,7 @@ class Update {
 					);
 			
 					// Insert the opponent into the database
-					$this->matches->insert_opponent($data);
+					$this->CI->matches->insert_opponent($data);
 					
 					// Retrieve the opponent id
 					$opponent_id = $this->db->insert_id();
@@ -624,7 +624,7 @@ class Update {
 					);
 				
 					// Update the opponent into the database
-					$this->matches->update_opponent($opponent_id, $data);
+					$this->CI->matches->update_opponent($opponent_id, $data);
 				
 					// Set up our data
 					$data = array (
@@ -632,7 +632,7 @@ class Update {
 					);
 		
 					// Update the match into the database
-					$this->matches->update_match($match->match_id, $data);
+					$this->CI->matches->update_match($match->match_id, $data);
 				}
 			}
 		}

@@ -27,7 +27,7 @@
 			<?php if($alerts): ?>
 				<?php foreach($alerts as $alert): ?>
 				<div class="alert">
-					<?php echo $alert->alert_title; ?> - <?php if($alert->alert_slug == "version"): echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now', 'onclick' => "return updateConfirm();"); else: echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now'); endif; ?>
+					<?php echo $alert->alert_title; ?> - <?php if($alert->alert_slug == "version"): echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now', 'onclick' => "return updateConfirm();")); else: echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now')); endif; ?>
 				</div>
 				<?php echo br(); ?>
 				<?php endforeach; ?>
