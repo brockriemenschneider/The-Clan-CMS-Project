@@ -638,6 +638,24 @@ class Update {
 		// Drop depricated matches columns
 		$this->dbforge->drop_column('matches', 'match_opponent');
 		$this->dbforge->drop_column('matches', 'match_opponent_link');
+		
+		// Set up the fields
+		$fields = array(
+			'squad_tag' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE,
+							),
+			'squad_tag_position' => array(
+								'type' 			=> 'TINYINT',
+								'constraint' 	=> '1',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add squad tag, squad tag position columns to the squads table in the database
+		$this->CI->dbforge->add_column('squads', $fields, 'squad_slug');
 	}
 	
 	// --------------------------------------------------------------------

@@ -79,6 +79,30 @@
 				<?php echo br(); ?>
 				<div class="description">The name of your squad</div>
 		
+				<div class="label required">Tag Position</div>
+				<?php
+					$options = array(
+						'0' => 'Left',
+						'1'	=> 'Right'
+					);
+					
+				echo form_dropdown('tag_position', $options, set_value('tag_position', $squad->squad_tag_position), 'class="input"'); ?>
+				<?php echo br(); ?>
+				<div class="description">The position of the squad's tag</div>
+				
+				<div class="label">Tag</div>
+				
+				<?php 
+				$data = array(
+					'name'		=> 'tag',
+					'size'		=> '10',
+					'class'		=> 'input'
+				);
+
+				echo form_input($data, set_value('tag', $squad->squad_tag)); ?>
+				<?php echo br(); ?>
+				<div class="description">The tag of your squad</div>
+				
 				<div class="label required">Status</div>
 				<?php
 					$options = array(

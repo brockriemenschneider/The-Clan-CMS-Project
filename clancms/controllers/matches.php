@@ -490,12 +490,16 @@ class Matches extends Controller {
 			// Squad exosts, assign match squad & match squad slug
 			$match->squad = $squad->squad_title;
 			$match->squad_slug = $squad->squad_slug;
+			$match->squad_tag = $squad->squad_tag;
+			$match->squad_tag_position = $squad->squad_tag_position;
 		}
 		else
 		{
 			// Squad doesn't exist, assign match squad & match squad slug
 			$match->squad = '';
 			$match->squad_slug = '';
+			$match->squad_tag = '';
+			$match->squad_tag_position = '';
 		}
 		
 		// Format the text, create links, and assign match report

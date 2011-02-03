@@ -89,6 +89,8 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_comments` (
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__match_opponents`;
+-- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_opponents` (
   `opponent_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `opponent_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
@@ -223,6 +225,8 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squads` (
   `squad_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `squad_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `squad_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `squad_tag` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `squad_tag_position` tinyint(1) NOT NULL DEFAULT '0',
   `squad_status` tinyint(1) NOT NULL DEFAULT '0',
   `squad_priority` int(10) NOT NULL,
   PRIMARY KEY (`squad_id`)

@@ -103,7 +103,7 @@
 						<?php foreach($players as $player): ?>
 						<tr>
 							<td><?php if($player->online): echo anchor('account/profile/' . $this->users->user_slug($player->user_name), img(array('src' => THEME_URL . 'images/online.png', 'alt' => $player->user_name . ' is online')), array('title' => $player->user_name . ' is online')); else: echo anchor('account/profile/' . $player->user_name, img(array('src' => THEME_URL . 'images/offline.png', 'alt' => $player->user_name . ' is offline')), array('title' => $player->user_name . ' is offline')); endif; ?></td>
-							<td><?php if($player->member_title): echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->user_name); endif; ?></td>
+							<td><?php if($match->squad_tag && (bool) !$match->squad_tag_position): echo '[' . $match->squad_tag . ']'; endif; ?><?php if($player->member_title): echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($player->user_name), $player->user_name); endif; ?><?php if($match->squad_tag && (bool) $match->squad_tag_position): echo '[' . $match->squad_tag . ']'; endif; ?></td>
 							<td><?php echo $player->kills; ?></td>
 							<td><?php echo $player->deaths; ?></td>
 							<td class="<?php if($player->kd < '1.00'): echo 'red'; elseif($player->kd > '2.00'): echo 'green'; else: echo 'yellow'; endif; ?>"><?php echo $player->kd; ?></td>

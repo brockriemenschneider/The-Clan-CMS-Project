@@ -120,6 +120,8 @@ class Squads extends Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
+			$this->form_validation->set_rules('tag_position', 'Tag Position', 'trim|required');
+			$this->form_validation->set_rules('tag', 'Tag', 'trim');
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 		
@@ -129,6 +131,8 @@ class Squads extends Controller {
 				// Set up our data
 				$data = array (
 					'squad_title'			=> $this->input->post('title'),
+					'squad_tag'				=> $this->input->post('tag'),
+					'squad_tag_position'	=> $this->input->post('tag_position'),
 					'squad_status'			=> $this->input->post('status'),
 					'squad_priority'		=> $this->input->post('priority')
 				);
@@ -193,6 +197,8 @@ class Squads extends Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
+			$this->form_validation->set_rules('tag_position', 'Tag Position', 'trim|required');
+			$this->form_validation->set_rules('tag', 'Tag', 'trim');
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 			
@@ -209,10 +215,12 @@ class Squads extends Controller {
 			{
 				// Set up our data
 				$data = array (
-					'squad_title'		=> $this->input->post('title'),
-					'squad_slug'		=> $squad->squad_id . '-' . url_title($this->input->post('title')),
-					'squad_status'		=> $this->input->post('status'),
-					'squad_priority'	=> $this->input->post('priority')
+					'squad_title'			=> $this->input->post('title'),
+					'squad_slug'			=> $squad->squad_id . '-' . url_title($this->input->post('title')),
+					'squad_tag'				=> $this->input->post('tag'),
+					'squad_tag_position'	=> $this->input->post('tag_position'),
+					'squad_status'			=> $this->input->post('status'),
+					'squad_priority'		=> $this->input->post('priority')
 				);
 			
 				// Update the squad into the database

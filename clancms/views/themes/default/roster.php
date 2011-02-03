@@ -42,7 +42,7 @@
 				<?php foreach($squad->members as $member): ?>
 				<tr class="row">
 					<td><?php if($member->online): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), img(array('src' => THEME_URL . 'images/online.png', 'alt' => $member->user_name . ' is online', 'title' => $member->user_name . ' is online'))); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), img(array('src' => THEME_URL . 'images/offline.png', 'alt' => $member->user_name . ' is offline', 'title' => $member->user_name . ' is offline'))); endif; ?></td>
-					<td><?php if($member->member_title): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->user_name); endif; ?></td>
+					<td><?php if($squad->squad_tag && (bool) !$squad->squad_tag_position): echo '[' . $squad->squad_tag . ']'; endif; ?><?php if($member->member_title): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->user_name); endif; ?><?php if($squad->squad_tag && (bool) $squad->squad_tag_position): echo '[' . $squad->squad_tag . ']'; endif; ?></td>
 					<td><?php if($member->member_role): echo $member->member_role; else: echo 'N/A'; endif; ?></td>
 					<td><?php echo $member->total_kills; ?></td>
 					<td><?php echo $member->total_deaths; ?></td>
