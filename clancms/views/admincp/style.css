@@ -647,27 +647,6 @@ ul.newsticker a {
 	width: 741px;
 }
 
-#main .box .pages {
-	height: 61px;
-	width: 741px;
-	top: 0px;
-	Background: url('images/box_pages.png');
-}
-
-#main .box .pages h4 {
-	margin: 0;
-	line-height: 60px;
-	text-align: left;
-	color: #ffffff;
-	font-weight: bold;
-	padding-left: 20px;
-}
-
-#main .box .pages h4 a {
-	color: #ee2d00;
-	text-decoration: underline;
-}
-
 #main .box .tabs {	
 	height: 33px;
 	width: 741px;

@@ -2,6 +2,19 @@
 
 <?php $this->load->view(ADMINCP . 'sidebar'); ?>
 
+<script type="text/javascript">
+	function updateConfirm()
+	{
+    	var answer = confirm("Are you sure you want to update? Any modifications you have done to Clan CMS core files will be replaced with the updated ones. We recommend you create a backup before continuing!")
+    	if (answer)
+		{
+        	document.messages.submit();
+    	}
+    
+    	return false;  
+	} 
+</script> 
+
 <div id="main">
 
 	<div class="box">
@@ -14,7 +27,7 @@
 			<?php if($alerts): ?>
 				<?php foreach($alerts as $alert): ?>
 				<div class="alert">
-					<?php echo $alert->alert_title; ?> - <?php echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now')); ?>
+					<?php echo $alert->alert_title; ?> - <?php if($alert->alert_slug == "version"): echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now', 'onclick' => "return updateConfirm();"); else: echo anchor($alert->alert_link, 'Resolve Now', array('title' => 'Resolve Now'); endif; ?>
 				</div>
 				<?php echo br(); ?>
 				<?php endforeach; ?>

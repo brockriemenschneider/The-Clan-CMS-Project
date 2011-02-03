@@ -476,7 +476,9 @@ class Update {
 		// Old files
 		$old_files = array(
 			'./clancms/controllers/about.php',
-			'./clancms/views/themes/default/about.php'
+			'./clancms/views/themes/default/about.php',
+			'./clancms/views/themes/default/images/box_pages.png',
+			'./clancms/views/admincp/images/box_pages.png'
 		);
 		
 		// Loop through each old file
