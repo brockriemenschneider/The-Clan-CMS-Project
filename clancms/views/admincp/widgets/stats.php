@@ -10,6 +10,8 @@
 			<?php echo br(); ?>
 			Matches: <?php echo anchor(ADMINCP . 'matches', $total_matches . ' Matches'); ?>
 			<?php echo br(); ?>
+			Opponents: <?php echo anchor(ADMINCP . 'opponents', $total_opponents . ' Opponents'); ?>
+			<?php echo br(); ?>
 			Squads: <?php echo anchor(ADMINCP . 'squads', $total_squads . ' Squads'); ?>
 			<?php echo br(); ?>
 			Sponsors: <?php echo anchor(ADMINCP . 'sponsors', $total_sponsors . ' Sponsors'); ?>

@@ -65,6 +65,9 @@ class Stats_widget extends Widget {
 		// Retrieve the total number of matches
 		$this->data->total_matches = $this->CI->matches->count_matches();
 		
+		// Retrieve the total number of opponents
+		$this->data->total_opponents = $this->CI->matches->count_opponents();
+		
 		// Load the Squads model
 		$this->CI->load->model('Squads_model', 'squads');
 		
