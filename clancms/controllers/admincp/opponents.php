@@ -312,9 +312,25 @@ class Opponents extends Controller {
 			redirect(ADMINCP . 'opponents');
 		}
 				
+		// Retrieve the matches
+		if($matches = $this->matches->get_matches('', '', array('opponent_id' => $opponent->opponent_id)))
+		{
+			// Matches exist, loop through each match
+			foreach($matches as $match)
+			{
+				// Set up the data
+				$data = array(
+					'opponent_id'	=>	0
+				);
+				
+				// Update the match in the database
+				$this->matches->update_match($match->match_id, $data);
+			}
+		}
+		
 		// Delete the opponent from the database
 		$this->matches->delete_opponent($opponent->opponent_id);
-				
+		
 		// Alert the adminstrator
 		$this->session->set_flashdata('message', 'The opponent was successfully deleted!');
 				
