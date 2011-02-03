@@ -3,6 +3,21 @@
                              Clan CMS Change Log
 ============================================================================================
 
+-----0.5.6-----
+Added Squad Tag
+Added Opponents and maps for matches
+Fixed Deleting a squad deletes all matches
+Fixed KDR on user profiles
+Added Avatar support for comments in Admin CP
+Fixed two spaces above poll widget issue
+Added new page tab layout
+Added support for development versions
+Added confirmation when updating
+Deleted the depricated about.php file
+Fixed get_Setting in default theme header
+Fixed user can delete SUPERADMINISTRATOR
+Added delete confirmation for users
+
 -----0.5.5-----
 Fixed new users widget for only clan members
 Fixed installation issue that would add multiple same users
