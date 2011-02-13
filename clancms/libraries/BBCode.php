@@ -57,15 +57,15 @@ class BBCode {
 	
 		// Smilies to find
 		$in = array(
-			'>:D',
-			':D', 	
-			':(',
-			':o',
-			':p',
-			';)',
-			':)',
-			':3',
-			'<3'
+			':evil:',
+			':happy:', 	
+			':sad:',
+			':surprised:',
+			':tongue:',
+			':wink:',
+			':smile:',
+			':curly:',
+			':heart:'
 		);
 		
 		// Smiliy replacements

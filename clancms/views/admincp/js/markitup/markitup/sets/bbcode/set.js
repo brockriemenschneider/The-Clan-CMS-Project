@@ -80,14 +80,14 @@ mySettings = {
 		},
 		{separator:'---------------' },
 		{name:'Youtube', className:"youtube", openWith:'[youtube]', closeWith:'[/youtube]', placeHolder:'[![Youtube Video ID]!]'},
-		{name:'Happy', className:"happy", replaceWith:function(markitup) { return ':D'; }},
-		{name:'Sad', className:"sad", replaceWith:function(markitup) { return ':('; }},
-		{name:'Surprised', className:"surprised", replaceWith:function(markitup) { return ':o'; }},
-		{name:'Tongue', className:"tongue", replaceWith:function(markitup) { return ':p'; }},
-		{name:'Wink', className:"wink", replaceWith:function(markitup) { return ';)'; }},
-		{name:'Smile', className:"smile", replaceWith:function(markitup) { return ':)'; }},
-		{name:'Curly Lips', className:"curlylips", replaceWith:function(markitup) { return ':3'; }},
-		{name:'Evil Grin', className:"evilgrin", replaceWith:function(markitup) { return '>:D'; }},
-		{name:'Heart', className:"heart", replaceWith:function(markitup) { return '<3'; }}
+		{name:'Happy', className:"happy", replaceWith:function(markitup) { return ':happy:'; }},
+		{name:'Sad', className:"sad", replaceWith:function(markitup) { return ':sad:'; }},
+		{name:'Surprised', className:"surprised", replaceWith:function(markitup) { return ':surprised:'; }},
+		{name:'Tongue', className:"tongue", replaceWith:function(markitup) { return ':tongue:'; }},
+		{name:'Wink', className:"wink", replaceWith:function(markitup) { return ':wink:'; }},
+		{name:'Smile', className:"smile", replaceWith:function(markitup) { return ':smile:'; }},
+		{name:'Curly Lips', className:"curlylips", replaceWith:function(markitup) { return ':curly:'; }},
+		{name:'Evil Grin', className:"evilgrin", replaceWith:function(markitup) { return ':evil:'; }},
+		{name:'Heart', className:"heart", replaceWith:function(markitup) { return ':heart:'; }}
 	]
 }
