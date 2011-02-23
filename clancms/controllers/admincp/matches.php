@@ -269,7 +269,7 @@ class Matches extends Controller {
 					
 					// Set up our data
 					$data = array (
-						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('title'))
+						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('opponent'))
 					);
 				
 					// Update the opponent into the database
@@ -543,7 +543,7 @@ class Matches extends Controller {
 					
 					// Set up our data
 					$data = array (
-						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('title'))
+						'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('opponent'))
 					);
 				
 					// Update the opponent into the database
