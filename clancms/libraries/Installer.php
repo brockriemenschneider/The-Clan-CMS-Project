@@ -55,6 +55,9 @@ class Installer {
 	 */
     function install()
     {
+		// Change the permissions
+		chmod('./clancms/views/install/sql/install.sql', 0755);
+		
 		// Retrieve the install sql
 		$sql = file_get_contents('./clancms/views/install/sql/install.sql');
 		
@@ -91,6 +94,9 @@ class Installer {
 	 */
     function write_ClanCMS_file()
     {
+		// Change the permissions
+		chmod('./clancms/models/clancms.php', 0755);
+		
         // Fetch the database file
         $clancms_file = read_file('./clancms/models/clancms.php');
 		
@@ -127,6 +133,9 @@ class Installer {
 	 */
     function write_db_file()
     {
+		// Change the permissions
+		chmod('./clancms/config/database.php', 0755);
+		
         // Fetch the database file
         $db_file = read_file('./clancms/config/database.php');
 		
@@ -169,6 +178,9 @@ class Installer {
     {
 		// Load the string helper
 		$this->CI->load->helper('string');
+		
+		// Change the permissions
+		chmod('./clancms/config/config.php', 0755);
 		
         // Fetch the config file
         $config_file = read_file('./clancms/config/config.php');
