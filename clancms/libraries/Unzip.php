@@ -60,7 +60,7 @@ class Unzip {
 				// Destination doesn't exist, assign destination
 				$destination = dirname($file);
 			}
-		
+			
 			// Create a new zip archive
 			$zip = new ZipArchive();
 

@@ -179,6 +179,9 @@ class Dashboard extends Controller {
 		// Load the unzip library
 		$this->load->library('unzip');
 		
+		// Change the permissions
+		chmod('Update.zip', 0755);
+		
 		// Unzip the update
 		$this->unzip->extract('Update.zip');
 		
