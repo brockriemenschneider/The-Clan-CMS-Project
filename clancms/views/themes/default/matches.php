@@ -39,7 +39,7 @@
 				<tr>
 					<td><?php if($match->opponent): echo anchor('opponents/view/' . $match->opponent_slug, $match->opponent); else: echo 'N/A'; endif; ?></td>
 					<td><?php if($match->squad): echo $match->squad; else: echo "N/A"; endif; ?></td>
-					<td <?php if($match->match_score > $match->match_opponent_score): echo 'class="green"'; elseif($match->match_score < $match->match_opponent_score): echo 'class="red"'; elseif($match->match_score == $match->match_opponent_score && $match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo 'class="yellow"'; else: echo ''; endif;?>><?php if($match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo $match->match_score . ' - ' . $match->match_opponent_score; else: echo '-'; endif; ?></td>
+					<td <?php if($match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): if($match->match_score > $match->match_opponent_score): echo 'class="green"'; elseif($match->match_score < $match->match_opponent_score): echo 'class="red"'; elseif($match->match_score == $match->match_opponent_score): echo 'class="yellow"'; endif; endif; ?>><?php if($match->match_date < mdate('%Y-%m-%d %H:%i:%s', local_to_gmt(time()))): echo $match->match_score . ' - ' . $match->match_opponent_score; else: echo '-'; endif; ?></td>
 					<td><?php echo mdate("%M %d, %Y  at %h:%i %a", $match->date); ?></td>
 					<td><?php echo anchor('matches/view/' . $match->match_slug, img(array('src' => THEME_URL . 'images/view.png', 'alt' => 'View Match', 'title' => 'View Match'))); ?></td>
 				</tr>
