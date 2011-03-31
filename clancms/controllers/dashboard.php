@@ -141,7 +141,7 @@ class Dashboard extends Controller {
 		$page->title = $page->page_title;
 				
 		// Format the text, create links, and assign page content
-		$page->content = auto_link($this->typography->auto_typography($this->bbcode->to_html($page->page_content)), 'url');
+		$page->content = auto_link($this->typography->auto_typography($this->bbcode->to_html(htmlspecialchars_decode($page->page_content))), 'url');
 		
 		// Create a reference to page
 		$this->data->page =& $page;
