@@ -184,11 +184,15 @@ class Polls extends Controller {
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('active', 'Active', 'trim|required');
 			
-			// Loop through each option
-			foreach($titles as $option_id => $title)
+			// Check if titles exist
+			if($titles)
 			{
-				// Set form validation rules for each option
-				$this->form_validation->set_rules('titles[' . $option_id . ']', 'Titles', 'trim');
+				// Loop through each option
+				foreach($titles as $option_id => $title)
+				{
+					// Set form validation rules for each option
+					$this->form_validation->set_rules('titles[' . $option_id . ']', 'Titles', 'trim');
+				}
 			}
 			
 			// Form validation passed, so continue
@@ -213,16 +217,20 @@ class Polls extends Controller {
 				// Update the poll in the database
 				$this->polls->update_poll($poll->poll_id, $data);
 				
-				// Loop through each option
-				foreach($titles as $option_id => $option_title)
+				// Check if titles exist
+				if($titles)
 				{
-					// Set up the data
-					$data = array(
-						'option_title'		=> $titles[$option_id]
-					);
-					
-					// Update the poll option in the database
-					$this->polls->update_option($option_id, $data);				
+					// Loop through each option
+					foreach($titles as $option_id => $option_title)
+					{
+						// Set up the data
+						$data = array(
+							'option_title'		=> $titles[$option_id]
+						);
+						
+						// Update the poll option in the database
+						$this->polls->update_option($option_id, $data);				
+					}
 				}
 				
 				// Alert the adminstrator
