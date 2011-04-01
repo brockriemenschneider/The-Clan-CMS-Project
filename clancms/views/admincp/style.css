@@ -439,6 +439,7 @@ ul.newsticker a {
 
 #sidebar  .widget .tabs li {
 	list-style: none;
+	float: left;
 }
 
 #sidebar  .widget .tabs li a {
@@ -660,6 +661,7 @@ ul.newsticker a {
 
 #main .box .tabs li {
 	list-style: none;
+	float: left;
 }
 
 #main .box .tabs li a {
