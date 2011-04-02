@@ -85,6 +85,15 @@ class ClanCMS extends Model {
 				}
 			}
 		}
+		else
+		{
+			// Prevent an infinite loop
+			if($this->uri->segment(1, '') == '')
+			{
+				// Redirect to the install guide
+				redirect('install/index');
+			}
+		}
 	}
 	
 	// --------------------------------------------------------------------
