@@ -1,8 +1,20 @@
-Options +FollowSymLinks
-Options -Indexes
-DirectoryIndex index.php
-RewriteEngine on
-RewriteCond $1 !^(index\.php|images|css|js|robots\.txt|favicon\.ico)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ ./index.php?/$1 [L,QSA]
+<IfModule mod_rewrite.c>
+
+    # Make sure directory listing is disabled, assign directory index, and turn on rewriting
+	Options +FollowSymLinks -Indexes
+	DirectoryIndex index.php
+	RewriteEngine on
+	
+	# Send request via index.php (again, not if its a real file or folder)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	
+	<IfModule mod_php5.c>
+		RewriteRule ^(.*)$ index.php/$1 [L]
+	</IfModule>
+
+	<IfModule !mod_php5.c>
+		RewriteRule ^(.*)$ index.php?/$1 [L]
+	</IfModule>
+	
+</IfModule>
