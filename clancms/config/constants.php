@@ -36,6 +36,32 @@ define('FOPEN_READ_WRITE_CREATE', 				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT', 			'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
+/*
+|--------------------------------------------------------------------------
+| Base URL
+|--------------------------------------------------------------------------
+|
+| The base url of the installation
+|
+*/
+if(isset($_SERVER['HTTP_HOST']))
+{
+	// Assign base url
+	$base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http';
+	$base_url .= '://'. $_SERVER['HTTP_HOST'];
+	$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+}
+else
+{
+	// Assign base url
+	$base_url = 'http://localhost/';
+}
+
+// Define BASE URL
+define('BASE_URL', $base_url);
+
+// Unset base url
+unset($base_url);
 
 /*
 |--------------------------------------------------------------------------
