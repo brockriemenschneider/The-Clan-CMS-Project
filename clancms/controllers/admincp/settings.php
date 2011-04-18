@@ -81,17 +81,33 @@ class Settings extends Controller {
 					// Check if setting exists
 					if($setting = $this->settings->get_setting(array('setting_id' => $setting_id)))
 					{
+						// Check if the setting is required
+						if($setting->setting_rules)
+						{
+							// Set form validation rules
+							$this->form_validation->set_rules('setting[' . $setting->setting_id . ']', $setting->setting_title, $setting->setting_rules);
+						}
+						
+					}
+				}
+				
+				// Form validation passed, so continue
+				if (!$this->form_validation->run() == FALSE)
+				{
+					// Settings exist, loop through each setting
+					foreach($settings as $setting_id => $value)
+					{
 						// Setting exists, update the setting in the database
 						$this->settings->update_setting($setting->setting_id, array('setting_value' => $value));
 					}
+					
+					// Alert the adminstrator
+					$this->session->set_flashdata('message', 'The settings have been successfully updated!');
+					
+					// Redirect the adminstrator
+					ci_redirect(ADMINCP . 'settings');
 				}
 			}
-			
-			// Alert the adminstrator
-			$this->session->set_flashdata('message', 'The settings have been successfully updated!');
-				
-			// Redirect the adminstrator
-			redirect(ADMINCP . 'settings');
 		}
 		
 		// Retrieve all the setting categories
@@ -104,15 +120,28 @@ class Settings extends Controller {
 			foreach($categories as $category)
 			{
 				// Check if settings exist
-				if($settings = $this->settings->get_settings(array('category_id' => $category->category_id)))
+				if($category->settings = $this->settings->get_settings(array('category_id' => $category->category_id)))
 				{
-					// Settings exist, assign category settings
-					$category->settings = $settings;
-				}
-				else
-				{
-					// Settings doesn't exist, assign category settings
-					$category->settings = '';
+					// Category settings exist, loop through each setting
+					foreach($category->settings as $setting)
+					{
+						// Assign setting options
+						$setting->options = array();
+    	
+						// Check if setting options exists
+						if($setting->setting_options)
+						{
+							// Loop through the setting's options
+							foreach(explode('|', $setting->setting_options) as $setting_option)
+							{
+								// Explode the options
+								list($name, $value) = explode('=', $setting_option);
+								
+								// Assign the options to their values
+								$setting->options[$name] = $value;
+							}
+						}
+					}
 				}
 			}
 		}

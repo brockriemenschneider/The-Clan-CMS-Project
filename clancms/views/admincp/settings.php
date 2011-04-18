@@ -18,6 +18,12 @@
 		<div class="content">
 			<div class="inside">
 
+				<?php if(validation_errors()): ?>
+				<div class="alert">
+					<?php echo validation_errors(); ?>
+				</div>
+				<?php endif; ?>
+				
 				<?php if($this->session->flashdata('message')): ?>
 				<div class="alert">
 					<?php echo $this->session->flashdata('message'); ?>
@@ -35,9 +41,9 @@
 		
 					<?php if($category->settings): ?>
 					<?php foreach($category->settings as $setting): ?>
-				<div class="label"><?php echo $setting->setting_title; ?></div>
+				<div class="label <?php if(strpos($setting->setting_rules,'required')): echo 'required'; endif; ?>"><?php echo $setting->setting_title; ?></div>
 				
-				<?php if($setting->setting_type == "input"): ?>
+				<?php if($setting->setting_type == "text"): ?>
 					<?php 
 					$data = array(
 						'name'		=> 'setting[' . $setting->setting_id . ']',
@@ -50,15 +56,10 @@
 				
 					<?php echo timezone_menu(set_value('setting[' . $setting->setting_id . ']', $setting->setting_value), 'input select', 'setting[' . $setting->setting_id . ']'); ?>
 				
-				<?php elseif($setting->setting_type == "dropdown"): ?>
+				<?php elseif($setting->setting_type == "select"): ?>
 				
-					<?php 
-					$options = array(
-						'1'		=> 'Yes',
-						'0'		=> 'No'
-					);
-
-					echo form_dropdown('setting[' . $setting->setting_id . ']', $options, set_value('setting[' . $setting->setting_id . ']', $setting->setting_value), 'class="input select"'); ?>
+					<?php
+					echo form_dropdown('setting[' . $setting->setting_id . ']', $setting->options, set_value('setting[' . $setting->setting_id . ']', $setting->setting_value), 'class="input select"'); ?>
 				
 				<?php elseif($setting->setting_type == "textarea"): ?>
 				
