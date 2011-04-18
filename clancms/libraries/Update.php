@@ -78,6 +78,13 @@ class Update {
 			// Update to 0.5.6
 			$this->update_056();
 		}
+		
+		// Check if we need to update to 0.6.0
+		if(CLANCMS_VERSION < '0.6.0')
+		{
+			// Update to 0.6.0
+			$this->update_060();
+		}
 	}
 	
 	// --------------------------------------------------------------------
@@ -464,7 +471,7 @@ class Update {
 	// --------------------------------------------------------------------
 	
     /**
-	 * update_566
+	 * update_056
 	 *
 	 * Update for v0.5.6
 	 *
@@ -577,7 +584,7 @@ class Update {
 							)
 		);
 		
-		// Add match ma[s column to the matches table in the database
+		// Add match maps column to the matches table in the database
 		$this->CI->dbforge->add_column('matches', $fields, 'match_opponent_score');
 		
 		// Load the Matches model
@@ -658,6 +665,59 @@ class Update {
 		
 		// Add squad tag, squad tag position columns to the squads table in the database
 		$this->CI->dbforge->add_column('squads', $fields, 'squad_slug');
+	}
+	
+	// --------------------------------------------------------------------
+	
+    /**
+	 * update_060
+	 *
+	 * Update for v0.6.0
+	 *
+	 * @access	public
+     * @return	bool
+	 */
+    function update_060()
+    {
+		// Load the settings model
+		$this->CI->load->model('Settings_model', 'settings');
+		
+		// Set up the fields
+		$fields = array(
+			'setting_type' => array(
+								'type' 			=> 'ENUM',
+								'constraint' 	=> "'text','timezone','select','textarea'",
+								'null'			=> FALSE
+								'default'		=> 'text'
+							)
+		);
+		
+		// Modify setting type column in the settings table in the database
+		$this->CI->dbforge->modify_column('settings', $fields);
+		
+		// Set up the fields
+		$fields = array(
+			'setting_options' => array(
+								'type' 			=> 'TEXT',
+								'null'			=> FALSE
+							)
+		);
+		
+		// Add setting options column to the settings table in the database
+		$this->CI->dbforge->add_column('settings', $fields, 'setting_type');
+		
+		// Set up the fields
+		$fields = array(
+			'setting_rules' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							)
+		);
+		
+		// Add setting rules column to the settings table in the database
+		$this->CI->dbforge->add_column('settings', $fields, 'setting_description');
+	
 	}
 	
 	// --------------------------------------------------------------------
