@@ -13,7 +13,7 @@ http://xcelgaming.com
 
 -----REQUIREMENTS-----
 
-PHP version 5.0.0 or greater
+PHP version 5.1.6 or greater
 MySQL version 4.1 or greater
 The mod_rewrite Apache module
 
@@ -29,40 +29,3 @@ The mod_rewrite Apache module
 by manually deleting the "clancms/controllers/install.php", "clancms/libraries/Installer.php", and the "clancms/views/install/" folder.
 
 5) After you have done all of this you will be able to login to the Admin CP and start managing your site.
-
------UPDATING-----
-
-1) If your version is less then 0.5.3 then you must manual update to v0.5.3, otherwise go to step 2.
-
-2) Rename the zip to Update.zip and upload the the root of the installation.
-
-3) If you version is less then 0.5.4 then do the following, otherwise go to step 4:
-OPEN clancms/libraries/Unzip.php
-FIND function extract($file, $destination)
-REPLACE WITH function extract($file, $destination = '')
-SAVE AND CLOSE
-
-4) Click "Resolve Now" in Admin CP for pending manaual update.
-
------F.A.Q-----
-
-Q: I have mod_rewrite but it still isn't working. What do I do?
-
-A: You may have to turn on QUERY STRING by following this simple process:
-
-OPEN clancms/config/config.php
-FIND $config['uri_protocol'] = "AUTO";
-REPLACE WITH $config['uri_protocol'] = "QUERY_STRING";
-SAVE AND CLOSE
-
-OPEN .htaccess
-FIND 
-RewriteRule ^(.*)$ ./index.php/$1 [L,QSA]
-REPLACE WITH 
-RewriteRule ^(.*)$ ./index.php?/$1 [L,QSA]
-SAVE AND CLOSE
-
-Q: I can't even get to the installation process?
-
-A: We are aware that some people are having issues installing. We believe this is because their server requirements are not specific enough howevever
-we are also looking into possible fixes we can do to help out.
