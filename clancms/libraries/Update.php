@@ -679,11 +679,46 @@ class Update {
 	 */
     function update_060()
     {
+		// Old files
+		$old_files = array(
+			'./codeigniter/language/english/scaffolding_lang.php',
+			'./codeigniter/language/english/validation_lang.php',
+			'./codeigniter/libraries/Benchmark.php',
+			'./codeigniter/libraries/Config.php',
+			'./codeigniter/libraries/Controller.php',
+			'./codeigniter/libraries/Exceptions.php',
+			'./codeigniter/libraries/Hooks.php',
+			'./codeigniter/libraries/Input.php',
+			'./codeigniter/libraries/Language.php',
+			'./codeigniter/libraries/Loader.php',
+			'./codeigniter/libraries/Model.php',
+			'./codeigniter/libraries/Output.php',
+			'./codeigniter/libraries/Router.php',
+			'./codeigniter/libraries/URI.php',
+			'./codeigniter/libraries/Validation.php'
+		);
+		
+		// Loop through each old file
+		foreach($old_files as $old_file)
+		{
+			// Check if the file exists
+			if(file_exists($old_file))
+			{
+				// File exists, delete the old file
+				unlink($old_file);
+			}
+		}
+		
 		// Old folders
 		$old_folders = array(
 			'./clancms/views/themes/default/widgets'
-			'./clancms/views/admincp/widgets'
-			'./clancms/widgets/admincp'
+			'./clancms/views/admincp/widgets',
+			'./clancms/widgets/admincp',
+			'./codeigniter/cache',
+			'./codeigniter/codeigniter',
+			'./codeigniter/logs',
+			'./codeigniter/plugins',
+			'./codeigniter/scaffolding'
 		);
 		
 		// Loop through each old folder
