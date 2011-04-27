@@ -25,7 +25,7 @@
  */
 class Update {
 
-	var $CI;
+	public $CI;
 	
 	/**
 	 * Constructor
@@ -58,6 +58,15 @@ class Update {
 	 */
     function install()
     {
+	
+			
+		// Loop through the important files
+		foreach($important_files as $important_file)
+		{
+			// Write the important files
+			write_file($important_file, $file[$important_file]);
+		}
+		
 		// Check if we need to update to 0.5.4
 		if(CLANCMS_VERSION < '0.5.4')
 		{
@@ -679,6 +688,9 @@ class Update {
 	 */
     function update_060()
     {
+		echo 'test';
+		exit;
+		
 		// Old files
 		$old_files = array(
 			'./codeigniter/language/english/scaffolding_lang.php',
@@ -711,7 +723,7 @@ class Update {
 		
 		// Old folders
 		$old_folders = array(
-			'./clancms/views/themes/default/widgets'
+			'./clancms/views/themes/default/widgets',
 			'./clancms/views/admincp/widgets',
 			'./clancms/widgets/admincp',
 			'./codeigniter/cache',
@@ -728,6 +740,28 @@ class Update {
 			delete_directory($old_folder);
 		}
 		
+		// Set up the data
+		$data = array(
+			'permission_title'		=> 'Can manage widgets?',
+			'permission_slug'		=> 'widgets',
+			'permission_value'		=> '1024'
+		);
+		
+		// Insert the permission into the database
+		$this->CI->users->insert_permission($data);
+		
+		// Retrieve the administrators user group
+		if($group = $this->CI->users->get_group(array('group_id' => '2')))
+		{
+			// Set up the data
+			$data = array(
+				'group_permissions'		=> '2047'
+			);
+			
+			// Update the administrators user group in the database
+			$this->CI->users->update_group($group->group_id, $data);
+		}
+		
 		// Load the settings model
 		$this->CI->load->model('Settings_model', 'settings');
 		
@@ -736,7 +770,7 @@ class Update {
 			'setting_type' => array(
 								'type' 			=> 'ENUM',
 								'constraint' 	=> "'text','timezone','select','textarea'",
-								'null'			=> FALSE
+								'null'			=> FALSE,
 								'default'		=> 'text'
 							)
 		);
@@ -766,6 +800,160 @@ class Update {
 		
 		// Add setting rules column to the settings table in the database
 		$this->CI->dbforge->add_column('settings', $fields, 'setting_description');
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '1')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '2')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '3')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'timezone',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '4')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required|valid_email'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '5')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'select',
+				'setting_options'	=> '1=Yes|0=No',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '6')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '7')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '8')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'select',
+				'setting_options'	=> '1=Yes|0=No',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '9')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'text',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required|numeric'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '10')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'select',
+				'setting_options'	=> '1=Yes|0=No',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
+		
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_id' => '11')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_type'		=> 'textarea',
+				'setting_options'	=> '',
+				'setting_rules'		=> 'trim|required'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
 		
 		// Load the Widgets model
 		$this->CI->load->model('Widgets_model', 'widgets');
@@ -964,7 +1152,7 @@ class Update {
 								'constraint' 	=> '200',
 								'null'			=> FALSE
 							),
-			'widget_slug' => array(
+			'area_slug' => array(
 								'type' 			=> 'VARCHAR',
 								'constraint' 	=> '200',
 								'null'			=> FALSE

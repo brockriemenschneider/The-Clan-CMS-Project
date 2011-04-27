@@ -165,8 +165,7 @@ class Dashboard extends CI_Controller {
 		// Define the path to important files
 		$important_files = array(
 			'./clancms/config/config.php',
-			'./clancms/config/database.php',
-			'.htaccess'
+			'./clancms/config/database.php'
 		);
 		
 		// Loop through the important files
@@ -180,7 +179,7 @@ class Dashboard extends CI_Controller {
 		$this->load->library('unzip');
 		
 		// Change the permissions
-		chmod('Update.zip', 0755);
+		@chmod('Update.zip', 0777);
 		
 		// Unzip the update
 		$this->unzip->extract('Update.zip');
