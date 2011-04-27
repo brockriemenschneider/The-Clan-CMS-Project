@@ -16,3 +16,5 @@
 			<?php echo br(); ?>
 			Pages: <?php echo anchor(ADMINCP . 'pages', $total_pages . ' Pages'); ?>
 			<?php echo br(); ?>
+			Widgets: <?php echo anchor(ADMINCP . 'widgets', $total_widgets . ' Installed'); ?>
+			<?php echo br(); ?>

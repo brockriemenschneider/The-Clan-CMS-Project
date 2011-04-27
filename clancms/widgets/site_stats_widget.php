@@ -110,6 +110,25 @@ class Site_stats_widget extends Widget {
 		// Retrieve the total number of pages
 		$this->data->total_pages = $this->CI->pages->count_pages();
 		
+		// Load the Widgets model
+		$this->CI->load->model('Widgets_model', 'widgets');
+		
+		// Retrieve the total number of widgets
+		$widgets = $this->CI->widgets->scan_widgets();
+		
+		// Assign widget total
+		$widget_total = 0;
+		
+		// Loop through the widgets
+		foreach($widgets as $widget)
+		{
+			// Itterate widget_total
+			$widget_total++;
+		}
+		
+		// Assign total widgets
+		$this->data->total_widgets = $widget_total;
+		
 		// Assign the widget info
 		$widget->title = 'Site Stats';
 		$widget->content = $this->CI->load->view('widgets/site_stats', $this->data, TRUE);
