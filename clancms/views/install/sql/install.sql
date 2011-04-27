@@ -310,7 +310,8 @@ INSERT INTO `ClanCMS_widgets` (`widget_id`, `area_id`, `widget_title`, `widget_s
 (8, 3, 'Site Stats', 'site_stats', 'b:0;', 1),
 (9, 3, 'Admin CP Users Online', 'users_online', 'b:0;', 2),
 (10, 4, 'Admin CP Alerts', 'administrator_alerts', 'b:0;', 0),
-(11, 5, 'Pages', 'pages', 'b:0;', 0);
+(11, 5, 'Pages', 'pages', 'b:0;', 0),
+(12, 6, 'New Users', 'new_users', 'b:0;', 0);
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__widget_areas` (
   `area_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -324,4 +325,5 @@ INSERT INTO `__DBPREFIX__widget_areas` (`area_id`, `area_title`, `area_slug`) VA
 (2, 'Header', 'header'),
 (3, 'Admin CP Sidebar', 'admincp_sidebar'),
 (4, 'Admin CP Header', 'admincp_header'),
-(5, 'Navigation', 'navigation');
+(5, 'Navigation', 'navigation'),
+(6, 'Dashboard', 'dashboard');
