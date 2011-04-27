@@ -679,6 +679,20 @@ class Update {
 	 */
     function update_060()
     {
+		// Old folders
+		$old_folders = array(
+			'./clancms/views/themes/default/widgets'
+			'./clancms/views/admincp/widgets'
+			'./clancms/widgets/admincp'
+		);
+		
+		// Loop through each old folder
+		foreach($old_folders as $old_folder)
+		{
+			// Delete the old folder
+			delete_directory($old_folder);
+		}
+		
 		// Load the settings model
 		$this->CI->load->model('Settings_model', 'settings');
 		
@@ -717,7 +731,273 @@ class Update {
 		
 		// Add setting rules column to the settings table in the database
 		$this->CI->dbforge->add_column('settings', $fields, 'setting_description');
-	
+		
+		// Load the Widgets model
+		$this->CI->load->model('Widgets_model', 'widgets');
+		
+		// Set up the fields
+		$fields = array(
+			'widget_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'area_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							),
+			'widget_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'widget_slug' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'widget_settings' => array(
+								'type' 			=> 'TEXT',
+								'null'			=> FALSE
+							),
+			'widget_priority' => array(
+								'type' 			=> 'BIGINT',
+								'constraint' 	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to widget id
+		$this->CI->dbforge->add_key('widget_id');
+		
+		// Create the widgets table in the database
+		$this->CI->dbforge->create_table('widgets');
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '1',
+			'widget_title'		=> 'Login',
+			'widget_slug'		=> 'login',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '1',
+			'widget_title'		=> 'Poll',
+			'widget_slug'		=> 'polls',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '1'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '1',
+			'widget_title'		=> 'Matches',
+			'widget_slug'		=> 'matches',
+			'widget_settings'	=> 'a:2:{s:12:"matches_type";s:1:"0";s:14:"matches_number";s:1:"5";}',
+			'widget_priority'	=> '2'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '1',
+			'widget_title'		=> 'Sponsors',
+			'widget_slug'		=> 'sponsors',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '3'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '1',
+			'widget_title'		=> 'Users Online',
+			'widget_slug'		=> 'users_online',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '4'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the data
+		$data = array (
+			'area_id'			=> '2',
+			'widget_title'		=> 'Articles',
+			'widget_slug'		=> 'articles',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '3',
+			'widget_title'		=> 'Admin CP Login',
+			'widget_slug'		=> 'login',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '3',
+			'widget_title'		=> 'Site Stats',
+			'widget_slug'		=> 'site_stats',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '1'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '3',
+			'widget_title'		=> 'Admin CP Users Online',
+			'widget_slug'		=> 'users_online',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '2'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '4',
+			'widget_title'		=> 'Admin CP Alerts',
+			'widget_slug'		=> 'administrator_alerts',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '5',
+			'widget_title'		=> 'Pages',
+			'widget_slug'		=> 'pages',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		// Set up the data
+		$data = array (
+			'area_id'			=> '6',
+			'widget_title'		=> 'New Users',
+			'widget_slug'		=> 'new_users',
+			'widget_settings'	=> 'b:0;',
+			'widget_priority'	=> '0'
+		);
+			
+		// Insert the widget into the database
+		$this->CI->widgets->insert_widget($data);
+		
+		// Set up the fields
+		$fields = array(
+			'area_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'area_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'widget_slug' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to area id
+		$this->CI->dbforge->add_key('area_id');
+		
+		// Create the opponents table in the database
+		$this->CI->dbforge->create_table('widget_areas');
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Sidebar',
+			'area_slug'		=> 'sidebar'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Header',
+			'area_slug'		=> 'header'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Admin CP Sidebar',
+			'area_slug'		=> 'admincp_sidebar'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Admin CP Header',
+			'area_slug'		=> 'header'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Navigation',
+			'area_slug'		=> 'navigation'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
+		
+		// Set up the data
+		$data = array (
+			'area_title'	=> 'Dashboard',
+			'area_slug'		=> 'dashboard'
+		);
+			
+		// Insert the widget area into the database
+		$this->CI->widgets->insert_area($data);
 	}
 	
 	// --------------------------------------------------------------------
