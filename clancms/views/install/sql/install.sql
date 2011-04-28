@@ -190,7 +190,7 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (5, 3, 'Daylight Savings', 'daylight_savings', '__DAYLIGHTSAVINGS__', 'select', '1=Yes|0=No', 'Is it daylight savings?', 'trim|required', 2),
 (6, 1, 'Forum Link', 'forum_link', '', 'text', '', 'The link to your forums', 'trim', 3),
 (7, 1, 'Clan Slogan', 'clan_slogan', '', 'text', '', 'Put your clan slogan here', 'trim', 2),
-(8, 2, 'Theme Logo', 'logo', '1', 'select', '1=Yes|0=No', 'Use the logo image? Otherwise it will use text', 'trim|required', 2),
+(8, 2, 'Theme Logo', 'logo', '1', 'select', '1=Yes|0=No|2=Text', 'Use the logo image? Otherwise it will use text', 'trim|required', 2),
 (9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'text', '', 'The width of sponsor images in pixels', 'trim|required|numeric', 3),
 (10, 4, 'Allow Registration', 'allow_registration', '1', 'select', '1=Yes|0=No', 'Allow users to register on the site?', 'trim|required', 1),
 (11, 4, 'CAPTCHA Words', 'captcha_words', 'Xcel Gaming', 'textarea', '', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 'trim|required', 2);

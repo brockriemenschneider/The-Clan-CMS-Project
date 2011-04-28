@@ -951,7 +951,7 @@ class Update {
 			// Set up the data
 			$data = array(
 				'setting_type'		=> 'select',
-				'setting_options'	=> '1=Yes|0=No',
+				'setting_options'	=> '1=Yes|0=No|2=Text',
 				'setting_rules'		=> 'trim|required'
 			);
 			
