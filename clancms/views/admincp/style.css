@@ -599,6 +599,13 @@ ul.newsticker a {
 	vertical-align: middle;
 }
 
+#main .box .subheader .stars-wrapper{
+	float: right;
+	margin-top: 5px;
+	padding-right: 10px;
+	vertical-align: middle;
+}
+
 #main .box .content {
 	Background: url('images/box_middle.png') repeat-y;
 	width: 741px;

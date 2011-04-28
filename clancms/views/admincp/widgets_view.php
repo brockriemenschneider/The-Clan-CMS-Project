@@ -94,6 +94,23 @@
 				<div class="details"><?php echo $widget['widget_count']; ?> times</div>
 				<div class="clear"></div>
 				
+				<div class="label">Rating:</div>
+				<div class="details">
+					<div class="stars-wrapper">
+						<?php
+							$options = array(
+								'1' => 'Very poor',
+								'2' => 'Not that bad',
+								'3' => 'Average',
+								'4' => 'Good',
+								'5' => 'Perfect'
+							);
+							
+							echo form_dropdown('rating', $options, set_value('rating', $widget['widget_rating']), 'class="input" disabled="disabled"'); ?>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
 				<?php if(!$this->widgets->is_installed($widget['widget_slug'])): ?>
 					<?php echo form_open(ADMINCP . 'widgets/install/' . $widget['widget_slug']); ?>
 						<?php 
@@ -142,6 +159,83 @@
 	</div>
 	
 	<div class="space"></div>
+	
+	<?php if($this->uri->segment(5, '') == 'reviews' && (bool) !$widget['review_written']): ?>
+	<?php echo form_open(ADMINCP . 'widgets/view/' . $widget['widget_slug'] . '/reviews/page/' . $pages->current_page); ?>
+	<div class="box">
+		<div class="header">
+			<?php echo heading('Write A Review', 4); ?>
+		</div>
+		<div class="content">
+			<div class="inside">
+			
+			<?php if(validation_errors()): ?>
+				<div class="alert">
+					<?php echo validation_errors(); ?>
+				</div>
+				<?php echo br(); ?>
+			<?php endif; ?>
+			
+			<div class="required-field required">Required Field</div>
+			<?php echo br(); ?>
+			<div class="subheader">
+					<?php echo heading('Review Information', 4); ?>
+			</div>
+				
+			<div class="label required">Nickname:</div>
+			<?php 
+			$data = array(
+				'name'		=> 'nickname',
+				'size'		=> '30',
+				'class'		=> 'input'
+			);
+
+			echo form_input($data, set_value('nickname')); ?>
+			<?php echo br(); ?>
+				
+			<div class="label required">Rating:</div>
+				<div class="input">
+					<div class="stars-wrapper">
+					<?php
+					
+					$options = array(
+						'1' => 'Very poor',
+						'2' => 'Not that bad',
+						'3' => 'Average',
+						'4' => 'Good',
+						'5' => 'Perfect'
+					);
+					
+					echo form_dropdown('review_rating', $options, set_value('review_rating', ''), 'class="input"'); ?>
+					</div>
+					<div class="stars-cap" style="float:left;margin-left:5px;"></div>
+				</div>
+				<?php echo br(); ?>
+			
+			<?php
+				$data = array(
+					'name'		=> 'review',
+					'rows'		=> '10',
+					'cols'		=> '85'
+				);
+			
+			echo form_textarea($data); ?>
+			<?php 
+					$data = array(
+						'name'		=> 'add_review',
+						'class'		=> 'submit',
+						'value'		=> 'Write Review'
+					);
+				
+				echo form_submit($data); ?>
+				<div class="clear"></div>
+			<?php echo form_close(); ?>
+			</div>
+		</div>
+		<div class="footer"></div>
+	</div>
+	<div class="space"></div>
+	<?php endif; ?>
 	
 	<div class="box">
 		<div class="tabs">
@@ -248,8 +342,20 @@
 					
 			<?php if($reviews): ?>
 			<?php foreach($reviews as $review): ?>
+			<?php
+					
+				$options = array(
+					'1' => 'Very poor',
+					'2' => 'Not that bad',
+					'3' => 'Average',
+					'4' => 'Good',
+					'5' => 'Perfect'
+				);
+					
+				$rating = '<div class="stars-wrapper">' . form_dropdown('rating', $options, set_value('rating', $review['review_rating']), 'class="input" disabled="disabled"') . '</div>'; ?>
+			
 				<div class="subheader">
-					<?php echo heading($review['review_author'] . ' Posted ' . $review['review_date'], 4); ?>
+					<?php echo heading($review['review_author'] . ' Posted ' . $review['review_date'] . $rating, 4); ?>
 				</div>
 
 		<p class="comment"><?php echo $review['review_title']; ?></p>

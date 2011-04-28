@@ -281,6 +281,7 @@ class Widgets extends CI_Controller {
 		$request = array(
 			array(
 				'widget_slug' => array($this->uri->segment(4, ''), 'string'),
+				'poster' => array(base_url(), 'string'),
 				'page' => array($page, 'int')
 			), 'struct');
 		
@@ -300,6 +301,65 @@ class Widgets extends CI_Controller {
 		{
 			// Retrieve the response
 			$widget = $this->xmlrpc->display_response();
+			
+			// Retrieve our forms
+			$add_review = $this->input->post('add_review');
+		
+			// Check it add review has been posted
+			if($add_review)
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('nickname', 'Nickname', 'trim|required');
+				$this->form_validation->set_rules('review_rating', 'Rating', 'trim|required');
+				$this->form_validation->set_rules('review', 'Review', 'trim|required');
+			
+				// Form validation passed, so continue
+				if (!$this->form_validation->run() == FALSE)
+				{	
+					// Assign server and the method to be requested
+					$this->xmlrpc->server('http://www.xcelgaming.com/widgets', 80);
+					$this->xmlrpc->method('review');
+				
+					// Assign the request
+					$request = array(
+						array(
+							'widget_slug' => array($widget[0]['widget']['widget_slug'], 'string'),
+							'nickname' => array($this->input->post('nickname'), 'string'),
+							'rating' => array($this->input->post('review_rating'), 'int'),
+							'review' => array($this->input->post('review'), 'string'),
+							'poster' => array(base_url(), 'string')
+						), 'struct');
+					
+					// Request the response
+					$this->xmlrpc->request(array($request, 'array'));
+					
+					// Check if the xml rpc request failed
+					if (!$this->xmlrpc->send_request() && $this->session->flashdata('message') == '')
+					{
+							// Alert the user
+							$this->session->set_flashdata('message', 'Your review could not be written at this time! Please try again later.');
+					}
+					else
+					{
+						// Retrieve the response
+						$reviewed = $this->xmlrpc->display_response();
+						
+						if($reviewed[0]['message'] == 0)
+						{
+							// Alert the user
+							$this->session->set_flashdata('message', 'You have already written a review!');
+						}
+						else
+						{
+							// Alert the user
+							$this->session->set_flashdata('message', 'Your review has been written!');
+						}
+					}
+					
+					// Redirect the user
+					redirect(ADMINCP . 'widgets/view/' . $widget[0]['widget']['widget_slug'] . '/reviews');
+				}
+			}
 			
 			//Set up the variables
 			$per_page = $widget[0]['widget']['per_page'];

@@ -8,11 +8,15 @@
 	<?php echo link_tag(ADMINCP_URL . 'js/markitup/markitup/sets/bbcode/style.css'); ?> 
 	<?php echo link_tag(ADMINCP_URL . 'style.css'); ?>
 	<?php echo link_tag(ADMINCP_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>
+	<?php echo link_tag(ADMINCP_URL . 'js/rating/jquery.ui.stars.min.css'); ?>
+	<?php echo link_tag(ADMINCP_URL . 'js/rating/jquery.ui.stars.css'); ?>
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/jquery-1.4.2.min.js"></script> 
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/jquery-ui-1.8.2.custom.min.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.newsticker.js"></script>
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/markitup/markitup/jquery.markitup.js"></script>
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/markitup/markitup/sets/bbcode/set.js"></script> 
+	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/rating/jquery.ui.stars.js"></script> 
+	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/rating/jquery.ui.stars.min.js"></script> 
 	<script type="text/javascript"> 
         $(function(){
 			$(".submit").button();
@@ -32,7 +36,12 @@
 				emoticon = $(this).attr("title");
 				$.markItUp( { replaceWith:emoticon } );
 			});
-	
+			
+			$(".stars-wrapper").stars({
+				inputType: "select",
+				captionEl: $(".stars-cap")
+			});
+
 		});
 	</script>
 </head>
