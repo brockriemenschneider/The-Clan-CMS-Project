@@ -107,7 +107,7 @@
 				
 				<tr class="row">
 					<td>Business Development</td>
-					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=1', 'Brock Riemenschneider'); ?>, <?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=8', 'Christian Sawyer'); ?></td>
+					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=1', 'Brock Riemenschneider'); ?></td>
 				</tr>
 			
 				<tr class="row">

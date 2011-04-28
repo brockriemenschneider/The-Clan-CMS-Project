@@ -678,7 +678,65 @@ class Update {
      * @return	bool
 	 */
     function update_060()
-    {
+    {		
+        // Fetch the config file
+        $config_file = read_file('./clancms/views/install/update/0.6.0/config.php');
+		
+		// Determine if mod rewrite works
+		if(file_get_contents(BASE_URL . 'install/modrewrite') == 1)
+		{
+			$index = '""';
+		}
+		else
+		{
+			$index = '"index.php"';
+		}
+		
+        // Variables to replace
+        $replace = array(
+            '"index.php"' => $index,
+			'__ENCRYPTION__' => $this->CI->user->_salt(),
+            '$config[\'sess_use_database\'] = FALSE;' => '$config[\'sess_use_database\'] = TRUE;'
+        );
+		
+        // Create the new config file content
+        $new_config_file = str_replace(array_keys($replace), $replace, $config_file);
+			
+		// Attempt to write to the config file
+		@chmod('./clancms/config/config.php', 0666);
+        write_file('./clancms/config/config.php', $new_config_file, 'w+');
+		
+		// Fetch the .htaccess file
+        $htaccess_file = read_file('./clancms/views/install/update/0.6.0/.htaccess');
+		
+		// Attempt to write to the .htaccess file
+		@chmod('.htaccess', 0666);
+        write_file('.htaccess', $htaccess_file, 'w+');
+		
+		// Fetch the database file
+        $db_file = read_file('./clancms/config/database.php');
+		
+		// Get the database info
+		preg_match_all('/(\$db\[\'default\'\]\[\')(?P<name>.+)(\'\])(\s)=(\s)(\"|\')(?P<value>.+)(\"|\')/', $db_file, $matches);
+			
+        // Variables to replace
+        $replace = array(
+            '__DBPREFIX__' => $matches['value'][5],
+            '__HOSTNAME__' => $matches['value'][0],
+            '__USERNAME__' => $matches['value'][1],
+            '__PASSWORD__' => $matches['value'][2],
+            '__DATABASE__' => $matches['value'][3],
+            '$db[\'default\'][\'autoinit\'] = FALSE;' => '',
+			'__PORT__' => 3306
+        );
+		
+        // Create the new database file content
+        $new_db_file = str_replace(array_keys($replace), $replace, $db_file);
+		
+		// Attempt to write to the database file
+		@chmod('./clancms/config/database.php', 0666);
+        write_file('./clancms/config/database.php', $db_file, 'w+');
+		
 		// Old files
 		$old_files = array(
 			'./codeigniter/language/english/scaffolding_lang.php',
@@ -1189,7 +1247,7 @@ class Update {
 		// Set up the data
 		$data = array (
 			'area_title'	=> 'Admin CP Header',
-			'area_slug'		=> 'header'
+			'area_slug'		=> 'admincp_header'
 		);
 			
 		// Insert the widget area into the database
