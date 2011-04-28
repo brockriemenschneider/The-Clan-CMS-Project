@@ -683,7 +683,7 @@ class Update {
         $config_file = read_file('./clancms/views/install/update/0.6.0/config.php');
 		
 		// Determine if mod rewrite works
-		if(file_get_contents(BASE_URL . 'install/modrewrite') == 1)
+		if(file_get_contents(base_url() . 'install/modrewrite') == 1)
 		{
 			$index = '""';
 		}
@@ -714,11 +714,11 @@ class Update {
         write_file('.htaccess', $htaccess_file, 'w+');
 		
 		// Fetch the database file
-        $db_file = read_file('./clancms/config/database.php');
+        $db_file = read_file('./clancms/views/install/update/0.6.0/database.php');
 		
 		// Get the database info
 		preg_match_all('/(\$db\[\'default\'\]\[\')(?P<name>.+)(\'\])(\s)=(\s)(\"|\')(?P<value>.+)(\"|\')/', $db_file, $matches);
-			
+		
         // Variables to replace
         $replace = array(
             '__DBPREFIX__' => $matches['value'][5],
