@@ -259,6 +259,7 @@
 			</div>
 		</div>
 		<div class="footer"></div>
+	</div>
 		<?php elseif($this->uri->segment(5, '') == 'screenshots'): ?>
 		<div class="header">
 			<?php echo heading('Screenshots', 4); ?>
@@ -279,6 +280,7 @@
 			</div>
 		</div>
 		<div class="footer"></div>
+	</div>
 		<?php elseif($this->uri->segment(5, '') == 'changelog'): ?>
 		<div class="header">
 			<?php echo heading('Changelog', 4); ?>
@@ -307,6 +309,7 @@
 			</div>
 		</div>
 		<div class="footer"></div>
+	</div>
 		<?php elseif($this->uri->segment(5, '') == 'faq'): ?>
 		<div class="header">
 			<?php echo heading('FAQ', 4); ?>
@@ -332,6 +335,7 @@
 			</div>
 		</div>
 		<div class="footer"></div>
+	</div>
 		<?php elseif($this->uri->segment(5, '') == 'reviews'): ?>
 		<div class="header">
 			<?php echo heading('Reviews', 4); ?>
