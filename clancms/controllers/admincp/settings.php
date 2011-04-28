@@ -98,14 +98,14 @@ class Settings extends CI_Controller {
 					foreach($settings as $setting_id => $value)
 					{
 						// Setting exists, update the setting in the database
-						$this->settings->update_setting($setting->setting_id, array('setting_value' => $value));
+						$this->settings->update_setting($setting_id, array('setting_value' => $value));
 					}
 					
 					// Alert the adminstrator
 					$this->session->set_flashdata('message', 'The settings have been successfully updated!');
 					
 					// Redirect the adminstrator
-					ci_redirect(ADMINCP . 'settings');
+					redirect(ADMINCP . 'settings');
 				}
 			}
 		}

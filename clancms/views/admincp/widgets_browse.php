@@ -68,8 +68,8 @@
 				<thead>
 					<tr>
 						<th width="50%">Widget</th>
-						<th width="10%">Version</th>
-						<th width="25%">Author</th>
+						<th width="15%">Rating</th>
+						<th width="20%">Author</th>
 						<th width="15%">Actions</th>
 					</tr>
 				</thead>
@@ -78,8 +78,17 @@
 					<?php if($widgets): ?>
 						<?php foreach($widgets as $widget): ?>
 						<tr <?php if($this->widgets->check_updates($widget['widget_slug'])): echo 'class="selected"'; endif; ?>>
-							<td><br /><?php echo anchor(ADMINCP . 'widgets/view/' . $widget['widget_slug'], $widget['widget_title']); ?><br /><?php if($widget['widget_description']): echo $widget['widget_description']; endif; ?><br /><br /></td>
-							<td><?php echo $widget['widget_version']; ?></td>
+							<td><br /><?php echo anchor(ADMINCP . 'widgets/view/' . $widget['widget_slug'], $widget['widget_title'] . ' v' . $widget['widget_version']); ?><br /><?php if($widget['widget_description']): echo $widget['widget_description']; endif; ?><br /><br /></td>
+							<td><div class="stars-wrapper"><?php
+							$options = array(
+								'1' => 'Very poor',
+								'2' => 'Not that bad',
+								'3' => 'Average',
+								'4' => 'Good',
+								'5' => 'Perfect'
+							);
+							
+							echo form_dropdown('rating', $options, set_value('rating', $widget['widget_rating']), 'class="input" disabled="disabled"'); ?></div></td>
 							<td><?php echo $widget['widget_author']; ?></td>
 							<td><?php echo anchor(ADMINCP . 'widgets/view/' . $widget['widget_slug'], img(ADMINCP_URL . 'images/view.png', array('alt' => 'View')), array('title' => 'View')); ?> <?php if(!$this->widgets->is_installed($widget['widget_slug'])): echo anchor(ADMINCP . 'widgets/install/' . $widget['widget_slug'], img(ADMINCP_URL . 'images/add.png', array('alt' => 'Install')), array('title' => 'Install', 'onclick' => "return installConfirm();")); endif; ?> <?php if($this->widgets->check_updates($widget['widget_slug'])): echo anchor(ADMINCP . 'widgets/update/' . $widget['widget_slug'], img(array('src' => ADMINCP_URL . 'images/update.png', 'alt' => 'Update')), array('title' => 'Update', 'onclick' => "return updateConfirm();")); endif; ?> <?php if($this->widgets->is_installed($widget['widget_slug'])): echo anchor(ADMINCP . 'widgets/uninstall/' . $widget['widget_slug'], img(array('src' => ADMINCP_URL . 'images/delete.png', 'alt' => 'Uninstall')), array('title' => 'Uninstall', 'onclick' => "return uninstallConfirm();")); endif; ?></td>
 						</tr>

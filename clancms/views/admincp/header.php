@@ -56,7 +56,7 @@
 			<?php $this->load->widget_area('admincp_header'); ?>
 		</div>
 	</div>
-	<div id="banner"><?php if((bool) $this->ClanCMS->get_setting('logo')): ?><?php echo anchor(ADMINCP, img(array('src' => ADMINCP_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo'))); ?><?php elseif($this->ClanCMS->get_setting('logo') == 2): ?><?php echo anchor(ADMINCP, '<h1>' . CLAN_NAME . '</h1><h2>Admin Control Panel</h2>'); ?><?php endif; ?></div>
+	<div id="banner"><?php if(($this->ClanCMS->get_setting('logo') == 1): ?><?php echo anchor(ADMINCP, img(array('src' => ADMINCP_URL . 'images/logo.png', 'alt' => 'Logo', 'id' => 'logo'))); ?><?php elseif($this->ClanCMS->get_setting('logo') == 2): ?><?php echo anchor(ADMINCP, '<h1>' . CLAN_NAME . '</h1><h2>Admin Control Panel</h2>'); ?><?php endif; ?></div>
 	<div id="navigation">
 	<ul>
 		<li <?php if($this->uri->segment(2, '') == ''): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP, 'Dashboard'); ?></span><span class="right"></span></li>
