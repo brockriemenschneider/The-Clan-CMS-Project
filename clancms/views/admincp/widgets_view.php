@@ -106,7 +106,7 @@
 								'5' => 'Perfect'
 							);
 							
-							echo form_dropdown('rating', $options, set_value('rating', $widget['widget_rating']), 'class="input" disabled="disabled"'); ?>
+							echo form_dropdown('rating', $options, set_value('rating', $widget['widget_rating']), 'class="input" disabled="disabled"'); ?><span style="margin-left:5px;"><?php echo $widget['total_ratings']; ?> Ratings</span>
 					</div>
 				</div>
 				<div class="clear"></div>
