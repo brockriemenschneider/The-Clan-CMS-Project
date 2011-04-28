@@ -58,15 +58,6 @@ class Update {
 	 */
     function install()
     {
-	
-			
-		// Loop through the important files
-		foreach($important_files as $important_file)
-		{
-			// Write the important files
-			write_file($important_file, $file[$important_file]);
-		}
-		
 		// Check if we need to update to 0.5.4
 		if(CLANCMS_VERSION < '0.5.4')
 		{
@@ -688,9 +679,6 @@ class Update {
 	 */
     function update_060()
     {
-		echo 'test';
-		exit;
-		
 		// Old files
 		$old_files = array(
 			'./codeigniter/language/english/scaffolding_lang.php',
@@ -723,14 +711,14 @@ class Update {
 		
 		// Old folders
 		$old_folders = array(
-			'./clancms/views/themes/default/widgets',
-			'./clancms/views/admincp/widgets',
-			'./clancms/widgets/admincp',
-			'./codeigniter/cache',
-			'./codeigniter/codeigniter',
-			'./codeigniter/logs',
-			'./codeigniter/plugins',
-			'./codeigniter/scaffolding'
+			'./clancms/views/themes/default/widgets/',
+			'./clancms/views/admincp/widgets/',
+			'./clancms/widgets/admincp/',
+			'./codeigniter/cache/',
+			'./codeigniter/codeigniter/',
+			'./codeigniter/logs/',
+			'./codeigniter/plugins/',
+			'./codeigniter/scaffolding/'
 		);
 		
 		// Loop through each old folder
@@ -955,9 +943,6 @@ class Update {
 			$this->CI->settings->update_setting($setting->setting_id, $data);
 		}
 		
-		// Load the Widgets model
-		$this->CI->load->model('Widgets_model', 'widgets');
-		
 		// Set up the fields
 		$fields = array(
 			'widget_id' => array(
@@ -1012,7 +997,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1024,7 +1009,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1036,7 +1021,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1048,7 +1033,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1060,7 +1045,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1072,7 +1057,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '3',
@@ -1083,7 +1069,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '3',
@@ -1094,7 +1081,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '3',
@@ -1105,7 +1093,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '4',
@@ -1116,7 +1105,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '5',
@@ -1127,7 +1117,8 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
+		
 		// Set up the data
 		$data = array (
 			'area_id'			=> '6',
@@ -1138,7 +1129,7 @@ class Update {
 		);
 			
 		// Insert the widget into the database
-		$this->CI->widgets->insert_widget($data);
+		$this->CI->db->insert('widgets', $data);
 		
 		// Set up the fields
 		$fields = array(
@@ -1175,7 +1166,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1184,7 +1175,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1193,7 +1184,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1202,7 +1193,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1211,7 +1202,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 		
 		// Set up the data
 		$data = array (
@@ -1220,7 +1211,7 @@ class Update {
 		);
 			
 		// Insert the widget area into the database
-		$this->CI->widgets->insert_area($data);
+		$this->CI->db->insert('widget_areas', $data);
 	}
 	
 	// --------------------------------------------------------------------
