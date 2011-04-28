@@ -707,14 +707,14 @@ class Update {
         write_file('./clancms/config/config.php', $new_config_file, 'w+');
 		
 		// Fetch the .htaccess file
-        $htaccess_file = read_file('./clancms/views/install/update/0.6.0/.htaccess');
+        $htaccess_file = read_file('./clancms/views/install/update/0.6.0/htaccess.txt');
 		
 		// Attempt to write to the .htaccess file
 		@chmod('.htaccess', 0666);
         write_file('.htaccess', $htaccess_file, 'w+');
 		
 		// Fetch the database file
-        $db_file = read_file('./clancms/views/install/update/0.6.0/database.php');
+        $db_file = read_file('./clancms/config/database.php');
 		
 		// Get the database info
 		preg_match_all('/(\$db\[\'default\'\]\[\')(?P<name>.+)(\'\])(\s)=(\s)(\"|\')(?P<value>.+)(\"|\')/', $db_file, $matches);
@@ -734,8 +734,8 @@ class Update {
         $new_db_file = str_replace(array_keys($replace), $replace, $db_file);
 		
 		// Attempt to write to the database file
-		@chmod('./clancms/config/database.php', 0666);
-        write_file('./clancms/config/database.php', $db_file, 'w+');
+		@chmod('./clancms/views/install/update/0.6.0/database.php', 0666);
+        write_file('./clancms/views/install/update/0.6.0/database.php', $new_db_file, 'w+');
 		
 		// Old files
 		$old_files = array(
