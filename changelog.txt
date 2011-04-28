@@ -3,6 +3,16 @@
                              Clan CMS Change Log
 ============================================================================================
 
+-----0.6.0-----
+Updated to Codeigniter 2.0.2
+Added new widget system
+Updated site settings
+Updated the installer
+Updated the .htaccess
+Added support for html on pages
+Fixed some styling issues
+Added support for no theme logo
+
 -----0.5.6-----
 Added Squad Tag
 Added Opponents and maps for matches
