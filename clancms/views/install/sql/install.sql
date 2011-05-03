@@ -193,7 +193,8 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (8, 2, 'Theme Logo', 'logo', '1', 'select', '1=Yes|0=No|2=Text', 'Use the logo image? Otherwise it will use text', 'trim|required', 2),
 (9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'text', '', 'The width of sponsor images in pixels', 'trim|required|numeric', 3),
 (10, 4, 'Allow Registration', 'allow_registration', '1', 'select', '1=Yes|0=No', 'Allow users to register on the site?', 'trim|required', 1),
-(11, 4, 'CAPTCHA Words', 'captcha_words', 'Xcel Gaming', 'textarea', '', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 'trim|required', 2);
+(11, 4, 'CAPTCHA Words', 'captcha_words', 'Xcel Gaming', 'textarea', '', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 'trim|required', 3),
+(12, 4, 'Team Password', 'team_password', '', 'text', '', 'If this is set then users that enter this password during registration will automatically be put into the "Team Members" usergroup.', 'trim', 2);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
