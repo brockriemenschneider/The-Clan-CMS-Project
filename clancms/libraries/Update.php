@@ -1291,6 +1291,22 @@ class Update {
 	 */
     function update_061()
     {	
+		// Old files
+		$old_files = array(
+			'./clancms/libraries/ClanCMS_Loader.php',
+		);
+		
+		// Loop through each old file
+		foreach($old_files as $old_file)
+		{
+			// Check if the file exists
+			if(file_exists($old_file))
+			{
+				// File exists, delete the old file
+				unlink($old_file);
+			}
+		}
+		
 		// Set up the data
 		$data = array(
 			'category_id'			=> '4',
@@ -1301,10 +1317,10 @@ class Update {
 			'setting_rules'			=> 'trim',
 			'setting_priority'		=> '2'
 		);
-			
+		
 		// Insert the setting in the database
 		$this->CI->settings->insert_setting($data);
-			
+		
 		// Retrieve the setting
 		if($setting = $this->CI->settings->get_setting(array('setting_slug' => 'caotcha_words')))
 		{
@@ -1316,6 +1332,104 @@ class Update {
 			// Update the setting in the database
 			$this->CI->settings->update_setting($setting->setting_id, $data);
 		}
+		
+		// Set up the data
+		$data = array(
+			'category_title'	=> 'Email Settings',
+			'category_priority'	=> '5'
+		);
+		
+		// Insert the setting category into the database
+		$this->CI->settings->insert_category($data);
+		
+		// Get the email settings setting category id
+		$email_setting_id = $this->CI->db->insert_id();
+
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'Email Protocol',
+			'setting_slug'			=> 'email_protocol',
+			'setting_value'			=> 'mail',
+			'setting_type'			=> 'select',
+			'setting_options'		=> 'mail=Mail|sendmail=Sendmail|smtp=SMTP',
+			'setting_description'	=> 'The desired email protocol',
+			'setting_rules'			=> 'trim|required',
+			'setting_priority'		=> '1'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'Sendmail Path',
+			'setting_slug'			=> 'email_sendmail_path',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'Path to server sendmail binary.',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '2'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'SMTP Host',
+			'setting_slug'			=> 'email_smtp_host',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'SMTP host name',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '3'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'SMTP User',
+			'setting_slug'			=> 'email_smtp_user',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'SMTP user name',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '4'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+	
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'SMTP Password',
+			'setting_slug'			=> 'email_smtp_pass',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'SMTP password',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '5'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> $email_setting_id,
+			'setting_title'			=> 'SMTP Port',
+			'setting_slug'			=> 'email_smtp_port',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'SMTP port number',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '6'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
 	}
 	
 	// --------------------------------------------------------------------

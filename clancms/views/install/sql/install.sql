@@ -194,7 +194,13 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (9, 2, 'Sponsor Image Width', 'sponsor_width', '209', 'text', '', 'The width of sponsor images in pixels', 'trim|required|numeric', 3),
 (10, 4, 'Allow Registration', 'allow_registration', '1', 'select', '1=Yes|0=No', 'Allow users to register on the site?', 'trim|required', 1),
 (11, 4, 'CAPTCHA Words', 'captcha_words', 'Xcel Gaming', 'textarea', '', 'Word Bank for CAPTCHA. Seperate each word on a new line.', 'trim|required', 3),
-(12, 4, 'Team Password', 'team_password', '', 'text', '', 'If this is set then users that enter this password during registration will automatically be put into the "Team Members" usergroup.', 'trim', 2);
+(12, 4, 'Team Password', 'team_password', '', 'text', '', 'If this is set then users that enter this password during registration will automatically be put into the "Team Members" usergroup.', 'trim', 2),
+(13, 5, 'Email Protocol', 'email_protocol', 'mail', 'select', 'mail=Mail|sendmail=Sendmail|smtp=SMTP', 'The desired email protocol', 'trim|required', 1),
+(14, 5, 'Sendmail Path', 'email_sendmail_path', '', 'text', '', 'Path to server sendmail binary.', 'trim', 2),
+(15, 5, 'SMTP Host', 'email_smtp_host', '', 'text', '', 'SMTP host name', 'trim', 3),
+(16, 5, 'SMTP User', 'email_smtp_user', '', 'text', '', 'SMTP user name', 'trim', 4),
+(17, 5, 'SMTP Password', 'email_smtp_pass', '', 'text', '', 'SMTP password', 'trim', 5),
+(18, 5, 'SMTP Port', 'email_smtp_port', '', 'text', '', 'SMTP port number', 'trim', 6);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
@@ -209,7 +215,8 @@ INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `
 (1, 'General Settings', 1),
 (2, 'Theme Settings', 2),
 (3, 'Time Settings', 3),
-(4, 'Registration Settings', 4);
+(4, 'Registration Settings', 4),
+(5, 'Email Settings', 5);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__sponsors`;
 -- command split --
