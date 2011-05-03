@@ -71,7 +71,7 @@ unset($base_url);
 | The current version of the Clan CMS that is running
 |
 */
-define('CLANCMS_VERSION', '0.6.0');
+define('CLANCMS_VERSION', '0.6.1');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
