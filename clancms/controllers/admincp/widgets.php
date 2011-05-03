@@ -734,10 +734,10 @@ class Widgets extends CI_Controller {
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 			
 			//Check if settings exist
-			if($widget->settings)
+			if($type->settings)
 			{
 				// Loop through each setting
-				foreach($widget->settings as $setting)
+				foreach($type->settings as $setting)
 				{
 					$this->form_validation->set_rules('setting[' . $setting['slug'] . ']', $setting['title'], $setting['rules']);
 				}
