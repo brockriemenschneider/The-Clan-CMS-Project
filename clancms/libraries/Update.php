@@ -85,6 +85,13 @@ class Update {
 			// Update to 0.6.0
 			$this->update_060();
 		}
+		
+		// Check if we need to update to 0.6.1
+		if(CLANCMS_VERSION < '0.6.1')
+		{
+			// Update to 0.6.1
+			$this->update_061();
+		}
 	}
 	
 	// --------------------------------------------------------------------
@@ -1270,6 +1277,45 @@ class Update {
 			
 		// Insert the widget area into the database
 		$this->CI->db->insert('widget_areas', $data);
+	}
+	
+	// --------------------------------------------------------------------
+	
+    /**
+	 * update_061
+	 *
+	 * Update for v0.6.1
+	 *
+	 * @access	public
+     * @return	bool
+	 */
+    function update_061()
+    {	
+		// Set up the data
+		$data = array(
+			'category_id'			=> '4',
+			'setting_title'			=> 'Team Password',
+			'setting_slug'			=> 'team_password',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'If this is set then users that enter this password during registration will automatically be put into the "Team Members" usergroup.',
+			'setting_rules'			=> 'trim',
+			'setting_priority'		=> '2'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+			
+		// Retrieve the setting
+		if($setting = $this->CI->settings->get_setting(array('setting_slug' => 'caotcha_words')))
+		{
+			// Set up the data
+			$data = array(
+				'setting_priority'		=> '3'
+			);
+			
+			// Update the setting in the database
+			$this->CI->settings->update_setting($setting->setting_id, $data);
+		}
 	}
 	
 	// --------------------------------------------------------------------

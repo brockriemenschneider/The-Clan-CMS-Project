@@ -109,6 +109,25 @@
 				echo form_dropdown('daylight_savings', $options, set_value('daylight_savings'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				
+				<?php if($this->ClanCMS->get_setting('team_password')): ?>
+				<div class="subheader">
+						<?php echo heading('Team Verification', 4); ?>
+				</div>
+				
+				<div class="label">Team Password:</div> 
+				<?php 
+				$data = array(
+					'name'		=> 'team_password',
+					'size'		=> '30',
+					'class'		=> 'input'
+				);
+
+				echo form_password($data); ?>
+				<?php echo br(); ?>
+				<div class="description">The team password to join the team</div>
+				<?php echo br(); ?>
+				<?php endif; ?>
+				
 				<div class="subheader">
 						<?php echo heading('Image Verification', 4); ?>
 				</div>

@@ -82,6 +82,15 @@ class Register extends CI_Controller {
 			$this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'trim|required|matches[password]');
 			$this->form_validation->set_rules('timezone', 'Timezone', 'trim|required');
 			$this->form_validation->set_rules('daylight_savings', 'Daylight Savings', 'trim|required');
+			
+			// Check if there is a team password
+			if($this->ClanCMS->get_setting('team_password'))
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('team_password', 'Team Password', 'trim|callback__check_team_password');
+			}
+			
+			// Set form validation rules
 			$this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback__check_captcha');
 						
 			// Form validation passed, so continue
@@ -90,9 +99,21 @@ class Register extends CI_Controller {
 				// Retrieve salt
 				$salt = $this->user->_salt();
 				
+				// Check if team password matches
+				if($this->input->post('team_password') == $this->ClanCMS->get_setting('team_password') && $this->ClanCMS->get_setting('team_password') != '')
+				{
+					// New user is a team member
+					$group_id = 3;
+				}
+				else
+				{
+					// New user is a plain user
+					$group_id = 1;
+				}
+				
 				// Set up the data
 				$data = array(
-					'group_id'					=> 1,
+					'group_id'					=> $group_id,
 					'user_name'					=> $this->input->post('username'),
 					'user_password'				=> $this->encrypt->sha1($salt . $this->encrypt->sha1($this->input->post('password'))),
 					'user_salt'					=> $salt,
@@ -261,7 +282,34 @@ class Register extends CI_Controller {
 			return FALSE;
 		}
 	}
-			
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Check Team Password
+	 *
+	 * Check's to see if the team password is correct
+	 *
+	 * @access	private
+	 * @param	string
+	 * @return	bool
+	 */
+	function _check_team_password($password = '')
+	{
+		// Check if team password matches
+		if($this->input->post('team_password') == $this->ClanCMS->get_setting('team_password') OR $this->input->post('team_password') == '')
+		{
+			// Password matches, return TRUE
+			return TRUE;
+		}
+		else
+		{
+			// Team password is inccorect, alert the user & return FALSE
+			$this->form_validation->set_message('_check_team_password', 'The team password is incorrect.');
+			return FALSE;
+		}
+	}
+	
 	// --------------------------------------------------------------------
 	
 	/**
