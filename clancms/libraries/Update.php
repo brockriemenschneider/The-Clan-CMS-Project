@@ -1294,6 +1294,7 @@ class Update {
 		// Old files
 		$old_files = array(
 			'./clancms/libraries/ClanCMS_Loader.php',
+			'./clancms/config/Email.php'
 		);
 		
 		// Loop through each old file
