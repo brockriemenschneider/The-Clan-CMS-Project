@@ -69,10 +69,13 @@ class Unzip {
 			{
 				// Extract the zip
 				$zip->extractTo($destination);
+				
+				// Close the zip
+				return $zip->close();
 			}
-
-			// Close the zip
-			return $zip->close();
+			
+			// Return FALSE
+			return FALSE;
 		}
 		
 		// Return FALSE
