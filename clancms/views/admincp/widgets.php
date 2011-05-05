@@ -4,20 +4,24 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#widgets tbody").sortable({stop:function(i) {
-			$.ajax({
-				type: "POST",
-				url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>widgets/order",
-				data: $(this).sortable("serialize")
-			});
-			$("#move").html('<div class="alert">The widget was successfully moved!</div><br />');
-		}});
+		var cct = $.cookie('ci_csrf_token');
+		
+		$("#widgets tbody").sortable({
+			update:function(i) {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>widgets/order",
+					data: $(this).sortable("serialize") + '&ci_csrf_token=' + cct
+				});
+				
+				$("#move").html('<div class="alert">The widget was successfully moved!</div><br />');
+			}
+		});
 
 		$("#widgets tbody").disableSelection();
-		
 
-	});		
-	
+	});	
+
 	function updateConfirm()
 	{
     	var answer = confirm("Are you sure you want to update this widget?")

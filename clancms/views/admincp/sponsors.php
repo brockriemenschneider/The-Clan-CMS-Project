@@ -4,18 +4,23 @@
 
  <script type="text/javascript">
 	$(function() {
-		$("#sponsors tbody").sortable({stop:function(i) {
-			$.ajax({
-				type: "POST",
-				url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>sponsors/order",
-				data: $("#sponsors tbody").sortable("serialize")
-			});
-			$("#move").html('<div class="alert">The sponsor was successfully moved!</div><br />');
-		}});
+		var cct = $.cookie('ci_csrf_token');
+		
+		$("#sponsors tbody").sortable({
+			update:function(i) {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>sponsors/order",
+					data: $(this).sortable("serialize") + '&ci_csrf_token=' + cct
+				});
+				
+				$("#move").html('<div class="alert">The sponsor was successfully moved!</div><br />');
+			}
+		});
 
 		$("#sponsors tbody").disableSelection();
 
-	});		
+	});	
 		
 	function deleteConfirm()
 	{

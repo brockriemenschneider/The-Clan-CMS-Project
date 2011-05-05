@@ -4,18 +4,23 @@
 
  <script type="text/javascript">
 	$(function() {
-		$("#members tbody").sortable({stop:function(i) {
-			$.ajax({
-				type: "POST",
-				url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>/squads/order_members/<?php echo $squad->squad_id; ?>",
-				data: $("#members tbody").sortable("serialize")
-			});
-			$("#move").html('<div class="alert">The member was successfully moved!</div><br />');
-		}});
+		var cct = $.cookie('ci_csrf_token');
+		
+		$("#members tbody").sortable({
+			update:function(i) {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url(); ?><?php echo ADMINCP; ?>squads/order_members/<?php echo $squad->squad_id; ?>",
+					data: $(this).sortable("serialize") + '&ci_csrf_token=' + cct
+				});
+				
+				$("#move").html('<div class="alert">The member was successfully moved!</div><br />');
+			}
+		});
 
 		$("#members tbody").disableSelection();
 
-	});		
+	});
 	
 	function deleteConfirm()
 	{

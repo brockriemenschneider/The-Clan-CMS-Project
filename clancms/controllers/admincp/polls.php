@@ -125,10 +125,11 @@ class Polls extends CI_Controller {
 				if((bool) $this->input->post('active'))
 				{
 					// Poll is active, retrieve the current active poll
-					$active_poll = $this->polls->get_poll(array('poll_active' => 1));
-					
-					// Update the current active poll to inactive
-					$this->polls->update_poll($active_poll->poll_id, array('poll_active' => 0));
+					if($active_poll = $this->polls->get_poll(array('poll_active' => 1)))
+					{
+						// Update the current active poll to inactive
+						$this->polls->update_poll($active_poll->poll_id, array('poll_active' => 0));
+					}
 				}
 				
 				// Insert the poll into the database

@@ -239,6 +239,35 @@ class Pages extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
+	 * Order
+	 *
+	 * Update's the order of the pages
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function order()
+	{	
+		// Retrieve our forms
+		$pages = $this->input->post('page');
+		
+		// Loop through each page
+		foreach($pages as $page_priority => $page_id)
+		{
+			// Set up the data
+			$data = array(
+				'page_priority'	=> $page_priority
+			);
+	
+			// Update the page in the database
+			$this->pages->update_page($oage_id, $data);
+		}
+		
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
 	 * Check Slug
 	 *
 	 * Check's to see if a slug is unique

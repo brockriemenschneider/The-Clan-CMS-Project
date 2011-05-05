@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/markitup/markitup/sets/bbcode/set.js"></script> 
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/rating/jquery.ui.stars.js"></script> 
 	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/rating/jquery.ui.stars.min.js"></script> 
+	<script type="text/javascript" src="<?php echo ADMINCP_URL; ?>js/jquery.cookie.js"></script> 
 	<script type="text/javascript"> 
         $(function(){
 			$(".submit").button();
