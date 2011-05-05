@@ -52,6 +52,15 @@
 					);
 
 					echo form_input($data, set_value('setting[' . $setting->setting_id . ']', $setting->setting_value)); ?>
+				<?php elseif($setting->setting_type == "password"): ?>
+					<?php 
+					$data = array(
+						'name'		=> 'setting[' . $setting->setting_id . ']',
+						'size'		=> '30',
+						'class'		=> 'input'
+					);
+
+					echo form_password($data, set_value('setting[' . $setting->setting_id . ']', $setting->setting_value)); ?>
 				<?php elseif($setting->setting_type == "timezone"): ?>
 				
 					<?php echo timezone_menu(set_value('setting[' . $setting->setting_id . ']', $setting->setting_value), 'input select', 'setting[' . $setting->setting_id . ']'); ?>

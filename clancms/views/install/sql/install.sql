@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__settings` (
   `setting_title` varchar(100) NOT NULL,
   `setting_slug` varchar(100) NOT NULL,
   `setting_value` longtext NOT NULL,
-  `setting_type` enum('text','timezone','select','textarea') NOT NULL DEFAULT 'text',
+  `setting_type` enum('text','password','timezone','select','textarea') NOT NULL DEFAULT 'text',
   `setting_options` text NOT NULL,
   `setting_description` text NOT NULL,
   `setting_rules` varchar(200) NOT NULL,
@@ -199,7 +199,7 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (14, 5, 'Sendmail Path', 'email_sendmail_path', '', 'text', '', 'Path to server sendmail binary.', 'trim', 2),
 (15, 5, 'SMTP Host', 'email_smtp_host', '', 'text', '', 'SMTP host name', 'trim', 3),
 (16, 5, 'SMTP User', 'email_smtp_user', '', 'text', '', 'SMTP user name', 'trim', 4),
-(17, 5, 'SMTP Password', 'email_smtp_pass', '', 'text', '', 'SMTP password', 'trim', 5),
+(17, 5, 'SMTP Password', 'email_smtp_pass', '', 'password', '', 'SMTP password', 'trim', 5),
 (18, 5, 'SMTP Port', 'email_smtp_port', '', 'text', '', 'SMTP port number', 'trim', 6);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;

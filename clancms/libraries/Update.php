@@ -1308,6 +1308,22 @@ class Update {
 			}
 		}
 		
+		// Load the settings model
+		$this->CI->load->model('Settings_model', 'settings');
+		
+		// Set up the fields
+		$fields = array(
+			'setting_type' => array(
+								'type' 			=> 'ENUM',
+								'constraint' 	=> "'text','password','timezone','select','textarea'",
+								'null'			=> FALSE,
+								'default'		=> 'text'
+							)
+		);
+		
+		// Modify setting type column in the settings table in the database
+		$this->CI->dbforge->modify_column('settings', $fields);
+		
 		// Set up the data
 		$data = array(
 			'category_id'			=> '4',
