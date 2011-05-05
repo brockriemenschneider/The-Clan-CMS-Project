@@ -173,8 +173,8 @@ class Register extends CI_Controller {
 				// Set up the data
 				$data = array(
 					'word'	 	 => $word,
-					'img_path'	 => UPLOAD . 'captcha',
-					'img_url'	 => IMAGES . 'captcha',
+					'img_path'	 => UPLOAD . 'captcha/',
+					'img_url'	 => IMAGES . 'captcha/',
 					'img_width'	 => 150,
 					'img_height' => 50,
 					'expiration' => 0
