@@ -40,13 +40,13 @@ class ClanCMS_Email extends CI_Email {
 		$this->CI =& get_instance();
 		
 		// Retrieve the email protocol
-        $config['protocol'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_protocol');
+        $config['protocol'] = $this->CI->ClanCMS->get_setting('email_protocol');
 
         // Configure sendmail settings
         if($config['protocol'] == 'sendmail')
         {
 			// Check the sendmail path
-            if($this->CI->settings->get_setting(array('setting_slug' => 'email_sendmail_path') == '')
+            if($this->CI->ClanCMS->get_setting('email_sendmail_path') == '')
             {
 				// Set mail path
 				$config['mailpath'] = '/usr/sbin/sendmail';
@@ -54,19 +54,23 @@ class ClanCMS_Email extends CI_Email {
 			else
 			{
 				// Set mail path
-				$config['mailpath'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_sendmail_path');
+				$config['mailpath'] = $this->CI->ClanCMS->get_setting('email_sendmail_path');
 			}
 		}
         
         // Configure smtp settings
         if ($config['protocol'] == 'smtp')
-        {
-                $config['smtp_host'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_smtp_host');
-                $config['smtp_user'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_smtp_user');
-                $config['smtp_pass'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_smtp_pass');
-                $config['smtp_port'] = $this->CI->settings->get_setting(array('setting_slug' => 'email_smtp_port');
+        {	
+			// Configure additional settings
+            $config['smtp_host'] = $this->CI->ClanCMS->get_setting('email_smtp_host');
+            $config['smtp_user'] = $this->CI->ClanCMS->get_setting('email_smtp_user');
+            $config['smtp_pass'] = $this->CI->ClanCMS->get_setting('email_smtp_pass');
+			$config['smtp_port'] = $this->CI->ClanCMS->get_setting('email_smtp_port');
+			$config['smtp_timeout'] = '30';
+			$config['charset'] = 'utf-8';
+			$config['newline'] = "\r\n"; 
         }
-        
+
 		// Initialize settings
         $this->initialize($config);
 	}
