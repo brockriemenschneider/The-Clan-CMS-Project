@@ -121,7 +121,7 @@
 							'cols'		=> '50'
 						);
 				
-						echo form_textarea($data, set_value('setting[' . $setting['slug'] . ']', $widget->settings[$setting['slug']])); ?>
+						echo form_textarea($data, set_value('setting[' . $setting['slug'] . ']', htmlspecialchars_decode($widget->settings[$setting['slug']]))); ?>
 				
 						<?php endif; ?>
 						<div class="description"><?php echo $setting['description']; ?></div>

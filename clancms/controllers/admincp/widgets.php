@@ -586,6 +586,48 @@ class Widgets extends CI_Controller {
 			// Delete the install package
 			unlink($widget['download_file']);
 			
+			// Set up the data
+			$data = array(
+				'widget_slug'	=>	$this->uri->segment(4, '')
+			);
+			
+			// Retrieve the widget
+			if($widget = $this->widgets->get_widget($data))
+			{
+				// Retrieve the widget type
+				if($type = $this->widgets->read_widget($widget->widget_slug))
+				{
+					// Check if type settings is defined
+					if(empty($type->settings))
+					{
+						// Assign type settings
+						$type->settings = array();
+					}
+					
+					// Unserialize the widget settings
+					$widget->settings = unserialize($widget->widget_settings);
+					
+					// Loop through type settings
+					foreach($type->settings as $setting)
+					{
+						// Check if the setting exists
+						if(!array_key_exists($setting['slug'], $widget->settings))
+						{
+							// Add the setting
+							$widget->settings = array_merge($widget->settings, array($setting['slug'] => $setting['value']));
+						}
+					}
+					
+					// Set up the data
+					$data = array (
+						'widget_settings'	=> serialize($widget->settings)
+					);
+				
+					// Update the widget in the database
+					$this->widgets->update_widget($widget->widget_id, $data);
+				}
+			}
+			
 			// The widget has been installed, alert the adminstrator
 			$this->session->set_flashdata('message', 'The widget has been updated!');
 			
