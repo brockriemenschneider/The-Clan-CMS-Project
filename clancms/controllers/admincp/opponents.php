@@ -265,7 +265,7 @@ class Opponents extends CI_Controller {
 				// Set up the data
 				$data = array (
 					'opponent_title'	=> $this->input->post('title'),
-					'opponent_slug'		=> $opponent_id . '-' . url_title($this->input->post('title')),
+					'opponent_slug'		=> $opponent->opponent_id . '-' . url_title($this->input->post('title')),
 					'opponent_link'		=> $this->input->post('link'),
 					'opponent_tag'		=> $this->input->post('tag')
 				);
