@@ -65,6 +65,50 @@ class Dashboard extends CI_Controller {
 	 */
 	function index()
 	{	
+		// Retrieve the slides
+		$slides = $this->articles->get_slides($this->ClanCMS->get_setting('slide_limit'), '', array());
+		
+		// Check if slides exist
+		if($slides)
+		{
+			// Slides exist, loop through each slide
+			foreach($slides as $slide)
+			{
+				// Retrieve the slide article
+				if($article = $this->articles->get_article(array('article_id' => $slide->article_id)))
+				{
+					// Retrieve the squad
+					$squad = $this->squads->get_squad(array('squad_id' => $article->squad_id));
+					
+					// Check if squad exists
+					if($squad)
+					{
+						// Squad exists, assign article squad
+						$article->squad = $squad->squad_title;
+					}
+					else
+					{
+						// Squad doesn't exist, assign article squad
+						$article->squad = '';
+					}
+				
+					// Assign article information
+					$slide->slider_title = $article->squad . $article->article_title;
+					
+					// Check if the slide has content
+					if(!$slide->slider_content)
+					{
+						// Assign article information
+						$slide->slider_content = ellipsize($article->article_content, 200, 1);
+					}
+					
+					// Assign article information
+					$slide->slider_link = 'articles/view/' . $article->article_slug;
+				}
+			}
+		}
+		
+		
 		// Retrieve the articles
 		$articles = $this->articles->get_articles(5, '', array('article_status' => 1));
 		
@@ -115,7 +159,8 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
-		// Create a reference to articles
+		// Create a reference to sldies & articles
+		$this->data->slides =& $slides;
 		$this->data->articles =& $articles;
 	
 		// Load the dashboard view

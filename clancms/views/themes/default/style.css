@@ -206,13 +206,13 @@ ul.newsticker a {
 	height: 30px;	
 	width: 981px;
 	position:relative;
+	z-index: 10;
 }
 
 #header #navigation  ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	float:left;
 }
 
 #header #navigation ul li {
@@ -280,10 +280,6 @@ ul.newsticker a {
 	width: 4px;
 	height: 30px;
 	float: left;
-}
-
-#header #navigation ul li ul a {
-	width: 100%;
 }
 
 #header #navigation ul li ul {
@@ -989,4 +985,71 @@ ul.newsticker a {
 {
 	border-bottom: 1px #ee2d00 solid;
 	padding-bottom: 11px;
+}
+
+#slider-wrapper
+{
+	position:relative;
+	height: 252px;
+	width: 741px;
+	background-image: url('images/slideshow.png');
+}
+
+#slider
+{
+	position: absolute;
+	top: 7px;
+	left: 7px;
+}
+
+#slider .nivo-controlNav
+{
+	position:absolute;
+	bottom: -50px;
+	left: 2px;
+}
+
+#slider .nivo-controlNav a img
+{
+	display:inline;
+	position:relative;
+	margin-right: 5px;
+	opacity: 0.4;
+}
+
+#slider .nivo-controlNav a.active img
+{
+	display:inline;
+	position:relative;
+	margin-right: 5px;
+	opacity: 1.0;
+}
+
+#slider .nivo-caption
+{
+    text-shadow:none;
+    font-family: Helvetica, Arial, sans-serif;
+	height: 50px;
+	width: 727px;
+	overflow: hidden;
+}
+
+#slider .nivo-caption img
+{
+    float: right;
+}
+
+
+#slider .nivo-caption h4
+{	
+	margin: 0;
+	text-align: left;
+	color: #ffd800;
+	font-weight: bold;
+}
+
+#slider .nivo-caption a
+{ 
+	color: #ee2d00;
+	text-decoration: underline;
 }

@@ -38,6 +38,210 @@ class Articles_model extends CI_Model {
 	// --------------------------------------------------------------------
 	
 	/**
+	 * Get Slide
+	 *
+	 * Retrieves a article slide from the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function get_slide($data = array())
+	{	
+		// Check for valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->where($data)
+						->get('article_slider', 1);
+		
+		// Check if query row exists
+		if($query->row())
+		{
+			// Query row exists, return query row
+			return $query->row();
+		}
+		else
+		{
+			// Query row doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Get Slides
+	 *
+	 * Retrieves all article slides from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	int
+	 * @param	array
+	 * @return	array
+	 */
+	function get_slides($limit = 0, $offset = 0, $data = array())
+	{
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Check if limit exists
+		if($limit == 0)
+		{
+			// Limit doesn't exist, assign limit
+			$limit = '';
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->order_by('slider_priority', 'asc')
+						->limit($limit, $offset)
+						->where($data)
+						->get('article_slider');
+		
+		// Check if query result exists
+		if($query->result())
+		{
+			// Query result exists, return query result
+			return $query->result();
+		}
+		else
+		{
+			// Query result doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Count Slides
+	 *
+	 * Count the number of article slides in the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function count_slides($data = array())
+	{	
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->from('article_slider')
+						->where($data)
+						->count_all_results();
+						
+		// Return query
+		return $query;
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Insert Slide
+	 *
+	 * Inserts a article slide into the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	bool
+	 */
+	function insert_slide($data = array())
+	{
+		// Check to see if we have valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, insert the data in the database
+		return $this->db->insert('article_slider', $data);
+	}
+	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Update Slide
+	 *
+	 * Updates a article slide in the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	array
+	 * @return	bool
+	 */
+	function update_slide($slide_id = 0, $data = array())
+	{
+		// Check to see if we have valid data
+		if($slide_id == '0' OR empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if slide exists
+		if(!$slide = $this->get_slide(array('slider_id' => $slide_id)))
+		{
+			// Slide doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, slide exists, update the data in the database
+		return $this->db->update('article_slider', $data, array('slider_id' => $slide_id));
+	}
+
+	// --------------------------------------------------------------------
+	
+    /**
+	 * Delete Slide
+	 *
+	 * Deletes a article slide from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	bool
+	 */
+	function delete_slide($slide_id = 0)
+	{	
+		// Check to see if we have valid data
+		if($slide_id == 0)
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if slide exists
+		if(!$slide = $this->get_slide(array('slider_id' => $slide_id)))
+		{
+			// Slide doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, slide exists, delete the data from the database
+		return $this->db->delete('article_slider', array('slider_id' => $slide_id));
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
 	 * Get Comment
 	 *
 	 * Retrieves a article comment from the database

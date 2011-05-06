@@ -38,6 +38,17 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 -- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
+  `slider_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `article_id` bigint(20) NOT NULL DEFAULT '0',
+  `slider_title` varchar(100) NOT NULL,
+  `slider_content` varchar(200) NOT NULL,
+  `slider_image` varchar(200) NOT NULL,
+  `slider_link` varchar(200) NOT NULL,
+  `slider_priority` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`slider_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__group_permissions`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__group_permissions` (
@@ -59,7 +70,8 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (8, 'Can manage pages?', 'pages', 128),
 (9, 'Can manage polls?', 'polls', 256),
 (10, 'Can manage opponents?', 'opponents', 512),
-(11, 'Can manage widgets?', 'widgets', 1024);
+(11, 'Can manage widgets?', 'widgets', 1024),
+(11, 'Can manage news slider?', 'slider', 2048);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__matches`;
 -- command split --
@@ -200,7 +212,12 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (15, 5, 'SMTP Host', 'email_smtp_host', '', 'text', '', 'SMTP host name', 'trim', 3),
 (16, 5, 'SMTP User', 'email_smtp_user', '', 'text', '', 'SMTP user name', 'trim', 4),
 (17, 5, 'SMTP Password', 'email_smtp_pass', '', 'password', '', 'SMTP password', 'trim', 5),
-(18, 5, 'SMTP Port', 'email_smtp_port', '', 'text', '', 'SMTP port number', 'trim', 6);
+(18, 5, 'SMTP Port', 'email_smtp_port', '', 'text', '', 'SMTP port number', 'trim', 6),
+(19, 2, 'Slide Limit', 'slide_limit', '9', 'text', '', 'The number of slides to show on the slider', 'trim|required|integer', 4),
+(20, 2, 'Slide Image Width', 'slide_width', '727', 'text', '', 'The width of slide images in pixels', 'trim|required|numeric', 5),
+(21, 2, 'Slide Image Height', 'slide_height', '189', 'text', '', 'The height of slide images in pixels', 'trim|required|numeric', 6),
+(22, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 7),
+(23, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 8);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
@@ -293,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_groups` (
 -- command split --
 INSERT INTO `__DBPREFIX__user_groups` (`group_id`, `group_title`, `group_user_title`, `group_default`, `group_administrator`, `group_clan`, `group_banned`, `group_permissions`) VALUES
 (1, 'Registered Users', 'Registered User', 1, 0, 0, 0, 0),
-(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 2047),
+(2, 'Administrators', 'Administrator', 1, 1, 1, 0, 4095),
 (3, 'Team Members', 'Team Member', 1, 0, 1, 0, 0),
 (4, 'Banned Users', 'Banned', 1, 0, 0, 1, 0);
 -- command split --

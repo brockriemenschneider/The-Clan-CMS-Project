@@ -512,7 +512,22 @@ class Articles extends CI_Controller {
 					'article_comments'	=> $this->input->post('comments'),
 					'article_status'	=> $this->input->post('status'),
 				);
-		
+				
+				// Check if article is a draft
+				if((bool) !$this->input->post('status'))
+				{
+					// Retrieve the slides
+					if($slides = $this->articles->get_slides('', '', array('article_id' => $article->article_id)))
+					{
+						// Slides exist, loop through each slide
+						foreach($slides as $slide)
+						{
+							// Delete the comment from the database
+							$this->articles->delete_slide($slide->slide_id);
+						}
+					}
+				}
+				
 				// Update the article into the database
 				$this->articles->update_article($article->article_id, $data);
 				
@@ -598,7 +613,7 @@ class Articles extends CI_Controller {
 	{
 		// Set up the data
 		$data = array(
-			'article_id'	=>	$this->uri->segment(4)
+			'article_id'	=>	$this->uri->segment(4, '')
 		);
 		
 		// Retrieve the article
@@ -608,11 +623,19 @@ class Articles extends CI_Controller {
 			redirect(ADMINCP . 'articles');
 		}
 		
-		// Retrieve the comments
-		$comments = $this->articles->get_comments('', '', $data);
+		// Retrieve the slides
+		if($slides = $this->articles->get_slides('', '', $data))
+		{
+			// Slides exist, loop through each slide
+			foreach($slides as $slide)
+			{
+				// Delete the comment from the database
+				$this->articles->delete_slide($slide->slide_id);
+			}
+		}
 		
-		// Check if comments exist
-		if($comments)
+		// Retrieve the comments
+		if($comments = $this->articles->get_comments('', '', $data))
 		{
 			// Comments exist, loop through each comment
 			foreach($comments as $comment)

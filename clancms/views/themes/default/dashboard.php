@@ -3,6 +3,23 @@
 <?php $this->load->view(THEME . 'sidebar'); ?>
 
 <div id="main">
+<?php if($slides): ?>
+	<div id="slider-wrapper">
+		<div id="slider" class="nivoSlider">
+		<?php foreach($slides as $slide): ?>
+				<?php if($slide->slider_link): echo anchor($slide->slider_link, img(array('src' => IMAGES . 'slider/slides/' . $slide->slider_image, 'title' => '#slide' . $slide->slider_id, 'rel' => IMAGES . 'slider/previews/' . $slide->slider_image))); else: echo img(array('src' => IMAGES . 'slider/slides/' . $slide->slider_image, 'title' => '#slide' . $slide->slider_id, 'rel' => IMAGES . 'slider/previews/' . $slide->slider_image)); endif;?>
+		<?php endforeach; ?>
+		</div>
+		
+		<?php foreach($slides as $slide): ?>
+		<div id="slide<?php echo $slide->slider_id; ?>" class="nivo-html-caption">
+				<h4><?php echo $slide->slider_title; ?></h4> <?php echo $slide->slider_content; ?> <?php if($slide->slider_link): echo anchor($slide->slider_link, 'Read More'); endif; ?>
+		</div>
+		<?php endforeach; ?>
+	</div>
+	
+	<div class="space"></div>
+<?php endif; ?>
 
 <?php $this->load->widget_area('dashboard'); ?>
 

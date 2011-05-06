@@ -665,6 +665,17 @@ class Users extends CI_Controller {
 			}
 		}
 		
+		// Retrieve article comments
+		if($comments = $this->articles->get_comments('', '', array('user_id' =>  $user->user_id)))
+		{
+			// Loop through each comment
+			foreach($comments as $comment)
+			{
+				// Delete the comment from the database
+				$this->articles->delete_comment($comment->comment_id);
+			}
+		}
+		
 		// Retrieve match comments
 		if($comments = $this->matches->get_comments('', '', array('user_id' =>  $user->user_id)))
 		{

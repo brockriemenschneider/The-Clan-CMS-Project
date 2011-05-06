@@ -11,7 +11,23 @@
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-1.4.2.min.js"></script> 
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-ui-1.8.2.custom.min.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.newsticker.js"></script>
-	<script type="text/javascript"> 
+    <script type="text/javascript" src="<?php echo THEME_URL; ?>js/nivo-slider/jquery.nivo.slider.pack.js"></script>
+	
+	<script type="text/javascript">
+		$(window).load(function(){
+
+			$('#slider').nivoSlider({
+				effect:'fade',
+				animSpeed:500,
+				pauseTime:5000,
+				startSlide:0,
+				directionNav:false,
+				controlNavThumbs:true,
+				controlNavThumbsFromRel:true
+			});
+
+		});
+	
         $(function(){
 			$(".submit").button();
 			

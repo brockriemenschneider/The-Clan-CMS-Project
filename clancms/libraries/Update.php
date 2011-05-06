@@ -1447,6 +1447,150 @@ class Update {
 			
 		// Insert the setting in the database
 		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Limit',
+			'setting_slug'			=> 'slide_limit',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The number of slides to show on the slider',
+			'setting_rules'			=> 'trim|required|integer',
+			'setting_priority'		=> '4'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Image Width',
+			'setting_slug'			=> 'slide_width',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The width of slide images in pixels',
+			'setting_rules'			=> 'trim|required|numeric',
+			'setting_priority'		=> '6'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Image Height',
+			'setting_slug'			=> 'slide_height',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The height of slide images in pixels',
+			'setting_rules'			=> 'trim|required|numeric',
+			'setting_priority'		=> '6'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Preview Image Width',
+			'setting_slug'			=> 'slide_preview_width',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The width of slide preview images in pixels',
+			'setting_rules'			=> 'trim|required|numeric',
+			'setting_priority'		=> '6'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Preview Image Height',
+			'setting_slug'			=> 'slide_preview_height',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The height of slide preview images in pixels',
+			'setting_rules'			=> 'trim|required|numeric',
+			'setting_priority'		=> '6'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Load the Users model
+		$this->CI->load->model('Users_model', 'users');
+		
+		// Set up the data
+		$data = array(
+			'permission_title'		=> 'Can manage news slider?',
+			'permission_slug'		=> 'slider',
+			'permission_value'		=> '2048'
+		);
+		
+		// Insert the permission into the database
+		$this->CI->users->insert_permission($data);
+		
+		// Retrieve the administrators user group
+		if($group = $this->CI->users->get_group(array('group_id' => '2')))
+		{
+			// Set up the data
+			$data = array(
+				'group_permissions'		=> '4095'
+			);
+			
+			// Update the administrators user group in the database
+			$this->CI->users->update_group($group->group_id, $data);
+		}
+		
+		// Set up the fields
+		$fields = array(
+			'slider_id' => array(
+								'type' 				=> 'BIGINT',
+								'constraint'		=> '20',
+								'auto_increment'	=> TRUE
+							),
+			'article_id' => array(
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							),
+			'slider_title' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '100',
+								'null'			=> FALSE
+							),
+			'slider_content' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '200',
+								'null'			=> FALSE
+							),
+			'slider_image' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '100',
+								'null'			=> FALSE
+							),
+			'slider_link' => array(
+								'type' 			=> 'VARCHAR',
+								'constraint' 	=> '100',
+								'null'			=> FALSE
+							),
+			'slider_priority' => array(
+								'type' 			=> 'BIGINT',
+								'constraint' 	=> '20',
+								'null'			=> FALSE,
+								'default'		=> '0'
+							)
+		);
+		
+		// Add the fields
+		$this->CI->dbforge->add_field($fields);
+		
+		// Add a key to slider id
+		$this->CI->dbforge->add_key('slider_id');
+		
+		// Create the slider table in the database
+		$this->CI->dbforge->create_table('article_slider');
+		
 	}
 	
 	// --------------------------------------------------------------------
