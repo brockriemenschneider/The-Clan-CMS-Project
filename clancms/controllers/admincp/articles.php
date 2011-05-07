@@ -523,7 +523,7 @@ class Articles extends CI_Controller {
 						foreach($slides as $slide)
 						{
 							// Delete the comment from the database
-							$this->articles->delete_slide($slide->slide_id);
+							$this->articles->delete_slide($slide->slider_id);
 						}
 					}
 				}
@@ -630,7 +630,7 @@ class Articles extends CI_Controller {
 			foreach($slides as $slide)
 			{
 				// Delete the comment from the database
-				$this->articles->delete_slide($slide->slide_id);
+				$this->articles->delete_slide($slide->slider_id);
 			}
 		}
 		

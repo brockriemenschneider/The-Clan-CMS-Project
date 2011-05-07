@@ -5,7 +5,7 @@
  <script type="text/javascript">
 	function deleteConfirm()
 	{
-    	var answer = confirm("Are you sure you want to delete this article? Once deleted, there will be no way to recover the article or it's comments!")
+    	var answer = confirm("Are you sure you want to delete this article? Once deleted, there will be no way to recover the article, it's slides or it's comments!")
     	if (answer)
 		{
         	document.messages.submit();
