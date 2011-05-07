@@ -93,7 +93,7 @@ class Dashboard extends CI_Controller {
 					}
 				
 					// Assign article information
-					$slide->slider_title = $article->squad . $article->article_title;
+					$slide->slider_title = $article->squad . ': ' . $article->article_title;
 					
 					// Check if the slide has content
 					if(!$slide->slider_content)
