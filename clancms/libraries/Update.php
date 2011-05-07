@@ -1453,6 +1453,7 @@ class Update {
 			'category_id'			=> 2,
 			'setting_title'			=> 'Slide Limit',
 			'setting_slug'			=> 'slide_limit',
+			'setting_value'			=> '9',
 			'setting_type'			=> 'text',
 			'setting_description'	=> 'The number of slides to show on the slider',
 			'setting_rules'			=> 'trim|required|integer',
@@ -1465,8 +1466,24 @@ class Update {
 		// Set up the data
 		$data = array(
 			'category_id'			=> 2,
+			'setting_title'			=> 'Slide Content Limit',
+			'setting_slug'			=> 'slide_content_limit',
+			'setting_value'			=> '200',
+			'setting_type'			=> 'text',
+			'setting_description'	=> 'The limit to the length of the slide content',
+			'setting_rules'			=> 'trim|required|integer',
+			'setting_priority'		=> '5'
+		);
+			
+		// Insert the setting in the database
+		$this->CI->settings->insert_setting($data);
+		
+		// Set up the data
+		$data = array(
+			'category_id'			=> 2,
 			'setting_title'			=> 'Slide Image Width',
 			'setting_slug'			=> 'slide_width',
+			'setting_value'			=> '727',
 			'setting_type'			=> 'text',
 			'setting_description'	=> 'The width of slide images in pixels',
 			'setting_rules'			=> 'trim|required|numeric',
@@ -1481,10 +1498,11 @@ class Update {
 			'category_id'			=> 2,
 			'setting_title'			=> 'Slide Image Height',
 			'setting_slug'			=> 'slide_height',
+			'setting_value'			=> '189',
 			'setting_type'			=> 'text',
 			'setting_description'	=> 'The height of slide images in pixels',
 			'setting_rules'			=> 'trim|required|numeric',
-			'setting_priority'		=> '6'
+			'setting_priority'		=> '7'
 		);
 			
 		// Insert the setting in the database
@@ -1494,10 +1512,11 @@ class Update {
 			'category_id'			=> 2,
 			'setting_title'			=> 'Slide Preview Image Width',
 			'setting_slug'			=> 'slide_preview_width',
+			'setting_value'			=> '76',
 			'setting_type'			=> 'text',
 			'setting_description'	=> 'The width of slide preview images in pixels',
 			'setting_rules'			=> 'trim|required|numeric',
-			'setting_priority'		=> '6'
+			'setting_priority'		=> '8'
 		);
 			
 		// Insert the setting in the database
@@ -1507,10 +1526,11 @@ class Update {
 			'category_id'			=> 2,
 			'setting_title'			=> 'Slide Preview Image Height',
 			'setting_slug'			=> 'slide_preview_height',
+			'setting_value'			=> '46',
 			'setting_type'			=> 'text',
 			'setting_description'	=> 'The height of slide preview images in pixels',
 			'setting_rules'			=> 'trim|required|numeric',
-			'setting_priority'		=> '6'
+			'setting_priority'		=> '9'
 		);
 			
 		// Insert the setting in the database
@@ -1560,8 +1580,7 @@ class Update {
 								'null'			=> FALSE
 							),
 			'slider_content' => array(
-								'type' 			=> 'VARCHAR',
-								'constraint' 	=> '200',
+								'type' 			=> 'TEXT',
 								'null'			=> FALSE
 							),
 			'slider_image' => array(

@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   `slider_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_id` bigint(20) NOT NULL DEFAULT '0',
   `slider_title` varchar(100) NOT NULL,
-  `slider_content` varchar(200) NOT NULL,
+  `slider_content` text NOT NULL,
   `slider_image` varchar(200) NOT NULL,
   `slider_link` varchar(200) NOT NULL,
   `slider_priority` bigint(20) NOT NULL DEFAULT '0',
@@ -214,10 +214,11 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (17, 5, 'SMTP Password', 'email_smtp_pass', '', 'password', '', 'SMTP password', 'trim', 5),
 (18, 5, 'SMTP Port', 'email_smtp_port', '', 'text', '', 'SMTP port number', 'trim', 6),
 (19, 2, 'Slide Limit', 'slide_limit', '9', 'text', '', 'The number of slides to show on the slider', 'trim|required|integer', 4),
-(20, 2, 'Slide Image Width', 'slide_width', '727', 'text', '', 'The width of slide images in pixels', 'trim|required|numeric', 5),
-(21, 2, 'Slide Image Height', 'slide_height', '189', 'text', '', 'The height of slide images in pixels', 'trim|required|numeric', 6),
-(22, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 7),
-(23, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 8);
+(20, 2, 'Slide Content Limit', 'slide_content_limit', '200', 'text', '', 'The limit to the length of the slide content', 'trim|required|integer', 5),
+(21, 2, 'Slide Image Width', 'slide_width', '727', 'text', '', 'The width of slide images in pixels', 'trim|required|numeric', 6),
+(22, 2, 'Slide Image Height', 'slide_height', '189', 'text', '', 'The height of slide images in pixels', 'trim|required|numeric', 7),
+(23, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 8),
+(24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --

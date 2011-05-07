@@ -99,7 +99,7 @@ class Dashboard extends CI_Controller {
 					if(!$slide->slider_content)
 					{
 						// Assign article information
-						$slide->slider_content = ellipsize($article->article_content, 200, 1);
+						$slide->slider_content = ellipsize($article->article_content, $this->ClanCMS->get_setting('slide_content_limit'), 1);
 					}
 					
 					// Assign article information

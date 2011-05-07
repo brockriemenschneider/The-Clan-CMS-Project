@@ -23,7 +23,44 @@ $(function() {
 		$('#article').show();
 		$('#custom').hide();
 	}
-});		
+	
+	$("textarea[name='content']").keydown(function() {
+		var max = <?php echo $this->ClanCMS->get_setting('slide_content_limit'); ?>;
+		var length = $(this).val().length;
+		
+		if(length > max)
+		{
+			var text = $(this).val();
+			text = text.substring(0, max);
+			$(this).val(text);
+		}
+		else
+		{
+			$('#counter').html(max - length);
+		}
+	});
+	
+	$("textarea[name='content']").keyup(function() {
+		var max = <?php echo $this->ClanCMS->get_setting('slide_content_limit'); ?>;
+		var length = $(this).val().length;
+		
+		if(length > max)
+		{
+			var text = $(this).val();
+			text = text.substring(0, max);
+			$(this).val(text);
+		}
+		else
+		{
+			$('#counter').html(max - length);
+		}
+	});
+
+
+});	
+
+	
+
 </script> 
 
 <?php echo form_open_multipart(ADMINCP . 'slider/add'); ?>
@@ -126,7 +163,7 @@ $(function() {
 			
 				echo form_textarea($data, set_value('content')); ?>
 				<?php echo br(); ?>
-				<div class="description">The content of the slide</div>
+				<div class="description">The content of the slide. <span class="red"><strong><span id="counter"><?php echo $this->ClanCMS->get_setting('slide_content_limit'); ?></span> Characters Left</span></strong></div>
 				
 				<div class="label required">Image</div>
 				<?php 
