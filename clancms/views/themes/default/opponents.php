@@ -7,7 +7,7 @@
 	<div class="box">
 		<div class="tabs">
 		<ul>
-			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('oppoennts', 'Opponents'); ?></span><span class="right"></span></li>
+			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('opponents', 'Opponents'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
