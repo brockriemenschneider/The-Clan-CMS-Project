@@ -284,7 +284,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($this->input->post('email'));
 					$this->email->subject('Account Info for your account on ' . CLAN_NAME);
-					$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $generated_password . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $generated_password . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();
@@ -301,7 +301,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($this->input->post('email'));
 					$this->email->subject('Activation link for your account on ' . CLAN_NAME);
-					$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $generated_password . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . base_url() . "account/activate/" . $activation . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $generated_password . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . site_url() . "account/activate/" . $activation . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();
@@ -478,7 +478,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($user->user_email);
 					$this->email->subject('Activation link for your account on ' . CLAN_NAME);
-					$this->email->message("Hello " . $user->user_name . ",\n\nYour account has been de-activated and you need to re-activate it to login. Please click on the link below to re-activate your account.\n\n" . base_url() . "account/activate/" . $activation . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $user->user_name . ",\n\nYour account has been de-activated and you need to re-activate it to login. Please click on the link below to re-activate your account.\n\n" . site_url() . "account/activate/" . $activation . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();
@@ -497,7 +497,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($user_email);
 					$this->email->subject('Your account username has changed on ' . CLAN_NAME);
-					$this->email->message("Hello " . $user_name . ",\n\nHere are your new account details on " . CLAN_NAME . ":\n\nUsername: " . $user_name . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $user_name . ",\n\nHere are your new account details on " . CLAN_NAME . ":\n\nUsername: " . $user_name . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();
@@ -522,7 +522,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($user_email);
 					$this->email->subject('Your account password has changed on ' . CLAN_NAME);
-					$this->email->message("Hello " . $user_name . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $user_name . "\nPassword: " . $generated_password . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $user_name . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $user_name . "\nPassword: " . $generated_password . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();
@@ -539,7 +539,7 @@ class Users extends CI_Controller {
 					$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 					$this->email->to($user_email);
 					$this->email->subject('Your account password has changed on ' . CLAN_NAME);
-					$this->email->message("Hello " . $user_name . ",\n\nHere are your new account details on " . CLAN_NAME . ":\n\nUsername: " . $user_name . "\nPassword: " . $this->input->post('password') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+					$this->email->message("Hello " . $user_name . ",\n\nHere are your new account details on " . CLAN_NAME . ":\n\nUsername: " . $user_name . "\nPassword: " . $this->input->post('password') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 					// Email the user
 					$this->email->send();

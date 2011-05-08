@@ -495,7 +495,7 @@ class Account extends CI_Controller {
 			$page->title = "Activation Success";
 		
 			// Assign page content
-			$page->content = 'Your account has been activated!' . br(2) . 'You should now be able to ' . anchor('account/login', 'login') . ' and interact with the site.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			$page->content = 'Your account has been activated!' . br(2) . 'You should now be able to ' . anchor('account/login', 'login') . ' and interact with the site.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(site_url());
 			
 			// Create a reference to page
 			$this->data->page =& $page;
@@ -509,7 +509,7 @@ class Account extends CI_Controller {
 			$page->title = "Activation Error";
 		
 			// Assign page content
-			$page->content = 'This is an invalid activation link!' . br(2) . 'Please try again. If you are still having issues please ' . anchor('about', 'contact a site administrator') . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+			$page->content = 'This is an invalid activation link!' . br(2) . 'Please try again. If you are still having issues please ' . safe_mailto($this->ClanCMS->get_setting('site_email'), 'contact a site administrator') . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(site_url());
 			
 			// Create a reference to page
 			$this->data->page =& $page;
@@ -554,7 +554,7 @@ class Account extends CI_Controller {
 				$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 				$this->email->to($this->input->post('email'));
 				$this->email->subject('Account information requested on ' . CLAN_NAME);
-				$this->email->message("Hello " . $user->user_name . ",\n\nYou have requested your account information on " . CLAN_NAME . ". Here is your account information:\n\nUsername: " . $user->user_name . "\n\nIf you forgot your password please click the link below to reset your password:\n\n" . base_url() . "account/reset/" . $this->encrypt->sha1($user->user_password) . "/user/" . $user->user_id . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+				$this->email->message("Hello " . $user->user_name . ",\n\nYou have requested your account information on " . CLAN_NAME . ". Here is your account information:\n\nUsername: " . $user->user_name . "\n\nIf you forgot your password please click the link below to reset your password:\n\n" . site_url() . "account/reset/" . $this->encrypt->sha1($user->user_password) . "/user/" . $user->user_id . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 				// Email the user the activation code
 				$this->email->send();
@@ -563,7 +563,7 @@ class Account extends CI_Controller {
 				$page->title = "Account Information Sent";
 		
 				// Assign page content
-				$page->content = 'An email containing your username and instructions on changing your password has been sent to your email address.'. br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+				$page->content = 'An email containing your username and instructions on changing your password has been sent to your email address.'. br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(site_url());
 	
 				// Create a reference to page
 				$this->data->page =& $page;
@@ -634,7 +634,7 @@ class Account extends CI_Controller {
 				$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 				$this->email->to($user->user_email);
 				$this->email->subject('Account information updated on ' . CLAN_NAME);
-				$this->email->message("Hello " . $user->user_name . ",\n\nYour account information has been updated on " . CLAN_NAME . ". Here is your account information:\n\nUsername: " . $user->user_name . "\nPassword: " . $this->input->post('new_password') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+				$this->email->message("Hello " . $user->user_name . ",\n\nYour account information has been updated on " . CLAN_NAME . ". Here is your account information:\n\nUsername: " . $user->user_name . "\nPassword: " . $this->input->post('new_password') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 				// Email the user the activation code
 				$this->email->send();
 		
@@ -642,7 +642,7 @@ class Account extends CI_Controller {
 				$page->title = 'Password Reset';
 				
 				// Assign page content
-				$page->content = 'You have sucessfully reset your password!' . br(2) . 'An email containing your account infromation has been sent to you in case you forget again.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+				$page->content = 'You have sucessfully reset your password!' . br(2) . 'An email containing your account infromation has been sent to you in case you forget again.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(site_url());
 			
 				// Create a reference to page
 				$this->data->page =& $page;

@@ -64,7 +64,7 @@ class Register extends CI_Controller {
 			$page->title = 'Registration is not allowed!';
 			
 			// Assign page content
-			$page->content = 'Sorry, but registration has been disabled by an administrator. Please try again later.' . br(2) . 'Thanks,' . br() . CLAN_NAME . br() . anchor(base_url());
+			$page->content = 'Sorry, but registration has been disabled by an administrator. Please try again later.' . br(2) . 'Thanks,' . br() . CLAN_NAME . br() . anchor(site_url());
 			
 			// Create a reference to page
 			$this->data->page =& $page;
@@ -136,7 +136,7 @@ class Register extends CI_Controller {
 				$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 				$this->email->to($this->input->post('email'));
 				$this->email->subject('Activation link for your account on ' . CLAN_NAME);
-				$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . base_url() . "account/activate/" . $this->session->userdata('session_id') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . base_url());	
+				$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . site_url() . "account/activate/" . $this->session->userdata('session_id') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 				// Email the user
 				$this->email->send();
@@ -145,7 +145,7 @@ class Register extends CI_Controller {
 				$page->title = 'Registration Success!';
 				
 				// Assign page content
-				$page->content = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(base_url());
+				$page->content = 'Congratulations, you have successfully registered on ' . anchor('', CLAN_NAME) . '!' . br(2) . 'However, before you can login to your account you need to activate it. Please look at your email for the activation email.' . br(2) . 'Thanks for Registering!' . br() . CLAN_NAME . br() . anchor(site_url());
 				
 				// Create a reference to page
 				$this->data->page =& $page;

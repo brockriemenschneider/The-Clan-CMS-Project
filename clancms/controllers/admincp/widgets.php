@@ -281,7 +281,7 @@ class Widgets extends CI_Controller {
 		$request = array(
 			array(
 				'widget_slug' => array($this->uri->segment(4, ''), 'string'),
-				'poster' => array(base_url(), 'string'),
+				'poster' => array(site_url(), 'string'),
 				'page' => array($page, 'int')
 			), 'struct');
 		
@@ -327,7 +327,7 @@ class Widgets extends CI_Controller {
 							'nickname' => array($this->input->post('nickname'), 'string'),
 							'rating' => array($this->input->post('review_rating'), 'int'),
 							'review' => array($this->input->post('review'), 'string'),
-							'poster' => array(base_url(), 'string')
+							'poster' => array(site_url(), 'string')
 						), 'struct');
 					
 					// Request the response
