@@ -2,16 +2,58 @@
 
 <?php $this->load->view(ADMINCP . 'sidebar'); ?>
 
-<?php echo form_open(ADMINCP . 'settings'); ?>
 <div id="main">
 
+	<?php echo form_open(ADMINCP . 'settings/index/' . $category_id); ?>
 	<div class="box">
 		<div class="tabs">
 		<ul>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'settings', 'Site Settings'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'settings/backup', 'Database Backup'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
+		<div class="header">
+			<?php echo heading('Site Settings', 4); ?>
+		</div>
+		<div class="content">
+			<div class="inside">
+				
+				<div class="required-field required">Required Field</div>
+				<?php echo br(); ?>
+				
+				<div class="label required">Setting Category</div>
+				<?php
+					$options = array('0' => '-- Show All Settings --',);
+					if($search_categories):
+						foreach($search_categories as $search_category):
+							$options = $options + array($search_category->category_id	=>	$search_category->category_title);
+						endforeach;
+					endif;
+					
+				echo form_dropdown('category', $options, set_value('category', $category_id), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				
+				<?php 
+					$data = array(
+						'name'		=> 'edit_settings',
+						'class'		=> 'submit',
+						'value'		=> 'Edit Settings'
+					);
+				
+				echo form_submit($data); ?>
+				<div class="clear"></div>
+		
+			</div>
+		</div>
+		<div class="footer"></div>
+	</div>
+	<?php echo form_close(); ?>
+	
+	<div class="space"></div>
+	
+	<?php echo form_open(ADMINCP . 'settings/index/' . $category_id); ?>
+	<div class="box">
 		<div class="header">
 			<?php echo heading('Edit Site Settings', 4); ?>
 		</div>

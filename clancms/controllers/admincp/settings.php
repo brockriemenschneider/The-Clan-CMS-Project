@@ -63,17 +63,60 @@ class Settings extends CI_Controller {
 	 */
 	function index()
 	{	
+		// Retrieve the category
+		if($this->uri->segment(4, ''))
+		{
+			// Set up the data
+			$search = array(
+				'category_id'	=>	$this->uri->segment(4, '')
+			);
+			
+			// Retrieve the searched category
+			if(!$category_id = $this->settings->get_category($search)->category_id)
+			{
+				// Category doesn't exist, redirect the administrator
+				redirect(ADMINCP . 'settings');
+			}
+		}
+		else
+		{
+			// Assign search and category id
+			$search = array();
+			$category_id = 0;
+		}
+		
 		// Retrieve the forms
+		$edit_settings = $this->input->post('edit_settings');
 		$update_settings = $this->input->post('update_settings');
+		
+		// Check if edit settings has been posted
+		if($edit_settings)
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('category', 'Category', 'trim|required');
+			
+			// Form validation passed, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{
+				// Retrieve the category id
+				if($category_id = $this->input->post('category'))
+				{
+					// Redirect the administrator
+					redirect(ADMINCP . 'settings/index/' . $category_id);
+				}
+				else
+				{
+					// Redirect the administrator
+					redirect(ADMINCP . 'settings');
+				}
+			}
+		}
 		
 		// Check it update settings has been posted
 		if($update_settings)
 		{
 			// Retrieve the settings
-			$settings = $this->input->post('setting');
-			
-			// Check if settings exist
-			if($settings)
+			if($settings = $this->input->post('setting'))
 			{
 				// Settings exist, loop through each setting
 				foreach($settings as $setting_id => $value)
@@ -105,16 +148,16 @@ class Settings extends CI_Controller {
 					$this->session->set_flashdata('message', 'The settings have been successfully updated!');
 					
 					// Redirect the adminstrator
-					redirect(ADMINCP . 'settings');
+					redirect(ADMINCP . 'settings/index/' . $category_id);
 				}
 			}
 		}
 		
 		// Retrieve all the setting categories
-		$categories = $this->settings->get_categories();
+		$search_categories = $this->settings->get_categories();
 		
-		// Check if categories exist
-		if($categories)
+		// Retrieve the searched for setting categories
+		if($categories = $this->settings->get_categories($search))
 		{
 			// Categories exist, loop through each category
 			foreach($categories as $category)
@@ -146,14 +189,88 @@ class Settings extends CI_Controller {
 			}
 		}
 		
-		// Create a reference to the categories & category
+		// Create a reference to the category id, search categories & categories
+		$this->data->category_id =& $category_id;
+		$this->data->search_categories =& $search_categories;
 		$this->data->categories =& $categories;
-		$this->data->category =& $category;
 		
 		// Load the admincp settings view
 		$this->load->view(ADMINCP . 'settings', $this->data);
 	}
 	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Backup
+	 *
+	 * Display's the Admin CP Database Backup
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function backup()
+	{
+		// Retrieve the tables
+		$tables = $this->db->list_tables();
+
+		// Retrieve the forms
+		$backup_database = $this->input->post('backup_database');
+		
+		// Check if backup database has been posted
+		if($backup_database)
+		{
+			// Loop though the tables
+			foreach($tables as $table)
+			{
+				// Set form validation rules
+				$this->form_validation->set_rules('table[' . $table . ']', $table, 'trim|required');
+			}
+			
+			// Form validation passed, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{
+				// Load the database utility class
+				$this->load->dbutil();
+				
+				// Retrieve the permissions
+				$tables = $this->input->post('table');
+				
+				// Assign backup tables
+				$backup_tables = array();
+				
+				// Loop through the tables
+				foreach($tables as $table => $value)
+				{
+					// Check whether to include the table
+					if($value)
+					{
+						// Add the table to backup tables
+						array_push($backup_tables, $table);
+					}
+				}
+				
+				// Setup the config
+				$config = array(
+					'tables'	=> $backup_tables,
+					'format'	=> 'txt',
+					'filename'	=> 'ClanCMS-Backup-' .  date("m-d-Y") . '.sql'
+				);
+				
+				// Retrieve the backup
+				$backup =& $this->dbutil->backup($config); 
+				
+				// Load the download helper, force the download
+				$this->load->helper('download');
+				force_download($config['filename'], $backup);
+			}
+		}
+		
+		// Create a reference to the tablse
+		$this->data->tables =& $tables;
+		
+		// Load the admincp settings backup view
+		$this->load->view(ADMINCP . 'settings_backup', $this->data);
+	}
 }
 
 /* End of file settings.php */

@@ -61,7 +61,11 @@
 	<div id="navigation">
 	<ul>
 		<li <?php if($this->uri->segment(2, '') == ''): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP, 'Dashboard'); ?></span><span class="right"></span></li>
-		<li <?php if($this->uri->segment(2, '') == 'settings'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'settings', 'Site Settings'); ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(2, '') == 'settings'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'settings', 'Site Settings'); ?></span><span class="right"></span>
+			<ul>
+				<li <?php if($this->uri->segment(2, '') == 'settings' && $this->uri->segment(3, '') == 'backup'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'settings/backup', 'Database Backup'); ?></li>
+			</ul>
+		</li>
 		<li <?php if($this->uri->segment(2, '') == 'articles'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles', 'News Articles'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2, '') == 'articles' && $this->uri->segment(3, '') == 'drafts'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></li>
