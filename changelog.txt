@@ -3,6 +3,23 @@
                              Clan CMS Change Log
 ============================================================================================
 
+-----0.6.1-----
+Fixed polls updating current active poll
+Fixed pages order ajax call
+Fixed CSRF preventing ajax calls
+Fixed various styling issues
+Fixed captcha issue
+Fixed unzip issue
+Fixed updating widget settings
+Fixed updating opponents
+Fixed deleting article comments from a delete user
+Fixed activation emails
+Added Team Password joinability
+Added Email Settings
+Added News Slider
+Added support for passwords in settings
+Added Database Backup
+
 -----0.6.0-----
 Updated to Codeigniter 2.0.2
 Added new widget system
