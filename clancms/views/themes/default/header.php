@@ -4,7 +4,7 @@
 
 <head> 
 	<title><?php echo CLAN_NAME; ?> - Powered By Clan CMS v<?php echo CLANCMS_VERSION; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo config_item('charset');?>" />
 	<?php echo link_tag('favicon.ico', 'shortcut icon', 'image/ico'); ?>
 	<?php echo link_tag(THEME_URL . 'style.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>

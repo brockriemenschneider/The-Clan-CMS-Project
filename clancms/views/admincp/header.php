@@ -66,7 +66,7 @@
 				<li <?php if($this->uri->segment(2, '') == 'settings' && $this->uri->segment(3, '') == 'backup'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'settings/backup', 'Database Backup'); ?></li>
 			</ul>
 		</li>
-		<li <?php if($this->uri->segment(2, '') == 'articles'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles', 'News Articles'); ?></span><span class="right"></span>
+		<li <?php if($this->uri->segment(2, '') == 'articles' OR $this->uri->segment(2, '') == 'slider'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles', 'News Articles'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2, '') == 'articles' && $this->uri->segment(3, '') == 'drafts'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></li>
 				<li <?php if($this->uri->segment(2, '') == 'articles' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></li>
