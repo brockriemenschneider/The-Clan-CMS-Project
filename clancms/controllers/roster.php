@@ -186,7 +186,7 @@ class Roster extends CI_Controller {
 		}
 		
 		// Retrieve the squads
-		$squads = $this->squads->get_squads();
+		$squads = $this->squads->get_squads(array('squad_status' => 1)); 
 		
 		// Retrieve the articles
 		$articles = $this->articles->get_articles('', '', array('squad_id' => $squad->squad_id, 'article_status' => 1));
