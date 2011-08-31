@@ -14,9 +14,9 @@ DROP TABLE IF EXISTS `__DBPREFIX__articles`;
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `squad_id` bigint(20) NOT NULL DEFAULT '0',
-  `article_title` varchar(100) NOT NULL,
-  `article_slug` varchar(100) NOT NULL,
-  `article_content` text NOT NULL,
+  `article_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `article_slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `article_content` text COLLATE utf8_unicode_ci NOT NULL,
   `article_comments` tinyint(1) NOT NULL DEFAULT '0',
   `user_id` bigint(20) NOT NULL DEFAULT '0',
   `article_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
   `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
-  `comment_title` text NOT NULL,
+  `comment_title` text COLLATE utf8_unicode_ci NOT NULL,
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   `slider_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_id` bigint(20) NOT NULL DEFAULT '0',
-  `slider_title` varchar(100) NOT NULL,
-  `slider_content` text NOT NULL,
+  `slider_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `slider_content` text COLLATE utf8_unicode_ci NOT NULL,
   `slider_image` varchar(200) NOT NULL,
   `slider_link` varchar(200) NOT NULL,
   `slider_priority` bigint(20) NOT NULL DEFAULT '0',
@@ -278,7 +278,7 @@ DROP TABLE IF EXISTS `__DBPREFIX__users`;
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',
-  `user_notes` text NOT NULL,
+  `user_notes` text COLLATE utf8_unicode_ci NOT NULL,
   `user_name` varchar(200) NOT NULL,
   `user_password` varchar(40) NOT NULL,
   `user_salt` varchar(32) NOT NULL,
