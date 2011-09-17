@@ -2,6 +2,8 @@
 
     # Make sure directory listing is disabled, assign directory index, and turn on rewriting
 	Options +FollowSymLinks -Indexes
+  # Uncomment the below line if you are using Godaddy.
+  # Options -Multiviews 
 	DirectoryIndex index.php
 	RewriteEngine on
 	
