@@ -8,6 +8,7 @@
 	<?php echo link_tag('favicon.ico', 'shortcut icon', 'image/ico'); ?>
 	<?php echo link_tag(THEME_URL . 'style.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>
+	<?php echo link_tag(THEME_URL . 'js/nivo-slider/nivo-slider.css'); ?>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-1.4.2.min.js"></script> 
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-ui-1.8.2.custom.min.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.newsticker.js"></script>
