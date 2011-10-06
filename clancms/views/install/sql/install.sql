@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__match_comments` (
   `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `match_id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
-  `comment_title` text NOT NULL,
+  `comment_title` text COLLATE utf8_unicode_ci NOT NULL,
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -183,16 +183,16 @@ DROP TABLE IF EXISTS `__DBPREFIX__settings`;
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__settings` (
   `setting_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `category_id` bigint(20) NOT NULL DEFAULT '0',
-  `setting_title` varchar(100) NOT NULL,
-  `setting_slug` varchar(100) NOT NULL,
-  `setting_value` longtext NOT NULL,
+  `setting_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `setting_slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `setting_value` longtext COLLATE utf8_unicode_ci NOT NULL,
   `setting_type` enum('text','password','timezone','select','textarea') NOT NULL DEFAULT 'text',
-  `setting_options` text NOT NULL,
-  `setting_description` text NOT NULL,
+  `setting_options` text COLLATE utf8_unicode_ci NOT NULL,
+  `setting_description` text COLLATE utf8_unicode_ci NOT NULL,
   `setting_rules` varchar(200) NOT NULL,
   `setting_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 -- command split --
 INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`, `setting_slug`, `setting_value`, `setting_type`, `setting_options`, `setting_description`, `setting_rules`, `setting_priority`) VALUES
 (1, 1, 'Clan Name', 'clan_name', '__CLANNAME__', 'text', '', 'Put your clan name here.', 'trim|required', 1),
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_avatar` varchar(200) NOT NULL,
   `user_activation` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
 INSERT INTO `__DBPREFIX__users` (`user_id`, `group_id`, `user_notes`, `user_name`, `user_password`, `user_salt`, `user_email`, `user_timezone`, `user_daylight_savings`, `user_ipaddress`, `user_joined`, `user_avatar`, `user_activation`) VALUES
 (1, '2', '', '__USERNAME__', '__USERPASSWORD__', '__USERSALT__', '__USEREMAIL__', '__USERTIMEZONE__', '__USERDAYLIGHTSAVINGS__', '__USERIPADDRESS__', '__USERJOINED__', '', '1');

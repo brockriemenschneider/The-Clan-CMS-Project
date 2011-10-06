@@ -1564,9 +1564,9 @@ class Update {
 		// Set up the fields
 		$fields = array(
 			'slider_id' => array(
-								'type' 				=> 'BIGINT',
-								'constraint'		=> '20',
-								'auto_increment'	=> TRUE
+								'type' 			=> 'BIGINT',
+								'constraint'	=> '20',
+								'auto_increment'=> TRUE
 							),
 			'article_id' => array(
 								'type' 			=> 'BIGINT',
@@ -1607,9 +1607,14 @@ class Update {
 		// Add a key to slider id
 		$this->CI->dbforge->add_key('slider_id');
 		
-		// Create the slider table in the database
-		$this->CI->dbforge->create_table('article_slider');
+        // Create the slider table in the database
+        $this->CI->dbforge->create_table('article_slider');
 		
+		// Modify the database table collation
+		foreach($this->CI->db->list_tables() as $table)
+		{
+			$this->CI->db->query("ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci");
+		}
 	}
 	
 	// --------------------------------------------------------------------
