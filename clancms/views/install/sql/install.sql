@@ -71,7 +71,7 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (9, 'Can manage polls?', 'polls', 256),
 (10, 'Can manage opponents?', 'opponents', 512),
 (11, 'Can manage widgets?', 'widgets', 1024),
-(11, 'Can manage news slider?', 'slider', 2048);
+(12, 'Can manage news slider?', 'slider', 2048);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__matches`;
 -- command split --
