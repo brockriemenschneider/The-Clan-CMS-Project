@@ -29,3 +29,14 @@ The mod_rewrite Apache module
 by manually deleting the "clancms/controllers/install.php", "clancms/libraries/Installer.php", and the "clancms/views/install/" folder.
 
 5) After you have done all of this you will be able to login to the Admin CP and start managing your site.
+
+-----TROUBLESHOOTING-----
+
+If you are using GoDaddy or the installation guide is not appearing then follow the steps below:
+
+1) Open up .htaccess file in the root directory and change
+#RewriteBase /
+to
+RewriteBase /
+
+2) Save and close the file and refresh to see if you can get to the installation guide. If you are still having issues please contact us on the Xcel Gaming Forums.

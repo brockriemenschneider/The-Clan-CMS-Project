@@ -3,7 +3,7 @@
     # Make sure directory listing is disabled, assign directory index, and turn on rewriting
 	Options +FollowSymLinks -Indexes
 	DirectoryIndex index.php
-  DirectoryBase /
+    #RewriteBase /
 	RewriteEngine on
 	
 	# Send request via index.php (again, not if its a real file or folder)
