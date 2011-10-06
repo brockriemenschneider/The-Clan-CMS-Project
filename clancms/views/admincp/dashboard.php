@@ -112,7 +112,7 @@
 			
 				<tr class="row">
 					<td>Software Development</td>
-					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=1', 'Brock Riemenschneider'); ?>, <?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=12', 'Jon Schuster'); ?></td>
+					<td><?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=1', 'Brock Riemenschneider'); ?>, <?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=12', 'Jon Schuster'); ?>, <?php echo anchor('http://www.xcelgaming.com/forums/member.php?u=991', 'Travis Baker'); ?></td>
 				</tr>
 				
 				<tr class="row">
