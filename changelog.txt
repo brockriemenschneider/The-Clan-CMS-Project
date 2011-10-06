@@ -14,6 +14,7 @@ Fixed updating opponents
 Fixed deleting article comments from a delete user
 Fixed activation emails
 Fixed inactive squads being displayed
+Fixed several install bugs
 Added Team Password joinability
 Added Email Settings
 Added News Slider
