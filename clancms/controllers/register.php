@@ -136,7 +136,7 @@ class Register extends CI_Controller {
 				$this->email->from($this->ClanCMS->get_setting('site_email'), CLAN_NAME);
 				$this->email->to($this->input->post('email'));
 				$this->email->subject('Activation link for your account on ' . CLAN_NAME);
-				$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . site_url() . "account/activate/" . $this->session->userdata('session_id') . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
+				$this->email->message("Hello " . $this->input->post('username') . ",\n\nWelcome to " . CLAN_NAME . "! Here are your login details for your account:\n\nUsername: " . $this->input->post('username') . "\nPassword: " . $this->input->post('password') . "\n\nHowever, before you can login you need to activate your account. Please click on the link below to activate your account.\n\n" . site_url("account/activate/". $this->session->userdata('session_id')) . "\n\nThanks for Registering!\n" . CLAN_NAME . "\n" . site_url());	
 
 				// Email the user
 				$this->email->send();
