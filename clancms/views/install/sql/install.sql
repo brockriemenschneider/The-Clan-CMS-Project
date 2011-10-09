@@ -167,6 +167,18 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__poll_votes` (
   PRIMARY KEY (`vote_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__privmsgs`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__privmsgs` (
+  `msg_id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_msg_id` int(11) NOT NULL DEFAULT '0',
+  `msg_content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `msg_subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `from_uid` int(11) NOT NULL,
+  `to_uid` int(11) NOT NULL,
+  PRIMARY KEY (`msg_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__sessions`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__sessions` (
