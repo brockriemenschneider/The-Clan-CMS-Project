@@ -2,6 +2,12 @@
                              Clan CMS Change Log
 ============================================================================================
 
+
+-----0.6.2-----
+Fixed lingering install bugs
+Added FTP client support to download
+Added custom fields to user profiles
+
 -----0.6.1-----
 Fixed polls updating current active poll
 Fixed pages order ajax call
