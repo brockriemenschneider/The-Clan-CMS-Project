@@ -332,10 +332,11 @@ class Dashboard extends CI_Controller {
 	{
 		// Load the file helper
 		$this->load->helper('file');
+		$this->load->library('FileDownloader');
 		
 		// Fetch the Latest Version
-        if(!$latest_version = @file_get_contents('http://www.xcelgaming.com/download/latest_version'))
-		{
+ if(!$latest_version = @$this->filedownloader->readRemoteFile('http://www.xcelgaming.com/download/latest_version'))  
+ 		{
 			// Set up the data
 			$data = array(
 				'alert_title'	=> 'Could not check if a new version is available!',
