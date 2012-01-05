@@ -91,7 +91,6 @@ class FileDownloader {
 
 			$response = '';
 			$headers = true;
-						die(var_dump($response));
 
 			while(!feof($fp))
 			{
