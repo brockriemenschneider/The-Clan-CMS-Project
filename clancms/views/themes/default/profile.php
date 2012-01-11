@@ -10,7 +10,9 @@
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('account/profile/' . $user->user_name, $user->user_name); ?></span><span class="right"></span></li>
 			<?php if($user->user_id == $this->session->userdata('user_id')): ?>
 				<li><span class="left"></span><span class="middle"><?php echo anchor('account', 'My Account'); ?></span><span class="right"></span></li>
+				<li><span class="left"></span><span class="middle"><?php echo anchor('account/social', 'My Social'); ?></span><span class="right"></span></li>
 			<?php endif; ?>
+			
 		</ul>
 		</div>
 	
@@ -48,6 +50,54 @@
 				<div class="details"><?php echo mdate("%F %j%S, %Y", $user->joined); ?></div>
 				<div class="clear"></div>
 				
+				<?php echo br(); ?>
+				
+				<div class="subheader">
+					<?php echo heading($user->user_name . '\'s Social', 4); ?>
+				</div>
+				<?php if($social): ?>
+				<?php if($social->facebook): ?>
+					<div class="label">Facebook:</div>
+					<div class="details"><?php echo anchor('http://facebook.com/' . $social->facebook, $social->facebook); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->twitter): ?>
+					<div class="label">Twitter:</div>
+					<div class="details">
+						<?php echo anchor('http://www.twitter.com/' . $social->twitter, $social->twitter) . 
+						    '<a href="https://twitter.com/' . $social->twitter . '" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @' . $social->twitter . '</a>'; ?>
+						     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						</div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->youtube): ?>
+					<div class="label">YouTube:</div>
+					<div class="details"><?php echo anchor('http://www.youtube.com/user/' . $social->youtube, $social->youtube); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->xbox_live): ?>
+					<div class="label">Xbox Gamertag:</div>
+					<div class="details"><?php echo anchor('' . $social->xbox_live, $social->xbox_live); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->ps_online): ?>
+					<div class="label">PlayStation Online:</div>
+					<div class="details"><?php echo anchor('' . $social->ps_online, $social->ps_online); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->steam): ?>
+					<div class="label">Steam:</div>
+					<div class="details"><?php echo anchor('' . $social->steam, $social->steam); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php if($social->skype): ?>
+					<div class="label">Skype:</div>
+					<div class="details"><?php echo anchor('' . $social->skype, $social->skype); ?></div>
+					<div class="clear"></div>
+				<?php endif; ?>
+				<?php else: ?>
+					<div style="text-align: center;"><?php echo $user->user_name; ?> has not established any social connections yet.</div>
+				<?php endif; ?> 
 			</div>
 		</div>
 		<div class="footer"></div>

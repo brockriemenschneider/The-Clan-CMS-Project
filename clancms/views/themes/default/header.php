@@ -9,11 +9,12 @@
 	<?php echo link_tag(THEME_URL . 'style.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/nivo-slider/nivo-slider.css'); ?>
+	<?php echo link_tag(THEME_URL . 'js/skins/tango/skin.css'); ?>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-1.4.2.min.js"></script> 
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery-ui-1.8.2.custom.min.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.newsticker.js"></script>
-    <script type="text/javascript" src="<?php echo THEME_URL; ?>js/nivo-slider/jquery.nivo.slider.pack.js"></script>
-	
+	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/nivo-slider/jquery.nivo.slider.pack.js"></script>
+	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript">
 		$(window).load(function(){
 
@@ -35,7 +36,17 @@
 			$("ul#ticker").liScroll();
 		});
 	</script>
-	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		    jQuery('#mycarousel').jcarousel({
+		        // Configuration goes here
+		        wrap: 'circular',
+		//        auto: 8,
+		        animation: 'slow',
+		        
+		    });
+		});
+	</script>
 	
 </head>
 
@@ -68,6 +79,7 @@
 		</li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('polls', 'Polls'); ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(1) == 'gallery'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('gallery', 'Gallery'); ?></span><span class="right"></span></li>
 		<?php $this->load->widget_area('navigation'); ?>		
 	</ul>
 	</div>

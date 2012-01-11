@@ -39,6 +39,9 @@ class Account extends CI_Controller {
 		
 		// Load the Squads model
 		$this->load->model('Squads_model', 'squads');
+		
+		// Load the Social model
+		$this->load->model('Social_model', 'social');
 	}
 	
 	// --------------------------------------------------------------------
@@ -385,7 +388,8 @@ class Account extends CI_Controller {
 		$this->data->user =& $user;
 		$this->data->members =& $members;
 		$this->data->matches =& $recent_matches;
-		
+		$this->data->social =& $social;
+		$social =& $this->social->get_social($this->uri->segment(3));
 		// Load the profile view
 		$this->load->view(THEME . 'profile', $this->data);
 	}
@@ -832,7 +836,59 @@ class Account extends CI_Controller {
 			return FALSE;
 		}
 	}
+
+	// --------------------------------------------------------------------
 	
+	/**
+	 * Social
+	 *
+	 * Social media connections
+	 *
+	 * @access	private
+	 * @param	string
+	 * @return	bool
+	 */	
+	 function social()
+	 {
+	 	// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Retrieve the user
+		if(!$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id'))))
+		{
+			// User doesn't exist, redirect them
+			redirect('account/login');
+		}
+		
+		//  on submit -> to model
+		if ($this->input->post('update_social')) {
+			$data = array(
+			'facebook'		=> 	$this->input->post('facebook'),
+			'twitter'		=> 	$this->input->post('twitter'),
+			'xbox_live'	=> 	$this->input->post('xboxlive'),
+			'ps_online'	=> 	$this->input->post('psonline'),
+			'steam'		=> 	$this->input->post('steam'),
+			'skype'		=> 	$this->input->post('skype'),
+			'youtube'		=>	$this->input->post('youtube'),
+			'user'		=>	$user->user_name
+			);
+			$this->social->update_social($data);
+		}
+		
+		
+	 	// Create a reference to user
+		$this->data->user =& $user;
+		
+		$this->data->social =& $social;
+		$social =& $this->social->get_social($this->uri->segment(3));
+		
+		// Load view
+	 	$this->load->view(THEME . 'social', $this->data);
+	 }
 }
 
 /* End of file account.php */

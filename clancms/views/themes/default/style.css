@@ -51,7 +51,10 @@ img {
 	color: red;
 	text-decoration: none;
 }
-
+.white {
+	color: #fff;
+	text-decoration: none;
+	}
 .clear {
 	clear: both;
 }
@@ -592,7 +595,7 @@ ul.newsticker a {
 }
 
 #main .box .content .inside .required-field:before {
-    content: "* ";
+    content: " * ";
 	color: #ee2d00;
     font-weight: bold;
 }
@@ -640,7 +643,6 @@ ul.newsticker a {
 	color: #ffffff;
 	text-decoration: none;
 	padding: 0 10px 0 10px;
-	float: left;
 	font-weight: bold;
 }
 
@@ -674,7 +676,6 @@ ul.newsticker a {
 	color: #ffd800;
 	text-decoration: none;
 	padding: 0 10px 0 10px;
-	float: left;
 	font-weight: bold;
 }
 
@@ -837,7 +838,7 @@ ul.newsticker a {
 }
 
 #main .box .content .inside .required:before {
-    content: "* ";
+    content: " * ";
 	color: #ee2d00;
     font-weight: bold;
 }
@@ -919,6 +920,35 @@ ul.newsticker a {
 	border: 1px solid #070707;
 }
 
+.memberlist {
+    border: 1px solid #2B2B2B;
+    border-radius: 6px 6px 6px 6px;
+    display: block;
+    list-style: none outside none;
+    padding: 5px;
+}
+.memberlist .member_head {
+	height: 25px;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 24px;
+	border-bottom: 1px solid #333;
+}
+.memberlist .member {
+    display: inline-block;
+    padding: 0;
+    list-style: none;
+    width: 700px;
+}
+.memberlist li {
+    display: inline-block;
+}
+.member .icon {
+    width: 25px;
+}
+.memberlist .member .name {
+    width: 100px;
+}
 /*---
 	NEW USERS
 ----------------------------*/

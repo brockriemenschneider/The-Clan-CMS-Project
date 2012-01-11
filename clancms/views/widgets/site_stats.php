@@ -16,5 +16,9 @@
 			<?php echo br(); ?>
 			Pages: <?php echo anchor(ADMINCP . 'pages', $total_pages . ' Pages'); ?>
 			<?php echo br(); ?>
+			Images: <?php echo anchor('gallery', $total_images . ' images'); ?>
+			<?php echo br(); ?>
+			Shouts: <?php echo anchor('shouts', $total_shouts . ' shouts'); ?>
+			<?php echo br(); ?>
 			Widgets: <?php echo anchor(ADMINCP . 'widgets', $total_widgets . ' Installed'); ?>
 			<?php echo br(); ?>
