@@ -365,3 +365,13 @@ INSERT INTO `__DBPREFIX__widget_areas` (`area_id`, `area_title`, `area_slug`) VA
 (4, 'Admin CP Header', 'admincp_header'),
 (5, 'Navigation', 'navigation'),
 (6, 'Dashboard', 'dashboard');
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__shoutbox` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `shout` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rank` varchar(18) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
