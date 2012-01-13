@@ -8,9 +8,17 @@
 		<div class="tabs">
 		<ul>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('roster', 'All Squads'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor('roster/users', 'All Users'); ?></span><span class="right"></span></li>
 			<?php if($squads): ?>
 				<?php foreach($squads as $tab): ?>
-					<li <?php if($squad->squad_id == $tab->squad_id): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('roster/squad/' . $tab->squad_slug, $tab->squad_title); ?></span><span class="right"></span></li>
+					<li <?php if($squad->squad_id == $tab->squad_id): echo 'class="selected"'; endif; ?>>
+						<span class="left"></span>
+						<span class="middle">
+							<?php if($tab->squad_icon): echo img(array('src' => IMAGES . 'squad_icons/'.$tab->squad_icon, 'alt' => $tab->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $tab->squad_title)); else: echo img(array('src' => IMAGES . 'squad_icons/no_icon.png', 'alt' => $tab->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $tab->squad_title)); endif; ?><?php echo anchor('roster/squad/' . $tab->squad_slug, $tab->squad_title); ?>
+						</span>
+						<span class="right"></span>
+					</li>
+					
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</ul>
@@ -39,8 +47,8 @@
 			<?php if($squad->members): ?>
 				<?php foreach($squad->members as $member): ?>
 				<tr>
-					<td><?php if($member->online): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), img(array('src' => THEME_URL . 'images/online.png', 'alt' => $member->user_name . ' is online', 'title' => $member->user_name . ' is online'))); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), img(array('src' => THEME_URL . 'images/offline.png', 'alt' => $member->user_name . ' is offline', 'title' => $member->user_name . ' is offline'))); endif; ?></td>
-					<td><?php if($squad->squad_tag && (bool) !$squad->squad_tag_position): echo '[' . $squad->squad_tag . '] '; endif; ?><?php if($member->member_title): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->user_name); endif; ?><?php if($squad->squad_tag && (bool) $squad->squad_tag_position): echo ' [' . $squad->squad_tag . ']'; endif; ?></td>
+					<td><?php if($member->user->user_avatar): echo img(array('src' => IMAGES . 'avatars/'.$member->user->user_avatar, 'height' => '24px', 'width' => '24px')); else: echo img(array('src' => IMAGES . 'avatars/avatar_none.png', 'height' => '24px', 'width' => '24px')); endif;?></td>
+					<td><?php if($member->member_title): echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->member_title); else: echo anchor('account/profile/' . $this->users->user_slug($member->user_name), $member->user_name); endif; ?></td>
 					<td><?php if($member->member_role): echo $member->member_role; else: echo 'N/A'; endif; ?></td>
 					<td><?php echo $member->total_kills; ?></td>
 					<td><?php echo $member->total_deaths; ?></td>

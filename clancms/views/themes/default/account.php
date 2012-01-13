@@ -9,6 +9,7 @@
 		<ul>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('account/profile/' . $this->users->user_slug($user->user_name), $user->user_name); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('account/', 'My Account'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor('account/social', 'My Social'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		

@@ -4,6 +4,7 @@
 
 <div id="main">
 
+<?php $this->load->widget('shoutbox'); ?>
 
 <?php if($slides): ?>
 	<div id="slider-wrapper">

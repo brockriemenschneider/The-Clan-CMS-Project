@@ -261,6 +261,47 @@ class Roster extends CI_Controller {
 		$this->load->view(THEME . 'squad', $this->data);
 	}
 	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Users
+	 *
+	 * Display's the user list
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	 function users()
+	 {
+	 	// Load the games method
+		$users = $this->squads->get_users();
+		
+		// Cycle member online status
+		foreach($users as $user)
+		{
+			// Check if member user exist
+			if($user->user_id)
+			{
+				// Member user exists, assign member online & member user name
+				$user->online = $this->user->is_online($user->user_id);
+			}
+			else
+			{
+				return FALSE;
+			}
+		} 
+		// Retrieve the squads
+		$squads = $this->squads->get_squads(array('squad_status' => 1));
+		
+		 
+		 // Reference objects
+		$this->data->users =& $users;
+		$this->data->squads =& $squads;
+		$this->data->squad =& $squad;
+		
+		// Load userlist view
+	 	$this->load->view(THEME . 'users', $this->data);
+	 }
 }
 
 /* End of file roster.php */
