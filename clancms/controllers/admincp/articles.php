@@ -326,7 +326,7 @@ class Articles extends CI_Controller {
 	 * @return	void
 	 */
 	function add()
-	{
+	{		
 		// Retrievethe forms
 		$add_article = $this->input->post('add_article');
 		
@@ -338,6 +338,7 @@ class Articles extends CI_Controller {
 			$this->form_validation->set_rules('squad', 'Squad', 'trim|required');
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('article', 'Article', 'trim|required');
+			$this->form_validation->set_rules('game', 'Game', 'required');
 			$this->form_validation->set_rules('comments', 'Comments', 'trim|required');
 		
 			// Form validation passed, so continue
@@ -349,6 +350,7 @@ class Articles extends CI_Controller {
 					'article_title'		=> $this->input->post('title'),
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
+					'article_game'			=> $this->input->post('game'),
 					'user_id'			=> $this->session->userdata('user_id'),
 					'article_status'	=> $this->input->post('status'),
 					'article_date'		=> mdate('%Y-%m-%d %H:%i:%s', now())
@@ -378,9 +380,14 @@ class Articles extends CI_Controller {
 		
 		// Retrieve the squads
 		$squads = $this->squads->get_squads();
-		
 		// Create a reference to squads
 		$this->data->squads =& $squads;
+		
+		// Load the games method
+		$games = $this->articles->get_games();
+		 // Reference games
+		 $this->data->games =& $games;
+		
 		
 		// Load the admincp articles add view
 		$this->load->view(ADMINCP . 'articles_add', $this->data);
@@ -499,6 +506,7 @@ class Articles extends CI_Controller {
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('article', 'Article', 'trim|required');
 			$this->form_validation->set_rules('comments', 'Comments', 'trim|required');
+			$this->form_validation->set_rules('game', 'Game', 'required');
 		
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
@@ -511,6 +519,7 @@ class Articles extends CI_Controller {
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
 					'article_status'	=> $this->input->post('status'),
+					'article_game'	=> $this->input->post('game'),
 				);
 				
 				// Check if article is a draft
@@ -588,12 +597,15 @@ class Articles extends CI_Controller {
 				}
 			}
 		}
+		// Display all Game headers
+		$games = $this->articles->get_games();
 		
 		// Create a reference to article, squads, comments & pages
 		$this->data->article =& $article;
 		$this->data->squads =& $squads;
 		$this->data->comments =& $comments;
 		$this->data->pages =& $pages;
+		$this->data->games =& $games;
 		
 		// Load the admincp articles edit view
 		$this->load->view(ADMINCP . 'articles_edit', $this->data);
@@ -737,6 +749,66 @@ class Articles extends CI_Controller {
 		// Redirect the administrator
 		redirect(ADMINCP . 'articles/edit/' . $comment->article_id . '#comments');
 	}
+// --------------------------------------------------------------------
+	/** Headers
+	 * 
+	 *  Adds news headers
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	 function headers() {
+
+		// Display all Game headers
+		$data['games'] = $this->articles->get_games();
+		
+		//  on submit -> to model
+		if ($this->input->post('upload')) {
+			$this->articles->add_header();
+		}
+		
+		$this->load->view(ADMINCP . 'articles_headers', $data);
+	 }
+	// --------------------------------------------------------------------
+	/**
+	 * Delete Header
+	 *
+	 *  Removes header images
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */	
+	function del_header()
+	{
+		// Set up the data
+		$data = array(
+			'id'	=>	$this->uri->segment(4, '')
+		);
+
+		// Retrieve the header by file_name
+		if(!$header = $this->articles->get_header($data))
+		{
+			// Comment doesn't exist, alert the administrator
+			$this->session->set_flashdata('message', 'The header was not found!');
+		
+			// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+
+		// Delete the article comment from the database
+		unlink(UPLOAD . 'headers/' .$header->image);
+		$this->articles->delete_header($header->id, $data);
+		
+		// Alert the administrator
+		$this->session->set_flashdata('message', 'The header was successfully deleted!');
+				
+		// Redirect the administrator
+		redirect(ADMINCP . 'articles/headers/');
+	
+	}
+	
+	
 	
 }
 

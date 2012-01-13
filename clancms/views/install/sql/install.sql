@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `user_id` bigint(20) NOT NULL DEFAULT '0',
   `article_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `article_status` tinyint(1) NOT NULL DEFAULT '0',
+  `article_game` varchar(64) NOT NULL,
   PRIMARY KEY (`article_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 -- command split --
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 -- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` ( 
   `slider_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_id` bigint(20) NOT NULL DEFAULT '0',
   `slider_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -48,6 +49,21 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   `slider_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`slider_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__gallery`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` text NOT NULL,
+  `uploader` varchar(20) NOT NULL,
+  `desc` text NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `views` int(100) NOT NULL,
+  `comments` int(11) NOT NULL,
+  `game` text NOT NULL,
+  `title` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__group_permissions`;
 -- command split --
@@ -248,6 +264,18 @@ INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `
 (4, 'Registration Settings', 4),
 (5, 'Email Settings', 5);
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__shoutbox`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__shoutbox` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `shout` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rank` varchar(18) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__sponsors`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__sponsors` (
@@ -270,6 +298,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squads` (
   `squad_tag_position` tinyint(1) NOT NULL DEFAULT '0',
   `squad_status` tinyint(1) NOT NULL DEFAULT '0',
   `squad_priority` int(10) NOT NULL,
+  `squad_icon` varchar(64) NOT NULL,
   PRIMARY KEY (`squad_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --

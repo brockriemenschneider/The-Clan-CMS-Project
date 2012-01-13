@@ -50,6 +50,15 @@ class Widgets extends CI_Controller {
 			exit;
 		}
 		
+		// Verify widget directory permissions
+		if(!is_writable(WIDGETS)){
+			$error = 'The widget installation path does not have the required write permissions to install or update!  You will need to change the permissions before installation / updates';
+			
+			//Alert the administrator
+			$this->session->set_flashdata('message', $error);
+			clearstatcache();
+		}
+		
 		// Load the inflector helper
 		$this->load->helper('inflector');
 		
@@ -130,6 +139,8 @@ class Widgets extends CI_Controller {
 	 */
 	function browse()
 	{
+		
+			
 		// Load the xmlrpc library
 		$this->load->library('xmlrpc');
 		
@@ -457,6 +468,22 @@ class Widgets extends CI_Controller {
 	 */
 	function install()
 	{
+		//Before downloading, let's check the folder perms to ensure the webserver can r+w
+	if(substr(sprintf('%o', fileperms(WIDGETS)), -4) < 0755)  {
+		
+		// attempt a chmod
+		chmod(WIDGETS, 0775);
+		$this->install();
+		}
+		else {
+				//perms failed, alert the administrator
+				$this->session->set_flashdata('message', 'Please check that the permission settings on your widgets folder are at least 755.');
+		
+				// Redirect the administrator
+				redirect(ADMINCP . 'widgets/browse');
+		}
+	
+		
 		// Load the xmlrpc library
 		$this->load->library('xmlrpc');
 		
@@ -550,6 +577,21 @@ class Widgets extends CI_Controller {
 	 */
 	function update()
 	{
+	//Before downloading, let's check the folder perms to ensure the webserver can r+w
+	if(substr(sprintf('%o', fileperms(WIDGETS)), -4) < 0644)  {
+		
+		// attempt a chmod
+		if(chmod(WIDGETS, 0755)){
+			$this->update();
+			}else {
+				//perms failed, alert the administrator
+				$this->session->set_flashdata('message', 'Please check that the permission settings on your widgets folder are at least 755.');
+		
+				// Redirect the administrator
+				redirect(ADMINCP . 'widgets/browse');
+			}
+		}
+		
 		// Load the xmlrpc library
 		$this->load->library('xmlrpc');
 		
@@ -567,7 +609,7 @@ class Widgets extends CI_Controller {
 		$this->xmlrpc->request(array($request, 'array'));
 		
 		// Check if the xml rpc request failed
-		if (!$this->xmlrpc->send_request() && $this->session->flashdata('message') == '')
+		if (!$this->xmlrpc->send_request() && $this->session->flashdata('message') == '' )
 		{
 			// Xml request failed, alert the adminstrator
 			$this->session->set_flashdata('message', 'Could not download the widget! Please try again later.');
@@ -575,6 +617,8 @@ class Widgets extends CI_Controller {
 			// Redirect the administrator
 			redirect(ADMINCP . 'widgets/browse');
 		}
+		
+		
 		else
 		{
 			// Retrieve the response
@@ -584,8 +628,13 @@ class Widgets extends CI_Controller {
 			$widget = $widget[0]['widget'];
 			
 			$this->load->library('FileDownloader');
-            // Download the widget
-            if($this->filedownloader->downloadFile('http://www.xcelgaming.com/customize/widgets/download/' . $widget['download_file'], $widget['download_file']))
+			
+		        
+
+		          
+		        
+		         // Download the widget
+            		if($this->filedownloader->downloadFile('http://www.xcelgaming.com/customize/widgets/download/' . $widget['download_file'], $widget['download_file']))
 			{			
 				// Load the unzip library
 				$this->load->library('unzip');

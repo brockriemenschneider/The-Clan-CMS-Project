@@ -1,3 +1,28 @@
+=================================================================================
+                                 co[dezyne] fork README
+=================================================================================
+
+[ 11 January, 2012 ]
+
+Initial Commit from forked project: The-Clan-CMS-Project version 0.6.2
+
+*** Changelog
+
+SQUAD ROSTER MCV has been extended, removing the squad tag and replacing it with squad icons.
+
+ARTICLES MCV has been extended, adding the article header functionality.
+
+SHOUTBOX WIDGET and SHOUT MCV added.  The widget requires the SHOUT MCV in order to view shout history and permit admin moderation of shouts.
+
+Install database creation has been modified to create the required changes necessary to validate with my extensions.
+
+
+*** Important Notes
+
+For those only looking to update certain files, use the files in /DB Tables to alter your existing database tables.
+
+The Media GALLERY MCV is currently in alpha development and too embedded in current structer to remove the the purposes of this git commit.
+
 
 ============================================================================================
                              Clan CMS Read Me
