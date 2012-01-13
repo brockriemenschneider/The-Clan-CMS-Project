@@ -151,11 +151,10 @@ class Shouts extends CI_Controller {
 				if($delay <= 3){
 					// Shouts less than 3 minutes
 					$shout->delay  = 'just now';
-					
 				}elseif($delay > 3 && $delay < 60){
 					
 					// Shouts 3 to 60 minutes
-					$shout->delay = $delay . ' mins ago';
+					$shout->delay = $delay . 'mins ago';
 					
 				}elseif($delay >= 60 && $delay < 3600){
 					
@@ -163,13 +162,13 @@ class Shouts extends CI_Controller {
 					$delay = round(($delay / 60), 0);
 					$shout->delay  = $delay . ' hours ago';
 					
-				}elseif($delay >= 3600 && $delay < 25200){
+				}elseif($delay >= 3600 && $delay < 10800){
 					
 					// Shouts greater than a day
 					$delay = round(($delay / 1440), 0);
 					$shout->delay = $delay . ' days ago';
 					
-				}elseif($delay >= 25200){
+				}elseif($delay >= 10800){
 					
 					// Shouts greater than a week
 					$delay = round(($delay / 10080), 0);

@@ -104,13 +104,13 @@ class Shoutbox_widget extends Widget {
 						// Shouts 3 to 60 minutes
 						$shout->delay = $delay . ' mins ago';
 						
-					}elseif($delay >= 60 && $delay < 3600){
+					}elseif($delay >= 60 && $delay < 1440){
 						
 						// Shouts greater than one hour 
 						$delay = round(($delay / 60), 0);
 						$shout->delay  = $delay . ' hours ago';
 						
-					}elseif($delay >= 3600 && $delay < 10800){
+					}elseif($delay >= 1440 && $delay < 10800){
 						
 						// Shouts greater than a day
 						$delay = round(($delay / 1440), 0);
