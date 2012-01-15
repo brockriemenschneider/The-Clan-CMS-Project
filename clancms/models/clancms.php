@@ -45,7 +45,7 @@ class ClanCMS extends CI_Model {
 		$CI->load->model('Session_model', 'user');
 		
 		// Define Install
-		define('INSTALL', TRUE);
+		define('INSTALL', FALSE);
 		
 		// Check if we are installing
 		if(!INSTALL)
@@ -72,7 +72,7 @@ class ClanCMS extends CI_Model {
 			
 			define('IMAGES', base_url() . 'clancms/views/images/');
 			define('UPLOAD', 'clancms/views/images/');
-			define('SUPERADMINISTRATOR', '__SUPERADMINISTRATOR__');
+			define('SUPERADMINISTRATOR', '1');
 		
 			// Check if the user is remembered
 			$CI->user->is_remembered();

@@ -74,6 +74,7 @@
 					<ul class="subnav">
 						<li <?php if($this->uri->segment(2, '') == 'slider' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'slider/add', 'Add Slide'); ?></li>
 					</ul>
+				<li <?php if($this->uri->segment(2, '') == 'articles' && $this->uri->segment(3, '') == 'headers'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></li>
 				</li>			
 			</ul>
 		</li>
@@ -90,6 +91,7 @@
 		<li <?php if($this->uri->segment(2, '') == 'squads'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'squads', 'Squads'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2, '') == 'squads' && $this->uri->segment(3, '') == 'add'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'squads/add', 'Add Squad'); ?></li>
+				<li <?php if($this->uri->segment(2, '') == 'squads' && $this->uri->segment(3, '') == 'icons'): echo 'class="selected"'; endif; ?>><?php echo anchor(ADMINCP . 'squads/icons', 'Squad Icons'); ?></li>
 			</ul>
 		</li>
 		<li <?php if($this->uri->segment(2, '') == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'sponsors', 'Sponsors'); ?></span><span class="right"></span>

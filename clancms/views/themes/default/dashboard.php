@@ -3,6 +3,8 @@
 <?php $this->load->view(THEME . 'sidebar'); ?>
 
 <div id="main">
+
+
 <?php if($slides): ?>
 	<div id="slider-wrapper">
 		<div id="slider" class="nivoSlider">
@@ -44,6 +46,7 @@
 		<div class="content">
 			<div class="inside">
 			
+			<div><?php if($article->article_game): echo img(IMAGES . 'headers/' . $article->article_game); else: echo img(IMAGES . 'headers/default.png'); endif; ?></div>
 				<div class="subheader">
 					<?php echo heading('Posted on ' . mdate("%M %d, %Y at %h:%i %a", $article->date) . ' by ' . anchor('account/profile/' . $this->users->user_slug($article->author), $article->author), 4); ?>
 				</div>

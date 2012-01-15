@@ -74,7 +74,7 @@
 		
 		<div class="content">
 			<div class="inside">
-	
+			
 			<div id="move"></div>
 			
 			<?php if($updates): ?>

@@ -1,42 +1,128 @@
 
 ============================================================================================
-                             Clan CMS Read Me
+                             co[dezyne] ClanCMS Fork Changes
 ============================================================================================
 
+This is the complete system with all file changes, working and not.  Refer to specific branches
+for modification details.
 
-This is a quick guide on how to get set up with Clan CMS. Please feel free to contact us through the
-Xcel Gaming forums for additional support.
+******************************************
+              Files Added:
+******************************************
 
-Thanks,
-Xcel Gaming
-http://xcelgaming.com
+controllers/
+- gallery.php
+- shouts.php
 
------REQUIREMENTS-----
+models/
+- gallery_model.php
+- shouts_model.php
+- social_model.php
 
-PHP version 5.1.6 or greater
-MySQL version 4.1 or greater
-The mod_rewrite Apache module
+widgets/
+- shoutbox_widget.php
 
------INSTALLATION-----
+views/widgets/
+- shoutbox.php
 
-1) Upload all the files to your server
+views/images/
+- gallery/
+- gallery/thumbs/
+- headers/
+- squad_icons/
 
-2) Create a MySQL database and remember the details (Database name, Database username, Database password)
+views/admincp/
+- articles_headers.php
+- squads_icons.php
 
-3) Visit http://yoursite.com/install/ and follow the step by step installation guide
+views/themes/default/
+- gallery.php
+- image.php
+- media.php
+- shouts.php
+- social.php
+- social_agree.php
+- users.php
 
-4) After you install the script you need to remove the installation files. Either by clicking "Resolve Now" on the Installation file alert in the Admin CP or
-by manually deleting the "clancms/controllers/install.php", "clancms/libraries/Installer.php", and the "clancms/views/install/" folder.
+views/themes/default/js/
+- jquery.jcarousel.js
+- jquery.jcarousel.min.js
+- jcarousel/*
 
-5) After you have done all of this you will be able to login to the Admin CP and start managing your site.
 
------TROUBLESHOOTING-----
+[ end of added ]
 
-If you are using GoDaddy or the installation guide is not appearing then follow the steps below:
+******************************************
+              Files Changed
+******************************************
 
-1) Open up .htaccess file in the root directory and change
-#RewriteBase /
-to
-RewriteBase /
+controllers/admincp
+- articles.php
+- squads.php
 
-2) Save and close the file and refresh to see if you can get to the installation guide. If you are still having issues please contact us on the Xcel Gaming Forums.
+controllers/
+- account.php
+- articles.php
+- roster.php
+
+models/
+- articles_model.php
+- session_model.php
+- squads_model.php
+- users_model.php
+
+widgets/ 
+- site_stats_widget.php
+
+views/widgets/
+- site_stats.php
+
+views/admincp/
+- articles.php
+- articles_add.php
+- articles_edit.php
+- header.php
+- squads_add.php
+- squads_edit.php
+
+views/themes/default/
+- account.php
+- article.php
+- articles.php
+- footer.php
+- header.php
+- profile.php
+- roster.php
+- squad.php
+
+
+[ end of files changed ]
+
+****************************************
+               DB Tables Added
+****************************************
+_gallery
+_gallery_comments
+_headers
+_shoutbox
+_sqd_icons
+_user_api
+_user_extend
+_user_social
+
+[ end of new tables ]
+
+*********************************************
+               DB Tables Modified
+*********************************************
+_articles
+	- added 'article_game'
+_squads
+	- added 'squad_icon'
+
+_users
+	-added 'can_shout'
+	-added 'can_upload'
+	-added 'has_voice'
+
+[ end of table modifiers ]

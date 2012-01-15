@@ -627,7 +627,7 @@ ul.newsticker a {
 }
 
 #main .box .content .inside .required-field:before {
-    content: "* ";
+    content: " * ";
 	color: #ee2d00;
     font-weight: bold;
 }
@@ -872,7 +872,7 @@ ul.newsticker a {
 }
 
 #main .box .content .inside .required:before {
-    content: "* ";
+    content: " * ";
 	color: #ee2d00;
     font-weight: bold;
 }
@@ -990,4 +990,46 @@ ul.newsticker a {
 {
 	border-bottom: 1px #ee2d00 solid;
 	padding-bottom: 11px;
+}
+
+.cats {
+    display: block;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    width: 77px;
+}
+.cats li {
+    border-right: 1px solid #CC6600;
+    font-size: 12px;
+    height: 16px;
+    margin-bottom: 2px;
+    padding-right: 7px;
+}
+.cats li:last-child {
+    border-bottom: medium none;
+}
+.links {
+    display: block;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+.links li {
+    font-size: 11px;
+    height: 16px;
+    margin-bottom: 2px;
+    text-indent: 5px;
+}
+.links li:last-child {
+    border-bottom: medium none;
+}
+#site_stats {
+    border: 1px solid #333333;
+    border-radius: 5px 5px 5px 5px;
+    padding: 6px;
 }

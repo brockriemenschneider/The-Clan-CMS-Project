@@ -23,6 +23,7 @@
 			<li <?php if($this->uri->segment(3, '') != 'drafts'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles', 'Published'); ?></span><span class="right"></span></li>
 			<li <?php if($this->uri->segment(3, '') == 'drafts'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		

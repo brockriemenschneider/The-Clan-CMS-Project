@@ -11,6 +11,7 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles', 'Published'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -33,45 +34,51 @@
 					<?php echo heading('Article Information', 4); ?>
 				</div>
 				
+			<!-- Article Status -->
 				<div class="label required">Status</div>
-				<?php
-					
-					$options = array(
-						'0' => 'Draft',
-						'1' => 'Published'
-					);
+				<?php $options = array('0' => 'Draft','1' => 'Published');
 					
 				echo form_dropdown('status', $options, set_value('status'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What is the status of this article?</div>
 				
+				
+			<!-- Squad Select -->
 				<div class="label required">Squad</div>
-				<?php
-					
-					$options = array('0' => 'None',);
+				<?php $options = array('0' => 'None',);
 					if($squads):
 						foreach($squads as $squad):
 							$options = $options + array($squad->squad_id	=>	$squad->squad_title);
 						endforeach;
 					endif;
-					
 				echo form_dropdown('squad', $options, set_value('squad'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What squad is this article for?</div>
 		
+		
+			<!-- Title Name -->
 				<div class="label required">Title</div>
 				
-				<?php 
-				$data = array(
-					'name'		=> 'title',
-					'size'		=> '30',
-					'class'		=> 'input'
-				);
-
-				echo form_input($data, set_value('title')); ?>
+				<?php $data = array('name'	=> 'title','size'	=> '30','class'	=> 'input');
+					echo form_input($data, set_value('title')); ?>
 				<?php echo br(); ?>
 				<div class="description">The subject of the article</div>
 				
+			
+			<!-- Game selector -->
+				<div class="label required">Game</div>
+				<?php $options = array();
+					if($games):
+						foreach($games as $game):
+							$options = $options + array($game->image	=>	$game->title);
+						endforeach;
+					endif;
+				echo form_dropdown('game', $options, set_value('game'), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">Which game is this about? | <?php echo anchor(ADMINCP .'articles/headers', 'View / Add Headers', 'title="News Headers"');?></div>
+			
+			
+			<!-- Article Body -->
 				<?php
 				$data = array(
 					'name'		=> 'article',
@@ -83,6 +90,8 @@
 				echo form_textarea($data, set_value('article')); ?>
 				<?php echo br(); ?>
 				<div class="description">The content of the article</div>
+				
+				
 				
 				<?php echo br(); ?>
 				<div class="subheader">
@@ -115,13 +124,17 @@
 					);
 				
 				echo form_submit($data); ?>
+				
 				<div class="clear"></div>
+				
 			</div>
+			<?php echo form_close(); ?>		
 		</div>
 		<div class="footer"></div>
-	</div>
 	
-</div>
-<?php echo form_close(); ?>
 
+
+
+
+</div>
 <?php $this->load->view(ADMINCP . 'footer'); ?>
