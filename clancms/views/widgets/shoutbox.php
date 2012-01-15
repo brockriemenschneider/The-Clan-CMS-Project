@@ -16,34 +16,37 @@
 	<?php endif; ?>
 </div>
 <?php if($this->user->logged_in()): ?>
-	<div id="shout_input">
-		<?php $user_info = array (
-			'user'	=> $user->user_name,
-			'avatar'	=> $user->user_avatar,
-			'rank'	=> $user->group
-			); 
-		?>
-			
-		<?php echo form_open('', '', $user_info);?>
-		<?php $data = array(
-				'name'	=>	'comment',
-				'maxlength'	=>	'80',
-				'style'		=>	'width:64%'
-				)
-		?>
-		<?php echo form_input($data);?>
-		<?php 
-					$data = array(
-						'name'		=> 'shoutbox',
-						'class'		=> 'submit',
-						'value'		=> 'Shout!'
-					);
+		<div id="shout_input">
+		<?php if($this->user->can_shout()): ?>
+			<?php $user_info = array (
+				'user'	=> $user->user_name,
+				'avatar'	=> $user->user_avatar,
+				'rank'	=> $user->group
+				); 
+			?>
 				
-				echo form_submit($data); ?>
-		<?php echo form_close(); ?>
-		<div class="clear"></div>
+			<?php echo form_open('', '', $user_info);?>
+			<?php $data = array(
+					'name'	=>	'comment',
+					'maxlength'	=>	'80',
+					'style'		=>	'width:64%'
+					)
+			?>
+			<?php echo form_input($data);?>
+			<?php 
+						$data = array(
+							'name'		=> 'shoutbox',
+							'class'		=> 'submit',
+							'value'		=> 'Shout!'
+						);
+					
+					echo form_submit($data); ?>
+			<?php echo form_close(); ?>
+			<div class="clear"></div>
+			<?php endif; ?>
 		
 		<?php echo anchor('shouts', 'Shout History'); ?>
+
 		<!-- Form Validation -->
 				<?php if(validation_errors()): ?>
 				<div class="alert">
