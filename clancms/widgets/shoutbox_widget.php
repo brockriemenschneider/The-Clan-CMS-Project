@@ -30,11 +30,9 @@ class Shoutbox_widget extends Widget {
 	public $description = "Allows users to communicate through shoutbox.";
 	public $author = 'co[dezyne]';
 	public $link = 'http://www.codezyne.me';
-	public $version = '1.5.0';
+	public $version = '1.6.0';
 	
-	// Widget settings
-	public $settings = array();
-	
+
 	/**
 	 * Constructor
 	 *
@@ -122,8 +120,6 @@ class Shoutbox_widget extends Widget {
 						// Shouts greater than a week
 						$delay = round(($delay / 10080), 0);
 						$shout->delay  = $delay . ' weeks ago';		
-							
-					// Scan shouts for links
 											
 					}
 				}

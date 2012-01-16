@@ -548,6 +548,12 @@ border-collapse: collapse;
 	color: #ffffff;
 	font-weight: bold;
 }
+#main .box .header .new{
+    float: left;
+    margin: 9px 0px -28px 10px;
+    position: relative;
+    z-index: 1000;
+}
 
 #main .box .subheader {
 	Background: url('images/box_subheader.png') no-repeat;
@@ -1193,6 +1199,12 @@ margin: 0 0 3px;
 	z-index: 1000;
 	margin: 5px 5px -21px 0;
 }
+#photos .new {
+    float: left;
+    margin: -3px 0px -41px -3px;
+    position: relative;
+    z-index: 1000;
+}
 #photos li img {
 	border: 0 none;
 	clear: both;
@@ -1540,4 +1552,9 @@ textarea {
     font-weight: bold;
     padding: 0 5px;
     line-height: 25px;
+}
+
+.edit:hover {
+    box-shadow: 0 0 3px #fff;
+    border-radius: 3px;
 }

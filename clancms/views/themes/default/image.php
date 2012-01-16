@@ -54,7 +54,7 @@
 						<div class="clear"></div>
 						<?php if($this->user->logged_in()): ?>
 						<ul class="share">
-							<?php echo anchor('gallery/download/' . $image->image_slug, '<li class="download"></li>');?>
+							<?php echo anchor('gallery/download/' . $image->image_slug, '<li class="download"></li>', array('title' => 'Download original size'));?>
 							<li class="favor"></li>
 							<li class="facebook"></li>
 							<li class="twitter"></li>
@@ -75,6 +75,28 @@
 						</div>
 						<div class="uploader_desc">
 							<?php if($image->desc): ?>
+								<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
+									<?php echo img(array('src' => THEME_URL . 'images/edit.png', 'title' => 'Edit', 'alt' => 'Edit Description', 'class' => 'right edit')); ?>
+									<div id="edit" style="display: none;">
+									<?php echo form_open('gallery/image/' . $image->image_slug); ?>
+									<?php $data = array(
+											'name'		=> 'desc',
+											'rows'		=> '4',
+											'cols'			=> '40',
+											'value'		=> $image->desc
+											);
+									echo form_textarea($data); ?>
+									<?php $data = array(
+												'name'		=> 'add_desc',
+												'class'		=> 'submit',
+												'value'		=> 'Describe'
+											);
+										echo form_submit($data); ?>
+									<button id="cancel" class="submit ui-button ui-widget ui-state-default ui-corner-all">Cancel</button>
+									<?php echo form_close(); ?>
+									</div>
+								<?php endif; ?> 
+							
 								<p><?php echo $image->desc; ?></p>
 							<?php else: ?>
 								<?php if($this->session->userdata('username') == $image->uploader): ?>
@@ -166,5 +188,18 @@
 	</div>
 	<div class="space"></div>
 </div>
+
+<script>
+$(".edit").click(function () {
+  $("div#edit").show("fast", function () {
+    /* use callee so don't have to name the function */
+    $(this).next("div.edit").show("fast", arguments.callee);
+  });
+});
+$("#cancel").click(function () {
+  $("div.edit").hide(2000);
+});
+
+</script>
 
 <?php $this->load->view(THEME . 'footer'); ?>

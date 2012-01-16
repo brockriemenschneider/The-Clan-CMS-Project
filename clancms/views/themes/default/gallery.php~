@@ -133,7 +133,7 @@
 						 		<li>
 						 			<div class="gallery_inset">
 										<?php if($this->user->logged_in() && !$image->tracked): ?>
-											<?php echo anchor('gallery/image/' . $image->image_slug, img(array('src' => THEME_URL . 'images/new.png', 'alt' => 'new', 'class' => 'new'))); ?>
+											<?php echo achor('gallery/image/' . $image->image_slug, img(array('src' => THEME_URL . 'images/new.png', 'alt' => 'new', 'class' => 'new'))); ?>
 										<?php endif; ?>
 							 			<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
 											<?php echo $actions = anchor('gallery/del_image/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>

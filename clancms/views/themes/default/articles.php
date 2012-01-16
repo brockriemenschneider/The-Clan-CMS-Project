@@ -21,6 +21,9 @@
 		</div>
 		
 		<div class="header">
+			<?php if($this->user->logged_in() && !$article->tracked): ?>
+				<?php echo img(array('src' => THEME_URL . 'images/new.png', 'alt' => 'new', 'height' => 32, 'width' => 32, 'class' => 'new')); ?>
+			<?php endif; ?>
 			<?php if($article->squad): ?>
 				<?php echo heading($article->squad . ': ' . $article->article_title, 4); ?>
 			<?php else: ?>

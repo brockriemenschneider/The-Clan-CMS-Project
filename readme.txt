@@ -7,6 +7,12 @@ This is the complete system with all file changes, working and not.  Refer to sp
 for modification details.
 
 ******************************************
+              Recent Changes
+******************************************
+Created tracker table to log user views for objects.  Assimilated articles and gallery images to check user
+against tabled.  New items are branded with a 'new' image ribbon.
+
+******************************************
               Files Added:
 ******************************************
 
@@ -18,6 +24,7 @@ models/
 - gallery_model.php
 - shouts_model.php
 - social_model.php
+- tracker_model.php
 
 widgets/
 - shoutbox_widget.php
@@ -64,12 +71,15 @@ controllers/
 - account.php
 - articles.php
 - roster.php
+- dashboard.php
+- gallery.php
 
 models/
 - articles_model.php
 - session_model.php
 - squads_model.php
 - users_model.php
+- gallery_model.php
 
 widgets/ 
 - site_stats_widget.php
@@ -94,6 +104,8 @@ views/themes/default/
 - profile.php
 - roster.php
 - squad.php
+- gallery.php
+- image.php
 
 
 [ end of files changed ]
