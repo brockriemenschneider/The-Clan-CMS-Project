@@ -86,12 +86,11 @@ class Shoutbox_widget extends Widget {
 			
 		}
 		
-		
+		// Time Conversions
+		$current = strtotime(date('Y-m-d G:i:s'));
 		
 		if($shouts)
 		{
-			// Time Conversions
-			$current = strtotime(date('Y-m-d G:i:s'));
 			foreach($shouts as $shout)
 				{ 
 					// Set matching for post time

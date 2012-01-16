@@ -1,65 +1,42 @@
-==============================================================================
-                          co[dezyne] Shoutbox
-==============================================================================
 
-Current Version: 1.9
+============================================================================================
+                             Clan CMS Read Me
+============================================================================================
 
-The shoutbox allows users to communicate with each other via a sidebar widget 
-on ClanCMS.  The widget tracks the latest recent shouts and displays a user-friendly 
-timestamp.  Users are alerted via confirmation when their shouts are posted successfully. 
-Links beginning with 'http' and 'www' are parsed into hyperlinks for easy site 
-sharing within the community.
 
-A shout history is visible to all site members and admin are given the authority 
-to remove shouts no longer desired.
+This is a quick guide on how to get set up with Clan CMS. Please feel free to contact us through the
+Xcel Gaming forums for additional support.
 
-The shoutbox and shout history is inaccessible to visitors, and admin have the authority 
-to restrict users from using the shoutbox.
+Thanks,
+Xcel Gaming
+http://xcelgaming.com
 
-**************************************************
-               Required Files and Changes
-**************************************************
+-----REQUIREMENTS-----
 
-Database
-- Create table '*prefix*_shouts'
-- Modify table '*prefix_users'
-	-Add row 'can_shout'
-	-Add row 'has_voice' *also required*
-	-Add row 'can_upload' *also required*
+PHP version 5.1.6 or greater
+MySQL version 4.1 or greater
+The mod_rewrite Apache module
 
-controllers/
-- Add shouts.php
+-----INSTALLATION-----
 
-models/
-- Add shouts_model.php
-- Update session_model.php
+1) Upload all the files to your server
 
-widgets/
-- Add shoutbox_widget.php
+2) Create a MySQL database and remember the details (Database name, Database username, Database password)
 
-views/widgets/
-- Add shoutbox.php
+3) Visit http://yoursite.com/install/ and follow the step by step installation guide
 
-views/theme/*theme*/
-- Add shout.php
-- Update profile.php
+4) After you install the script you need to remove the installation files. Either by clicking "Resolve Now" on the Installation file alert in the Admin CP or
+by manually deleting the "clancms/controllers/install.php", "clancms/libraries/Installer.php", and the "clancms/views/install/" folder.
 
-*************************************
-    Changelog & Version History
-*************************************
-Current Version 1.9
-- Modified session model to include checking if user has privileges to shout
-- Gave admin authority to remove shout privs
-- Gave admin authority to mute users *preparative function for future development*
+5) After you have done all of this you will be able to login to the Admin CP and start managing your site.
 
-Version 1.6
-- Modified timestamp output calculation
+-----TROUBLESHOOTING-----
 
-Version 1.5
-- Parses shouts and converts links to hyperlinks
+If you are using GoDaddy or the installation guide is not appearing then follow the steps below:
 
-Version 1.1
-- Added shout history
+1) Open up .htaccess file in the root directory and change
+#RewriteBase /
+to
+RewriteBase /
 
-Version 1
-- Shoutbox widget developed
+2) Save and close the file and refresh to see if you can get to the installation guide. If you are still having issues please contact us on the Xcel Gaming Forums.
