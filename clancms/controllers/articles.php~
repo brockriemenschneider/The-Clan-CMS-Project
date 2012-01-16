@@ -409,31 +409,6 @@ class Articles extends CI_Controller {
 			}
 		}
 		
-		// Fetch active user
-		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
-		
-		// Query tracking table
-		if($user)
-		{
-			// set up data
-			$data = array(
-				'controller_name'	=>	$this->uri->segment(1),
-				'controller_method'	=>	$this->uri->segment(2),
-				'controller_item_id'	=>	$this->uri->segment(3),
-				'user_id'			=>	$user->user_id,
-				);
-			
-			// Check user against tracker
-			$track = $this->tracker->check($data);
-			
-			if(!$track)
-			{
-				// Object is new to user
-				$this->tracker->track($data);
-			}
-
-		}
-		
 		// Create a reference to the article & comments & pages
 		$this->data->article =& $article;
 		$this->data->comments =& $comments;

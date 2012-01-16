@@ -37,6 +37,9 @@ class Gallery extends CI_Controller {
 		// Load the Gallery model
 		$this->load->model('Gallery_model', 'gallery');
 		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
+		
 		// Load Download helper
 		$this->load->helper('download');
 		
@@ -72,10 +75,9 @@ class Gallery extends CI_Controller {
 		$video = array();
 		$blog_url = 'http://gdata.youtube.com/feeds/api/users/bluexephos/uploads';
 		$rawFeed = file_get_contents($blog_url);
-		$data['sxml'] = new SimpleXmlElement($rawFeed);
+		$sxml = new SimpleXmlElement($rawFeed);
 
-		// Display all uploaded images
-		$data['images'] = $this->gallery->get_images();
+		
 		
 		// Retrieve our forms
 		$gallery_upload = $this->input->post('upload');
@@ -94,8 +96,29 @@ class Gallery extends CI_Controller {
 			}
 			
 		}
+		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Display all uploaded images
+		$images = $this->gallery->get_images();
+		
+		// Query tracking table
+		if($user && $images)
+		{
+			// iterate through each image, pulling slugs
+			foreach($images as $image)
+			{
+				// Get tracked status
+				$image->tracked = $this->tracker->get_new($this->uri->segment(1), $image->image_slug, $user->user_id);
+			}
 
-		$this->load->view(THEME . 'gallery', $data);
+		}
+		
+		$this->data->sxml =& $sxml;
+		$this->data->images =& $images;
+
+		$this->load->view(THEME . 'gallery', $this->data);
 	}
 	
 	// --------------------------------------------------------------------
@@ -110,8 +133,7 @@ class Gallery extends CI_Controller {
 	 */
 	 
 	function image()
-	{ 
-		
+	{ 		
 		// Retrieve the image if it exists or redirect to gallery
 		$image = $this->gallery->get_image(array('image_slug' => $this->uri->segment(3, '')));
 		
@@ -204,6 +226,18 @@ class Gallery extends CI_Controller {
 			// Form validation passed & checked if gallery allows comments, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{	
+				// Add to comments count
+				$count = $image->comments;
+				$count = ($count + 1);
+			
+				// Set up the data
+				$data = array (
+					'comments'		=> $count,
+					);
+				
+				//  Update comment count
+				$this->gallery->edit_desc($data, $image->gallery_id);	
+				
 				// Set up our data
 				$data = array (
 					'gallery_id'		=> $image->gallery_id,
@@ -301,7 +335,7 @@ class Gallery extends CI_Controller {
 		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
 		
 		$comments = $this->gallery->get_comments($per_page, $offset, array('gallery_id' => $image->gallery_id));
-			
+
 		// Check if comments exist
 		if($comments)
 		{
@@ -341,24 +375,45 @@ class Gallery extends CI_Controller {
 				$count[] = $comment->count;
 			}
 			
+			// Assign comment points
+			$image->comments = array_sum($count);
+			
 		}
-		
-		// Assign comment points
-		$image->comments = array_sum($count);
 		
 		// Fetch active user
 		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
 		
-		// Block user for gaining self-views
-		if($user && $user->user_name != $image->uploader)
+		// Query tracking table
+		if($user)
+		{
+			// set up data
+			$data = array(
+				'controller_name'	=>	$this->uri->segment(1),
+				'controller_method'	=>	$this->uri->segment(2),
+				'controller_item_id'	=>	$this->uri->segment(3),
+				'user_id'			=>	$user->user_id,
+				);
+			
+			// Check user against tracker
+			$track = $this->tracker->check($data);
+			
+			if(!$track)
+			{
+				// Object is new to user
+				$this->tracker->track($data);
+			}
+
+		}
+		
+		// Count views
+		if($user && !$track)
 		{
 			// Hot update view count
 			$views = ($image->views + 1);
 			$image->views = $views;
 			$this->db->where('gallery_id', $image->gallery_id)
 				->update('gallery', array('views' => $image->views));
-		}
-		
+		}		
 		
 		// Create references
 		$this->data->image =& $image;
@@ -398,24 +453,47 @@ class Gallery extends CI_Controller {
 	 		// Set image name
 		 	$name = $file->image;
 		 	
-		 	$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
-
-			// Block user for gaining self-downloads
-			if($user->user_name != $file->uploader)
-			{
-			 	// Update download counts
-			 	$downloads = ($file->downloads + 1);
-				$file->downloads = $downloads;
-				$this->db->update('gallery', array('downloads' => $file->downloads));
-			}
+		 	// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Query tracking table
+		if($user)
+		{
+			// set up data
+			$data = array(
+				'controller_name'	=>	$this->uri->segment(1),
+				'controller_method'	=>	$this->uri->segment(2),
+				'controller_item_id'	=>	$this->uri->segment(3),
+				'user_id'			=>	$user->user_id,
+				);
 			
-			// Send download request
-		 	force_download($name, $path);
+			// Check user against tracker
+			$track = $this->tracker->check($data);
+			
+			if(!$track)
+			{
+				// Object is new to user
+				$this->tracker->track($data);
+			}
+
+		}
+
+		// Count downloads
+		if(!$track)
+		{
+		 	// Update download counts
+		 	$downloads = ($file->downloads + 1);
+			$file->downloads = $downloads;
+			$this->db->update('gallery', array('downloads' => $file->downloads));
+		}
+		
+		// Send download request
+	 	force_download($name, $path);
 		 }else {
-		 	
-		 	$this->session->set_flashdata('message', $file->image .' could not be downloaded.  Check if the file still exists.');
-		 	
-		 	}
+	 	
+	 	$this->session->set_flashdata('message', $file->image .' could not be downloaded.  Check if the file still exists.');
+	 	
+	 	}
 	 }
 	 
 	// --------------------------------------------------------------------
@@ -551,7 +629,31 @@ class Gallery extends CI_Controller {
 			// Redirect the user
 			redirect($this->session->userdata('previous'));
 		}
-				
+		
+		// Grab referring page so we can extract views
+		$uri = $this->session->userdata('previous');
+		$a = explode('/', $uri);
+		$a = $a[2];
+		
+		// Retrieve the image 
+		$image = $this->gallery->get_image(array('image_slug' => $a));
+		
+		if($image)
+		{
+			// Subtract 1 from comments
+			$count = $image->comments;
+			$count = ($count - 1);
+		
+			// Set up the data
+			$data = array (
+				'comments'		=> $count,
+				);
+			
+			//  Update comment count
+			$this->gallery->edit_desc($data, $image->gallery_id);	
+			
+		}
+					
 		// Delete the article comment from the database
 		$this->gallery->delete_comment($comment->comment_id, $data);
 		
