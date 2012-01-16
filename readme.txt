@@ -19,11 +19,14 @@ Admins are able to remove images, remove comments, and bar users from uploading.
 
 Anons are able to view images but not comment or hotlink
 
+Images and downloads are view-tracked for statistics and notifying users of new media.
+
+Descriptions are editable inline
+
 Future Functionality:
+
 Image properties panel will provide the ability to 'favor' and image as well as 
 share the image via several social network outlets.
-
-Images will be presented as either 'new' or previously viewed to distinguish files. 
 
 Calculations on user gallery statistics will be used to award badges and ranks
 
@@ -35,14 +38,13 @@ Categories for media
 
 Uploading from 'My Media'
 
-Inline editing of descriptions and comments
-
 ***************************************
     Files Added & Modified 
 ***************************************
 Database Tables
 - Add table '*prefix_gallery'
 - Add table '*prefix_gallery_comments'
+- Add table '*prefix_tracker'
 - Update table '*prefix_users'
 	- Add row 'can_upload'
 	- Add row 'can_shout'
@@ -71,4 +73,18 @@ views/themes/default/js/
 - Add jcarousel/
 - Add jquery.carousel.min.js
 - Add jquery.carousel.js
+
+
+******************************************
+         Version History & Changelog
+******************************************
+Current version 0.0.2
+- Download tracked
+- View tracked
+- Inline editing of description
+
+version 0.0.1
+- Uploading
+- 'My Media' page
+- Uploading privileges
 

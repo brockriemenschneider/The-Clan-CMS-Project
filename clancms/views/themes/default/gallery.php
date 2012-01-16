@@ -113,10 +113,15 @@
 							<label for="title">Title</label>
 								<?php
 								echo form_input('title');
-								echo form_upload('userfile');
-								echo form_submit('upload', 'Upload');
-								echo form_close();
-							 ?>
+								echo form_upload('userfile');?>
+								<?php $data = array(
+										'name'		=> 'upload',
+										'class'		=> 'submit',
+										'value'		=> 'Upload'
+									);
+								
+								echo form_submit($data); ?>
+							<?php echo form_close();?>
 					</div>
 					<?php endif; ?>
 					
