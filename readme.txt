@@ -1,42 +1,74 @@
+=============================================================================
+                          co[dezyne] Gallery
+=============================================================================
 
-============================================================================================
-                             Clan CMS Read Me
-============================================================================================
+This MCV gives the functionality for users to upload images to the site and to display 
+an official youtube channel into a video slider.  This extension is in alpha mode 
+and is not ready for implementation.
 
+Current functionality:
+Users are able to upload images, modify a description of the image, and comment on it. 
+Each image is given a statistical count, which will be implemented in future 
+features.  Uploader comments are differentiated from user comments.  Each user 
+is granted a 'My Media' tab in their profile.
 
-This is a quick guide on how to get set up with Clan CMS. Please feel free to contact us through the
-Xcel Gaming forums for additional support.
+Images are initially scaled to fit the site, however, an original size is maintained and 
+available for download via the image properties panel.
 
-Thanks,
-Xcel Gaming
-http://xcelgaming.com
+Admins are able to remove images, remove comments, and bar users from uploading. 
 
------REQUIREMENTS-----
+Anons are able to view images but not comment or hotlink
 
-PHP version 5.1.6 or greater
-MySQL version 4.1 or greater
-The mod_rewrite Apache module
+Future Functionality:
+Image properties panel will provide the ability to 'favor' and image as well as 
+share the image via several social network outlets.
 
------INSTALLATION-----
+Images will be presented as either 'new' or previously viewed to distinguish files. 
 
-1) Upload all the files to your server
+Calculations on user gallery statistics will be used to award badges and ranks
 
-2) Create a MySQL database and remember the details (Database name, Database username, Database password)
+Videos will be implemented
 
-3) Visit http://yoursite.com/install/ and follow the step by step installation guide
+Official channel will own videos
 
-4) After you install the script you need to remove the installation files. Either by clicking "Resolve Now" on the Installation file alert in the Admin CP or
-by manually deleting the "clancms/controllers/install.php", "clancms/libraries/Installer.php", and the "clancms/views/install/" folder.
+Categories for media
 
-5) After you have done all of this you will be able to login to the Admin CP and start managing your site.
+Uploading from 'My Media'
 
------TROUBLESHOOTING-----
+Inline editing of descriptions and comments
 
-If you are using GoDaddy or the installation guide is not appearing then follow the steps below:
+***************************************
+    Files Added & Modified 
+***************************************
+Database Tables
+- Add table '*prefix_gallery'
+- Add table '*prefix_gallery_comments'
+- Update table '*prefix_users'
+	- Add row 'can_upload'
+	- Add row 'can_shout'
+	- Add row 'has_voice'
 
-1) Open up .htaccess file in the root directory and change
-#RewriteBase /
-to
-RewriteBase /
+controllers/
+- Add gallery.php
+- Update roster.php
+- Update account.php
 
-2) Save and close the file and refresh to see if you can get to the installation guide. If you are still having issues please contact us on the Xcel Gaming Forums.
+models/
+- Add gallery_model.php
+- Update session_model.php
+
+views/themes/default/
+- Add gallery.php
+- Add image.php
+- Add media.php
+- Update style.css
+- Update header.php
+- Update profile.php
+- Update account.php
+- Update footer.php
+
+views/themes/default/js/
+- Add jcarousel/
+- Add jquery.carousel.min.js
+- Add jquery.carousel.js
+
