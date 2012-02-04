@@ -40,6 +40,9 @@ class Articles extends CI_Controller {
 		// Load the Squads Model
 		$this->load->model('Squads_model', 'squads');
 		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
+		
 		// Load the typography library
 		$this->load->library('typography');
 		
@@ -188,6 +191,21 @@ class Articles extends CI_Controller {
 				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
 		}
+		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Query tracking table
+		if($user && $articles)
+		{
+			// iterate through each article 
+			foreach($articles as $article)
+			{
+				// Get tracked status
+				$article->tracked = $this->tracker->get_new($this->uri->segment(1), $article->article_slug, $user->user_id);
+			}
+
+		}
 
 		// Create a reference to articles & pages
 		$this->data->articles =& $articles;
@@ -323,6 +341,9 @@ class Articles extends CI_Controller {
 		// Configure the article
 		$article->article = auto_link($this->typography->auto_typography($this->bbcode->to_html($article->article_content)), 'url');
 		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
 		// Retrieve the user
 		$user = $this->users->get_user(array('user_id' => $article->user_id));
 				
@@ -386,6 +407,31 @@ class Articles extends CI_Controller {
 					$comment->date = $this->ClanCMS->timezone($comment->comment_date);
 				}
 			}
+		}
+		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Query tracking table
+		if($user)
+		{
+			// set up data
+			$data = array(
+				'controller_name'	=>	$this->uri->segment(1),
+				'controller_method'	=>	$this->uri->segment(2),
+				'controller_item_id'	=>	$this->uri->segment(3),
+				'user_id'			=>	$user->user_id,
+				);
+			
+			// Check user against tracker
+			$track = $this->tracker->check($data);
+			
+			if(!$track)
+			{
+				// Object is new to user
+				$this->tracker->track($data);
+			}
+
 		}
 		
 		// Create a reference to the article & comments & pages

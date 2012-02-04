@@ -41,6 +41,7 @@
 		<ul>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'squads', 'Squads'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'squads/add', 'Add Squad'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'squads/icons', 'Squad Icons'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -74,7 +75,7 @@
 					<?php if($squads): ?>
 						<?php foreach($squads as $squad): ?>
 						<tr id="squad_<?php echo $squad->squad_id; ?>" class="move">
-							<td><?php if($squad->squad_tag && (bool) !$squad->squad_tag_position): echo '[' . $squad->squad_tag . '] '; endif; ?><?php echo anchor(ADMINCP . 'squads/edit/' . $squad->squad_id, $squad->squad_title); ?><?php if($squad->squad_tag && (bool) $squad->squad_tag_position): echo ' [' . $squad->squad_tag . ']'; endif; ?></td>
+							<td><?php if($squad->squad_icon): echo img(array('src' => IMAGES . 'squad_icons/' . $squad->squad_icon, 'height' => 24, 'width' => 24)); else:  echo img(array('src' => IMAGES . 'squad_icons/no_icon.png', 'height' => 24, 'width' => 24)); endif; ?><?php echo anchor(ADMINCP . 'squads/edit/' . $squad->squad_id, $squad->squad_title); ?><?php if($squad->squad_tag && (bool) $squad->squad_tag_position): echo ' [' . $squad->squad_tag . ']'; endif; ?></td>
 							<td><?php echo $squad->article_total; ?></td>
 							<td><?php echo $squad->match_total; ?></td>
 							<td><?php echo $squad->member_total; ?></td>

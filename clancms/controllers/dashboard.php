@@ -43,6 +43,9 @@ class Dashboard extends CI_Controller {
 		// Load the Pages Model
 		$this->load->model('Pages_model', 'pages');
 		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
+		
 		// Load the typography library
 		$this->load->library('typography');
 		
@@ -157,6 +160,21 @@ class Dashboard extends CI_Controller {
 				// Limit the article's words, format the text, create links, and assign it to article summary
 				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
+		}
+		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Query tracking table
+		if($user && $articles)
+		{
+			// iterate through each article 
+			foreach($articles as $article)
+			{
+				// Get tracked status
+				$article->tracked = $this->tracker->get_new($this->uri->segment(1), $article->article_slug, $user->user_id);
+			}
+
 		}
 
 		// Create a reference to sldies & articles

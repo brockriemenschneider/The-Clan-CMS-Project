@@ -646,8 +646,166 @@ class Articles_model extends CI_Model {
 		// Data is valid, article exists, delete the data from the database
 		return $this->db->delete('articles', array('article_id' => $article_id));
 	}
+
+	// --------------------------------------------------------------------
+	/**
+	 * Get Games
+	 *
+	 * Retrieves game listings from the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function get_games() {
+		$q = $this->db->get('headers');
+		
+		if($q->num_rows() > 0) {
+			foreach ($q->result() as $row) {
+			    $data[] = $row;
+			}
+		return $data;
+		}
+	}
+
+// --------------------------------------------------------------------
+	/**
+	 * Add Header
+	 *
+	 * Inserts news header into database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function add_header() {
+		
+		// Image restraints
+		$file_config = array(
+				'allowed_types'	=>	'jpg|jpeg|png|gif',
+				'upload_path'		=>	UPLOAD,
+				'max_size'				=>	4096,
+				'remove_spaces'	=>	TRUE
+			);
+			
+		//Load the library with restraints and run method, passing the meta data to data array	
+		$this->load->library('upload', $file_config);
+		
+		if(!$this->upload->do_upload()) {
+			$this->session->set_flashdata('message', 'The file was unsucessfully uploaded');
+		} else {
+			
+		
+		//  Do this to parse data for db and resize()
+		$header_data = $this->upload->data();
+		
+		// resize restraints
+		$resize = array(
+			'source_image' 		=> 	$header_data['full_path'],
+			'new_image' 		=> 	UPLOAD . 'headers',
+			'maintain_ratio' 	=> 	FALSE,
+			'width'					=>	710,
+			'height'					=>	95,
+			'master_dim'			=> 	'width'
+		);
+		
+		$this->load->library('image_lib', $resize);
+		$this->image_lib->resize();
+		
+		//delete original image
+		unlink(UPLOAD . $header_data['file_name']);
+		
+		// Pass image and name from data to database
+		$data = array(
+				'title'			=>		$this->input->post('title'),
+				'image'		=>		$header_data['file_name']
+				);
+		$this->db->insert('headers', $data);
+		
+		
+		// Alert the administrator
+		$this->session->set_flashdata('message', 'The header was successfully uploaded!');
+		
+		// Redirect to refresh get_headers()
+		redirect(ADMINCP . 'articles/headers/');	
+
+		}
+	}
+
+// --------------------------------------------------------------------
+	/**
+	 * Get Header
+	 *
+	 * Selects singular header image 
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */	
+	function get_header($data = array()) {	
+
+		// Check for valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->where($data)
+						->get('headers', 1);
+		
+		// Check if query row exists
+		if($query->row())
+		{
+			// Query row exists, return query row
+			return $query->row();
+		}
+		else
+		{
+			// Query row doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+	}
+// --------------------------------------------------------------------
+	/**
+	 * Delete Header
+	 *
+	 * Removes header from database and system
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function delete_header($header_image = 0) {	
+
+		
+		// Check to see if we have valid data
+		if($header_image == 0)
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if header exists
+		if(!$header = $this->get_header(array('id' => $header_image)))
+		{
+			// Comment doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		//Update the articles table to remove the symlink
+		$blank = array( 'article_game'		=>	 '' );
+		$this->db->update('articles', $blank, "article_game = '$header->image'") ;
+		
+		// Data is valid, header exists, delete the data from the database 
+	return $query = $this->db->delete('headers', array('id' => $header_image));
+
+	}
 	
-}
 
 /* End of file articles_model.php */
 /* Location: ./clancms/models/articles_model.php */
+}
