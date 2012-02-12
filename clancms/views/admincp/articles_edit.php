@@ -88,7 +88,7 @@
 				<div class="label required">Game</div>
 				<?php
 					
-					$options = array();
+					$options = array('0' => 'default');
 					if($games):
 						foreach($games as $game):
 							$options = $options + array($game->image	=>	$game->title);
@@ -147,6 +147,26 @@
 						);
 				
 				echo form_radio($data, '0', set_radio('comments', '0', (bool) !$article->article_comments)); ?> Disallow
+				
+				<?php echo br(); ?>
+
+				<div class="label required">View Permissions</div> 
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '1', set_radio('permissions', '1', (bool) $article->article_permission)); ?> Public
+				
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '0', set_radio('permissions', '0', (bool) !$article->article_permission)); ?> Clan Only
+				
 				<?php echo br(); ?>
 		
 				<?php 

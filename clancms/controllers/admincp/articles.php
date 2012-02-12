@@ -353,6 +353,7 @@ class Articles extends CI_Controller {
 					'article_game'			=> $this->input->post('game'),
 					'user_id'			=> $this->session->userdata('user_id'),
 					'article_status'	=> $this->input->post('status'),
+					'article_permission'	=>	$this->input->post('permissions'),
 					'article_date'		=> mdate('%Y-%m-%d %H:%i:%s', now())
 				);
 			
@@ -519,6 +520,7 @@ class Articles extends CI_Controller {
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
 					'article_status'	=> $this->input->post('status'),
+					'article_permission'	=>	$this->input->post('permissions'),
 					'article_game'	=> $this->input->post('game'),
 				);
 				
