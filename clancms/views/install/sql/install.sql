@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `user_id` bigint(20) NOT NULL DEFAULT '0',
   `article_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `article_status` tinyint(1) NOT NULL DEFAULT '0',
+  `article_game` varchar(64) NOT NULL,
   PRIMARY KEY (`article_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 -- command split --
@@ -230,7 +231,13 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (21, 2, 'Slide Image Width', 'slide_width', '727', 'text', '', 'The width of slide images in pixels', 'trim|required|numeric', 6),
 (22, 2, 'Slide Image Height', 'slide_height', '189', 'text', '', 'The height of slide images in pixels', 'trim|required|numeric', 7),
 (23, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 8),
-(24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9);
+(24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9),
+(25, 6, 'Facebook', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 1),
+(26, 6, 'Youtube Channel', 'youtube_id', '', 'text', '', 'YouTube channel username', 'trim', 2),
+(27, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 3),
+(28, 6, 'Steam', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 4),
+(29, 6, 'TeamSpeak', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 5),
+(30, 6, 'Ventrilo', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 6);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
@@ -246,7 +253,8 @@ INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `
 (2, 'Theme Settings', 2),
 (3, 'Time Settings', 3),
 (4, 'Registration Settings', 4),
-(5, 'Email Settings', 5);
+(5, 'Email Settings', 5),
+(6, 'Social Networking', 6);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__sponsors`;
 -- command split --
@@ -270,6 +278,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squads` (
   `squad_tag_position` tinyint(1) NOT NULL DEFAULT '0',
   `squad_status` tinyint(1) NOT NULL DEFAULT '0',
   `squad_priority` int(10) NOT NULL,
+  `squad_icon` VARCHAR( 64 ) NOT NULL,
   PRIMARY KEY (`squad_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
@@ -337,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__widgets` (
   PRIMARY KEY (`widget_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
-INSERT INTO `ClanCMS_widgets` (`widget_id`, `area_id`, `widget_title`, `widget_slug`, `widget_settings`, `widget_priority`) VALUES
+INSERT INTO `__DBPREFIX__widgets` (`widget_id`, `area_id`, `widget_title`, `widget_slug`, `widget_settings`, `widget_priority`) VALUES
 (1, 1, 'Login', 'login', 'b:0;', 0),
 (2, 1, 'Poll', 'polls', 'b:0;', 1),
 (3, 1, 'Matches', 'matches', 'a:2:{s:12:"matches_type";s:1:"0";s:14:"matches_number";s:1:"5";}', 2),
@@ -375,3 +384,45 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__shoutbox` (
   `rank` varchar(18) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery` (
+  `gallery_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `image_slug` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `image` text COLLATE utf8_unicode_ci NOT NULL,
+  `uploader` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `views` bigint(20) NOT NULL,
+  `comments` bigint(20) NOT NULL,
+  `favors` bigint(20) NOT NULL,
+  `downloads` bigint(20) NOT NULL,
+  `title` text COLLATE utf8_unicode_ci NOT NULL,
+  `height` int(4) NOT NULL,
+  `width` int(4) NOT NULL,
+  `size` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`gallery_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `Clan_gallery_comments` (
+  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gallery_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `comment_title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__headers` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
+  `controller_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `controller_method` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `controller_item_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` bigint(20) NOT NULL DEFAULT '0',
+  `tracktime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
