@@ -768,6 +768,231 @@ class Users_model extends CI_Model {
 		return $this->db->delete('users', array('user_id' => $user_id));
 	}
 	
+	// -----------------------------------------------------------------------
+	/**
+	 *
+	 * Edit Status
+	 *
+	 *@access		private
+	 *@param		array
+	 *@return		array
+	 */
+	 function edit_status($data=array(), $user_id)
+	 {
+	 	// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+	 	$this->db->where('user_id', $user_id)
+	 			->update('users', $data);
+	 	
+	 }
+	 
+	 	// --------------------------------------------------------------------
+	
+	/**
+	 * Insert Comment
+	 *
+	 * Inserts a wall comment into the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	bool
+	 */
+	function insert_comment($data = array())
+	{
+		// Check to see if we have valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, insert the data in the database
+		return $this->db->insert('wall_comments', $data);
+	}
+	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Update Comment
+	 *
+	 * Updates a wall comment in the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	array
+	 * @return	bool
+	 */
+	function update_comment($comment_id = 0, $data = array())
+	{
+		// Check to see if we have valid data
+		if($comment_id == '0' OR empty($data) OR !is_associative($data))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if comment exists
+		if(!$comment = $this->get_comment(array('comment_id' => $comment_id)))
+		{
+			// Comment doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, comment exists, update the data in the database
+		return $this->db->update('wall_comments', $data, array('comment_id' => $comment_id));
+	}
+
+	// --------------------------------------------------------------------
+	/**
+	 * Delete Comment
+	 *
+	 * Deletes a wall comment from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	bool
+	 */
+	function delete_comment($comment_id = 0)
+	{	
+		// Check to see if we have valid data
+		if($comment_id == 0)
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Check if comment exists
+		if(!$comment = $this->get_comment(array('comment_id' => $comment_id)))
+		{
+			// Comment doesn't exist, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, comment exists, delete the data from the database
+		return $this->db->delete('wall_comments', array('comment_id' => $comment_id));
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Count Comments
+	 *
+	 * Count the number of wall comments in the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function count_comments($data = array())
+	{	
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->from('wall_comments')
+						->where($data)
+						->count_all_results();
+						
+		// Return query
+		return $query;
+	}
+// --------------------------------------------------------------------
+	
+	/**
+	 * Get Comment
+	 *
+	 * Retrieves a gallery comment from the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function get_comment($data = array())
+	{	
+		// Check for valid data
+		if(empty($data) OR !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->where($data)
+						->get('wall_comments', 1);
+		
+		// Check if query row exists
+		if($query->row())
+		{
+			// Query row exists, return query row
+			return $query->row();
+		}
+		else
+		{
+			// Query row doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Get Comments
+	 *
+	 * Retrieves all gallery comments from the database
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	int
+	 * @param	array
+	 * @return	array
+	 */
+	function get_comments($limit = 0, $offset = 0, $data = array())
+	{
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Check if limit exists
+		if($limit == 0)
+		{
+			// Limit doesn't exist, assign limit
+			$limit = '';
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->order_by('comment_id', 'desc')
+						->limit($limit, $offset)
+						->where($data)
+						->get('wall_comments');
+		
+		// Check if query result exists
+		if($query->result())
+		{
+			// Query result exists, return query result
+			return $query->result();
+		}
+		else
+		{
+			// Query result doesn't exist, return FALSE
+			return FALSE;
+		}
+	}
+	
 }
 
 /* End of file users_model.php */

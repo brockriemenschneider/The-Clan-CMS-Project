@@ -39,6 +39,15 @@ class Account extends CI_Controller {
 		
 		// Load the Squads model
 		$this->load->model('Squads_model', 'squads');
+		
+		// Load the Social model
+		$this->load->model('Social_model', 'social');
+		
+		// Load the Users model
+		$this->load->model('Users_model', 'users');
+		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
 	}
 	
 	// --------------------------------------------------------------------
@@ -385,7 +394,8 @@ class Account extends CI_Controller {
 		$this->data->user =& $user;
 		$this->data->members =& $members;
 		$this->data->matches =& $recent_matches;
-		
+		$this->data->social =& $social;
+		$social =& $this->social->get_social($this->uri->segment(3));
 		// Load the profile view
 		$this->load->view(THEME . 'profile', $this->data);
 	}
@@ -832,7 +842,629 @@ class Account extends CI_Controller {
 			return FALSE;
 		}
 	}
+
+	// --------------------------------------------------------------------
 	
+	/**
+	 * Social
+	 *
+	 * Social media connections
+	 *
+	 * @access	private
+	 * @param	string
+	 * @return	bool
+	 */	
+	 function social()
+	 {
+	 	// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Retrieve the user
+		if(!$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id'))))
+		{
+			// User doesn't exist, redirect them
+			redirect('account/login');
+		}
+		
+		// Create a reference to user
+		$this->data->user =& $user;
+		
+		$this->data->social =& $social;
+		$social =& $this->social->get_social($user->user_name);
+		
+		// User has not accepted social networking agreement, send them the form
+		if(!$social)
+		{
+			
+			$this->load->view(THEME . 'social_agree', $this->data);
+			
+		}
+		
+		//  on submit -> to model
+		if ($this->input->post('update_social')) {
+			$data = array(
+			'facebook'		=> 	$this->input->post('facebook'),
+			'twitter'		=> 	$this->input->post('twitter'),
+			'xbox_live'	=> 	$this->input->post('xboxlive'),
+			'ps_online'	=> 	$this->input->post('psonline'),
+			'steam'		=> 	$this->input->post('steam'),
+			'skype'		=> 	$this->input->post('skype'),
+			'youtube'		=>	$this->input->post('youtube'),
+			'user'		=>	$user->user_name,
+			'user_id'		=>	$user->user_id
+			);
+			$this->social->update_social($data);
+			
+			// Alert user
+	 		$this->session->set_flashdata('message', 'You have successfully updated your social preferences!');
+	 		
+	 		// Redirect to clear the cache
+	 		redirect('account/social');
+		}
+		
+		// Load view
+	 	$this->load->view(THEME . 'social', $this->data);
+		 
+	 }
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Media
+	 *
+	 * Social media connections
+	 *
+	 * @access	private
+	 * @param	array
+	 */		 
+	 function media()
+	 {
+	 	// Retrieve the user slug
+		$user_slug = $this->uri->segment(3);
+		
+		// Retrieve the user or show 404
+		($user = $this->users->get_user(array('user_name' => $this->users->user_name($user_slug)))) or show_404();
+		
+		
+	 	$this->load->model('Gallery_model', 'gallery');
+	 	
+	 	// Create a reference to user
+		$this->data->user =& $user;
+		
+	 	$this->load->view(THEME . 'media', $this->data);
+	 }
+	 
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Wall
+	 *
+	 * Interactive User Wall
+	 *
+	 * @access	private
+	 * @param	array
+	 */		 
+	 function wall()
+	 {
+	 	// Retrieve the user slug
+		$user_slug = $this->uri->segment(3);
+		
+		// Retrieve the user or show 404
+		($user = $this->users->get_user(array('user_name' => $this->users->user_name($user_slug)))) or show_404();
+		
+		// Retrieve our forms
+		$status = $this->input->post('add_status');
+		$comment = $this->input->post('add_comment');
+		
+		// Someone is updating the description
+		if($status && $this->user->logged_in())
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('status', 'Statuts', 'trim|required');
+			
+			// Form validation passed & checked if gallery allows comments, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{	
+				// Set up our data
+				$data = array (
+					'status'	=> $this->input->post('status'),
+					);
+			
+				// Insert the comment into the database
+				$this->users->edit_status($data, $user->user_id);
+				
+				// Alert the user
+				$this->session->set_flashdata('message', 'Your status has been updated!');
+				
+				// Redirect the user
+				redirect($this->session->userdata('previous'));
+			}
+		}
+		
+		// Check if add comment has been posted and check if the user is logged in
+		if($comment && $this->user->logged_in())
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('comment', 'Comment', 'trim|required');
+			
+			// Form validation passed & checked if gallery allows comments, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{	
+				// Set up our data
+				$data = array (
+					'wall_owner_id'	=> $user->user_id,
+					'commenter_id'	=> $this->session->userdata('user_id'),
+					'comment'		=> $this->input->post('comment'),
+					'comment_date'	=> mdate('%Y-%m-%d %H:%i:%s', now())
+				);
+			
+				// Insert the comment into the database
+				$this->users->insert_comment($data);
+				
+				// Alert the user
+				$this->session->set_flashdata('message', 'Your comment has been posted!');
+				
+				// Redirect the user
+				redirect($this->session->userdata('previous'));
+			}
+		}		
+		// Retrieve the current page
+		$page = $this->uri->segment(5, '');
+	
+		// Check if page exists
+		if($page == '')
+		{
+			// Page doesn't exist, assign it
+			$page = 1;
+		}
+	
+		//Set up the variables
+		$per_page = 15;
+		$total_results = $this->users->count_comments(array('wall_owner_id' => $user->user_id));
+		$offset = ($page - 1) * $per_page;
+		$pages->total_pages = 0;
+		
+		// Create the pages
+		for($i = 1; $i < ($total_results / $per_page) + 1; $i++)
+		{
+			// Itterate pages
+			$pages->total_pages++;
+		}
+				
+		// Check if there are no results
+		if($total_results == 0)
+		{
+			// Assign total pages
+			$pages->total_pages = 1;
+		}
+		
+		// Set up pages
+		$pages->current_page = $page;
+		$pages->pages_left = 9;
+		$pages->first = (bool) ($pages->current_page > 5);
+		$pages->previous = (bool) ($pages->current_page > '1');
+		$pages->next = (bool) ($pages->current_page != $pages->total_pages);
+		$pages->before = array();
+		$pages->after = array();
+		
+		// Check if the current page is towards the end
+		if(($pages->current_page + 5) < $pages->total_pages)
+		{
+			// Current page is not towards the end, assign start
+			$start = $pages->current_page - 4;
+		}
+		else
+		{
+			// Current page is towards the end, assign start
+			$start = $pages->current_page - $pages->pages_left + ($pages->total_pages - $pages->current_page);
+		}
+		
+		// Assign end
+		$end = $pages->current_page + 1;
+		
+		// Loop through pages before the current page
+		for($page = $start; ($page < $pages->current_page); $page++)
+		{
+			// Check if the page is vaild
+			if($page > 0)
+			{
+				// Page is valid, add it the pages before, increment pages left
+				$pages->before = array_merge($pages->before, array($page));
+				$pages->pages_left--;
+			}
+		}
+		
+		// Loop through pages after the current page
+		for($page = $end; ($pages->pages_left > 0 && $page <= $pages->total_pages); $page++)
+		{
+			// Add the page to pages after, increment pages left
+			$pages->after = array_merge($pages->after, array($page));
+			$pages->pages_left--;
+		}
+		
+		// Set up pages
+		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
+		
+		$comments = $this->users->get_comments($per_page, $offset, array('wall_owner_id' => $user->user_id));
+
+		// Check if comments exist
+		if($comments)
+		{
+			// Comments exist, loop through each comment
+			foreach($comments as $comment)
+			{
+				// Retrieve the user
+				if($user = $this->users->get_user(array('user_id' => $comment->commenter_id)))
+				{
+					// User exists, assign comment author & comment avatar
+					$comment->author = $user->user_name;
+					$comment->avatar = $user->user_avatar;
+				}
+				else
+				{
+					// User doesn't exist, assign comment author & comment avatar
+					$comment->author = '';
+					$comment->avatar = '';
+				}
+				
+				// Format Timezone
+				$comment->comment_date = $this->ClanCMS->timezone($comment->comment_date);
+				
+			}			
+		}
+		
+		// Fetch active user
+		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
+		
+		// Query tracking table
+		if($user)
+		{
+			// set up data
+			$data = array(
+				'controller_name'	=>	$this->uri->segment(1),
+				'controller_method'	=>	$this->uri->segment(2),
+				'controller_item_id'	=>	$this->uri->segment(3),
+				'user_id'			=>	$user->user_id,
+				);
+			
+			// Check user against tracker
+			$track = $this->tracker->check($data);
+			
+			if(!$track)
+			{
+				// Object is new to user
+				$this->tracker->track($data);
+			}
+
+		}
+		
+	
+		
+		// Create references
+		$this->data->comments =& $comments;
+		$this->data->pages =& $pages;
+		$this->data->user =& $user;
+		
+	 	$this->load->view(THEME . 'user_wall', $this->data);
+	 }
+
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Agree
+	 *
+	 * User affirms to social agreement
+	 *
+	 * @access	private
+	 * @param	string
+	 */
+	 function agree()
+	 {
+	 	// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Retrieve the user
+		if(!$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id'))))
+		{
+			// User doesn't exist, redirect them
+			redirect('account/login');
+		}
+		
+		// Create a reference to user
+		$this->data->user =& $user;
+		
+	 	// Retrieve form
+	 	$agree = $this->input->post('social_agree');
+	 	
+	 	if(!$agree)
+	 	{
+	 		
+	 		return FALSE;
+	 		
+	 	} else {
+	 		
+	 		$data = array(
+	 			'user'		=> 	$user->user_name,
+	 			'user_id'		=>	$user->user_id
+	 		);
+	 		
+	 		// Send info to database
+	 		$this->social->update_social($data);
+	 		
+	 		// Alert user
+	 		$this->session->set_flashdata('message', 'You have accepted the social agreement!  You may now provide social IDs');
+	 		
+	 		redirect('account/social');
+	 	}
+	 	
+	 }
+	 
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Mute
+	 *
+	 * Mutes a user
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function mute()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'has_voice'	=> 0
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have muted ' . $user->user_name);
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+		 // --------------------------------------------------------------------
+	
+	/**
+	 * Unmute
+	 *
+	 * Unmutes a user
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function unmute()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'has_voice'	=> 1
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have unmuted ' . $user->user_name);
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Upload_no
+	 *
+	 * Revokes a user's right to upload
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function upload_no()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_upload'	=> 0
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to upload');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Upload_yes
+	 *
+	 * Returns a user's ability to upload
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function upload_yes()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_upload'	=> 1
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to upload');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Shout_no
+	 *
+	 * Restricts a user from the shoutbox
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function shout_no()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_shout'	=> 0
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to shout');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}	
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Shout_yes
+	 *
+	 * Restricts a user from the shoutbox
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function shout_yes()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_shout'	=> 1
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to shout');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}		
 }
 
 /* End of file account.php */

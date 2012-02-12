@@ -30,11 +30,9 @@ class Shoutbox_widget extends Widget {
 	public $description = "Allows users to communicate through shoutbox.";
 	public $author = 'co[dezyne]';
 	public $link = 'http://www.codezyne.me';
-	public $version = '1.5.0';
+	public $version = '2.0';
 	
-	// Widget settings
-	public $settings = array();
-	
+
 	/**
 	 * Constructor
 	 *
@@ -86,11 +84,12 @@ class Shoutbox_widget extends Widget {
 			
 		}
 		
-		// Time Conversions
-		$current = strtotime(date('Y-m-d G:i:s'));
+		
 		
 		if($shouts)
 		{
+			// Time Conversions
+			$current = strtotime(date('Y-m-d G:i:s'));
 			foreach($shouts as $shout)
 				{ 
 					// Set matching for post time
@@ -121,8 +120,6 @@ class Shoutbox_widget extends Widget {
 						// Shouts greater than a week
 						$delay = round(($delay / 10080), 0);
 						$shout->delay  = $delay . ' weeks ago';		
-							
-					// Scan shouts for links
 											
 					}
 				}
@@ -160,6 +157,8 @@ class Shoutbox_widget extends Widget {
 				// Reference newly build shout
 				$shout ->shout = $merged;
 				
+				// Replace whitespace, if exists
+				$shout->user_clean = preg_replace('/\s/', '+', $shout->user);
 			}
 		}
 		

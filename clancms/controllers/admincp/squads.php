@@ -112,27 +112,26 @@ class Squads extends CI_Controller {
 	 */
 	function add()
 	{
+				
 		// Retrieve our forms
 		$add_squad = $this->input->post('add_squad');
 		
 		// Check it add squad has been posted
 		if($add_squad)
-		{
+		{ 
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
-			$this->form_validation->set_rules('tag_position', 'Tag Position', 'trim|required');
-			$this->form_validation->set_rules('tag', 'Tag', 'trim');
+			$this->form_validation->set_rules('icon', 'Icon');
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 		
 			// Form validation passed, so continue
 			if (!$this->form_validation->run() == FALSE)
-			{
+			{ 
 				// Set up our data
 				$data = array (
 					'squad_title'			=> $this->input->post('title'),
-					'squad_tag'				=> $this->input->post('tag'),
-					'squad_tag_position'	=> $this->input->post('tag_position'),
+					'squad_icon'				=> $this->input->post('icon'),
 					'squad_status'			=> $this->input->post('status'),
 					'squad_priority'		=> $this->input->post('priority')
 				);
@@ -157,10 +156,18 @@ class Squads extends CI_Controller {
 				// Redirect the adminstrator
 				redirect(ADMINCP . 'squads/edit/' . $squad_id);
 			}
+			
+			
 		}
+		// Load the games method
+		$icons = $this->squads->get_icons();
+		 // Reference games
+		 $this->data->icons =& $icons;
+		
+		
 		
 		// Load the admincp squads add view
-		$this->load->view(ADMINCP . 'squads_add');
+		$this->load->view(ADMINCP . 'squads_add', $this->data);
 	}
 	
 	// --------------------------------------------------------------------
@@ -197,8 +204,6 @@ class Squads extends CI_Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
-			$this->form_validation->set_rules('tag_position', 'Tag Position', 'trim|required');
-			$this->form_validation->set_rules('tag', 'Tag', 'trim');
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
 			
@@ -217,8 +222,7 @@ class Squads extends CI_Controller {
 				$data = array (
 					'squad_title'			=> $this->input->post('title'),
 					'squad_slug'			=> $squad->squad_id . '-' . url_title($this->input->post('title')),
-					'squad_tag'				=> $this->input->post('tag'),
-					'squad_tag_position'	=> $this->input->post('tag_position'),
+					'squad_icon'				=> $this->input->post('icon'),
 					'squad_status'			=> $this->input->post('status'),
 					'squad_priority'		=> $this->input->post('priority')
 				);
@@ -304,11 +308,13 @@ class Squads extends CI_Controller {
 				}
 			}
 		}
-		
+		// Display all icons
+		$icons = $this->squads->get_icons();
 		// Create a reference to squad, members & users
 		$this->data->squad =& $squad;
 		$this->data->members =& $members;
 		$this->data->users =& $available_users;
+		$this->data->icons =& $icons;
 		
 		// Load the admincp squads edit view
 		$this->load->view(ADMINCP . 'squads_edit', $this->data);
@@ -624,6 +630,67 @@ class Squads extends CI_Controller {
 		}
 	}
 	
+// --------------------------------------------------------------------
+	/** Squad Icons
+	 * 
+	 *  Adds squad icons
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	 function icons() {
+		
+		// Display all Game headers
+		$data['icons'] = $this->squads->get_icons();
+		
+		//  on submit -> to model
+		if ($this->input->post('upload')) {
+			$this->squads->add_icon();
+			}
+		
+		
+		$this->load->view(ADMINCP . 'squads_icons', $data);
+	 }
+	// --------------------------------------------------------------------
+	/**
+	 * Delete Icon
+	 *
+	 *  Removes uploaded icon
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */	
+	function del_icon()
+	{
+		// Set up the data
+		$data = array(
+			'id'	=>	$this->uri->segment(4, '')
+		);
+
+		// Retrieve the header by file_name
+		if(!$icon = $this->squads->get_icon($data))
+		{
+			// Comment doesn't exist, alert the administrator
+			$this->session->set_flashdata('message', 'The icon was not found!');
+		
+			// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+
+		// Delete the article comment from the database
+		unlink(UPLOAD . 'squad_icons/' .$icon->image);
+		$this->squads->delete_icon($icon->id, $data);
+		
+		// Alert the administrator
+		$this->session->set_flashdata('message', 'The squad\'s icon was successfully deleted!');
+				
+		// Redirect the administrator
+		redirect(ADMINCP . 'squads/icons/');
+	
+	} 
+
+
 }
 
 /* End of file squads.php */

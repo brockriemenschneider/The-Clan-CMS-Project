@@ -110,6 +110,19 @@ class Site_stats_widget extends Widget {
 		// Retrieve the total number of pages
 		$this->data->total_pages = $this->CI->pages->count_pages();
 		
+		// Load the Gallery model
+		$this->CI->load->model('Gallery_model', 'gallery');
+		
+		// Retrieve the total number of images and videos
+		$this->data->total_images = $this->CI->gallery->count_images();
+		$this->data->total_videos = $this->CI->gallery->count_videos();
+		
+		// Load the Shouts model
+		$this->CI->load->model('Shouts_model', 'shouts');
+		
+		// Retrieve total number of shouts
+		$this->data->total_shouts = $this->CI->shouts->count_shouts();
+		
 		// Load the Widgets model
 		$this->CI->load->model('Widgets_model', 'widgets');
 		
