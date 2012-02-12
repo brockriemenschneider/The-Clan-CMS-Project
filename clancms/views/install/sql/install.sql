@@ -234,10 +234,10 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9),
 (25, 6, 'Facebook', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 1),
 (26, 6, 'Youtube Channel', 'youtube_id', '', 'text', '', 'YouTube channel username', 'trim', 2),
-(27, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 3),
-(28, 6, 'Steam', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 4),
-(29, 6, 'TeamSpeak', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 5),
-(30, 6, 'Ventrilo', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 6);
+(27, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Official Twitter Name', 'trim', 3),
+(28, 6, 'Steam', 'facebook_id', '', 'text', '', 'Steam Group', 'trim', 4),
+(29, 6, 'TeamSpeak', 'facebook_id', '', 'text', '', 'TeamSpeak Account Number', 'trim', 5),
+(30, 6, 'Ventrilo', 'facebook_id', '', 'text', '', 'Ventrilo Account Number', 'trim', 6);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
