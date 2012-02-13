@@ -43,9 +43,10 @@
 			<thead>
 				<tr>
 					<th width="25%">Title</th>
-					<th width="15%"># Of Comments</th>
+					<th width="10%"># Comm</th>
 					<th width="20%">Author</th>
-					<th width="25%">Date</th>
+					<th width="20%">Date</th>
+					<th width="10%">Perms</th>
 					<th width="15%">Actions</th>
 				</tr>
 			</thead>
@@ -58,6 +59,7 @@
 					<td><?php echo $article->total_comments; ?></td>
 					<td><?php echo anchor(ADMINCP . 'users/edit/' . $article->user_id, $article->author); ?></td>
 					<td><?php echo mdate("%M %d, %Y at %h:%i %a", $article->date); ?></td>
+					<td><?php if(!(bool) $article->article_permission): echo 'Clan'; else: echo 'Public'; endif; ?></td>
 					<td><?php if(!(bool) $article->article_status): echo anchor(ADMINCP . 'articles/publish/' . $article->article_id, img(array('src' => ADMINCP_URL . 'images/publish.png', 'alt' => 'Publish')), array('title' => 'Publish')); endif; ?>
 						<?php echo anchor(ADMINCP . 'articles/edit/' . $article->article_id, img(array('src' => ADMINCP_URL . 'images/edit.png', 'alt' => 'Edit')), array('title' => 'Edit')); ?>
 						<?php echo anchor(ADMINCP . 'articles/delete/' . $article->article_id, img(array('src' => ADMINCP_URL . 'images/delete.png', 'alt' => 'Delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>

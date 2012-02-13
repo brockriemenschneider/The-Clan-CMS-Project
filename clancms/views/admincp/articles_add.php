@@ -124,7 +124,7 @@
 						'class'		=> 'input',
 						);
 				
-				echo form_radio($data, '1', set_radio('permissions', '1', (bool) $article->article_permission)); ?> Public
+				echo form_radio($data, '1', set_radio('permissions', '1')); ?> Public
 				
 				<?php 
 					$data = array(
@@ -132,7 +132,7 @@
 						'class'		=> 'input',
 						);
 				
-				echo form_radio($data, '0', set_radio('permissions', '0', (bool) !$article->article_permission)); ?> Clan Only
+				echo form_radio($data, '0', set_radio('permissions', '0')); ?> Clan Only
 
 				<?php echo br(); ?>
 		
