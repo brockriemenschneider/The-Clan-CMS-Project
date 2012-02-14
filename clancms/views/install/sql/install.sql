@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `user_id` bigint(20) NOT NULL DEFAULT '0',
   `article_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `article_status` tinyint(1) NOT NULL DEFAULT '0',
+  `article_permission` tinyint(1) NOT NULL DEFAULT '1',
   `article_game` varchar(64) NOT NULL,
   PRIMARY KEY (`article_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
@@ -300,6 +301,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',
   `user_notes` text COLLATE utf8_unicode_ci NOT NULL,
+  `status` text COLLATE utf8_unicode_ci NOT NULL,
   `user_name` varchar(200) NOT NULL,
   `user_password` varchar(40) NOT NULL,
   `user_salt` varchar(32) NOT NULL,
@@ -310,6 +312,10 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_avatar` varchar(200) NOT NULL,
   `user_activation` varchar(40) NOT NULL DEFAULT '0',
+  `can_shout` tinyint(1) NOT NULL DEFAULT '1',
+  `can_upload` tinyint(1) NOT NULL DEFAULT '1',
+  `has_voice` tinyint(1) NOT NULL DEFAULT '1',
+  `wall_enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
@@ -410,14 +416,14 @@ CREATE TABLE IF NOT EXISTS `Clan_gallery_comments` (
   `comment_title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__headers` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) NOT NULL,
   `image` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
   `controller_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -426,3 +432,13 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
   `user_id` bigint(20) NOT NULL DEFAULT '0',
   `tracktime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__wall_comments` (
+`comment_id` bigint( 20 ) NOT NULL AUTO_INCREMENT ,
+`wall_owner_id` bigint( 20 ) NOT NULL ,
+`commenter_id` bigint( 20 ) NOT NULL ,
+`reply_to_id` bigint( 20 ) NOT NULL ,
+`comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+`comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+PRIMARY KEY ( `comment_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
