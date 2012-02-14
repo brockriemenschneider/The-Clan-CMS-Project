@@ -601,7 +601,7 @@ class Account extends CI_Controller {
 	 * @return	void
 	 */
 	function reset()
-	{		
+	{
 		// Check to see if the user is logged in
 		if ($this->user->logged_in())
 		{
@@ -955,7 +955,7 @@ class Account extends CI_Controller {
 		
 		// Retrieve the user or show 404
 		($user = $this->users->get_user(array('user_name' => $this->users->user_name($user_slug)))) or show_404();
-		
+
 		// Retrieve our forms
 		$status = $this->input->post('add_status');
 		$comment = $this->input->post('add_comment');
@@ -978,7 +978,7 @@ class Account extends CI_Controller {
 				$this->users->edit_status($data, $user->user_id);
 				
 				// Alert the user
-				$this->session->set_flashdata('message', 'Your status has been updated!');
+				$this->session->set_flashdata('wall', 'Your status has been updated!');
 				
 				// Redirect the user
 				redirect($this->session->userdata('previous'));
@@ -986,7 +986,7 @@ class Account extends CI_Controller {
 		}
 		
 		// Check if add comment has been posted and check if the user is logged in
-		if($comment && $this->user->logged_in())
+		if($comment && $this->user->logged_in() && $this->user->has_voice())
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('comment', 'Comment', 'trim|required');
@@ -1006,10 +1006,8 @@ class Account extends CI_Controller {
 				$this->users->insert_comment($data);
 				
 				// Alert the user
-				$this->session->set_flashdata('message', 'Your comment has been posted!');
+				$this->session->set_flashdata('wall', 'Your comment has been posted!');
 				
-				// Redirect the user
-				redirect($this->session->userdata('previous'));
 			}
 		}		
 		// Retrieve the current page
@@ -1116,9 +1114,6 @@ class Account extends CI_Controller {
 				
 			}			
 		}
-		
-		// Fetch active user
-		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
 		
 		// Query tracking table
 		if($user)
@@ -1464,7 +1459,52 @@ class Account extends CI_Controller {
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
-	}		
+	}
+	
+	/**
+	 * Delete Comment
+	 *
+	 * Deletes a wall comment from the databse
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function delete_comment()
+	{
+		// Set up our data
+		$data = array(
+			'comment_id'	=>	$this->uri->segment(3)
+		);
+		
+		// Retrieve the article comment
+		if(!$comment = $this->users->get_comment($data))
+		{
+			// Comment doesn't exist, alert the administrator
+			$this->session->set_flashdata('wall', 'The comment was not found!');
+		
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+		
+		// Check if the user is an administrator
+		if(!$this->user->is_administrator() && $this->session->userdata('user_id') != $comment->user_id)
+		{
+			// User isn't an administrator or the comment user, alert the user
+			$this->session->set_flashdata('wall', 'You are not allowed to delete this comment!');
+			
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+				
+		// Delete the article comment from the database
+		$this->users->delete_comment($comment->comment_id, $data);
+		
+		// Alert the administrator
+		$this->session->set_flashdata('wall', 'The comment was successfully deleted!');
+				
+		// Redirect the administrator
+		redirect($this->session->userdata('previous'));
+	}
 }
 
 /* End of file account.php */

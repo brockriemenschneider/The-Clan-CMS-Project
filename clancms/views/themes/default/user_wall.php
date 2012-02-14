@@ -32,9 +32,9 @@
 				</div>
 				<?php endif; ?>
 				
-				<?php if($this->session->flashdata('message')): ?>
+				<?php if($this->session->flashdata('wall')): ?>
 				<div class="alert">
-					<?php echo $this->session->flashdata('message'); ?>
+					<?php echo $this->session->flashdata('wall'); ?>
 				</div>
 				<?php endif; ?>
 				
