@@ -950,6 +950,16 @@ class Account extends CI_Controller {
 	 */		 
 	 function wall()
 	 {
+		
+		// Load the typography library
+		$this->load->library('typography');
+		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
+		// Load the text helper
+		$this->load->helper('text');
+		
 	 	// Retrieve the user slug
 		$user_slug = $this->uri->segment(3);
 		
@@ -968,7 +978,7 @@ class Account extends CI_Controller {
 			
 			// Form validation passed & checked if gallery allows comments, so continue
 			if (!$this->form_validation->run() == FALSE)
-			{	
+			{
 				// Set up our data
 				$data = array (
 					'status'	=> $this->input->post('status'),
@@ -1007,6 +1017,9 @@ class Account extends CI_Controller {
 				
 				// Alert the user
 				$this->session->set_flashdata('wall', 'Your comment has been posted!');
+				
+				// Redirect
+				redirect($this->session->userdata('previous'));
 				
 			}
 		}		
@@ -1096,11 +1109,11 @@ class Account extends CI_Controller {
 			foreach($comments as $comment)
 			{
 				// Retrieve the user
-				if($user = $this->users->get_user(array('user_id' => $comment->commenter_id)))
+				if($commenter = $this->users->get_user(array('user_id' => $comment->commenter_id)))
 				{
 					// User exists, assign comment author & comment avatar
-					$comment->author = $user->user_name;
-					$comment->avatar = $user->user_avatar;
+					$comment->author = $commenter->user_name;
+					$comment->avatar = $commenter->user_avatar;
 				}
 				else
 				{
@@ -1112,7 +1125,16 @@ class Account extends CI_Controller {
 				// Format Timezone
 				$comment->comment_date = $this->ClanCMS->timezone($comment->comment_date);
 				
+				// Format wall comment to bbcode
+				$comment->comment = auto_link($this->typography->auto_typography($this->bbcode->to_html($comment->comment)), 'url');
+				
 			}			
+		}
+		
+		if($user->status)
+		{
+			// Format status comment to bbcode
+			$user->status_bb = auto_link($this->typography->auto_typography($this->bbcode->to_html($user->status)), 'url');
 		}
 		
 		// Query tracking table
@@ -1137,14 +1159,62 @@ class Account extends CI_Controller {
 
 		}
 		
-	
-		
 		// Create references
 		$this->data->comments =& $comments;
+		$this->data->commenter =& $commenter;
 		$this->data->pages =& $pages;
 		$this->data->user =& $user;
 		
+		// Load the view
 	 	$this->load->view(THEME . 'user_wall', $this->data);
+	 }
+	 
+	 // ---------------------------------------------------------------
+	 /**
+	  * Wall Status
+	  * Enables / Disables a user's wall
+	  *
+	  * @access	private
+	  * @return	null
+	  */
+	 function wall_status($id)
+	 {
+	 	// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Retrieve the user
+		if(!$user = $this->users->get_user(array('user_id' => $id)))
+		{
+			// User doesn't exist, redirect them
+			redirect('account/login');
+		}
+		
+	 	if((bool)$user->wall_enabled)
+	 	{
+	 		// Wall is enabled, disable it
+	 		$this->users->edit_status(array('wall_enabled' => 0), $id);
+	 		
+	 		// Alert user
+	 		$this->session->flashdata('wall', 'The wall has been closed.');
+	 		
+	 		// Redirect
+	 		redirect($this->session->userdata('previous'));
+	 	}
+	 	else
+	 	{
+	 		// Wall is enabled, disable it
+	 		$this->users->edit_status(array('wall_enabled' => 1), $id);
+	 		
+	 		// Alert user
+	 		$this->session->flashdata('wall', 'The wall has been opened.');
+	 		
+	 		// Redirect
+	 		redirect($this->session->userdata('previous'));
+	 	}
 	 }
 
 	// --------------------------------------------------------------------

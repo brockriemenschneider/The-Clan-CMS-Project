@@ -10,7 +10,13 @@ for modification details.
 ******************************************
 Created tracker table to log user views for objects.  Assimilated articles and gallery images to check user
 against tabled.  New items are branded with a 'new' image ribbon. Updated article headers to include 
-no background image option. Fixed issue with squad icon not populating.
+no background image option. 
+
+Fixed issue with squad icon not populating.
+
+Added user walls
+
+Added Twitter widget & library
 
 ******************************************
               Files Added:
@@ -26,11 +32,17 @@ models/
 - social_model.php
 - tracker_model.php
 
+libraries/
+- Youtube.php
+- Twitter.php
+
 widgets/
 - shoutbox_widget.php
+- twitter_widget.php
 
 views/widgets/
 - shoutbox.php
+- twitter.php
 
 views/images/
 - gallery/
@@ -50,12 +62,13 @@ views/themes/default/
 - social.php
 - social_agree.php
 - users.php
+- user_wall.php
 
 views/themes/default/js/
 - jquery.jcarousel.js
 - jquery.jcarousel.min.js
 - jcarousel/*
-
+- tablesorter/
 
 [ end of added ]
 
@@ -136,6 +149,8 @@ _users
 	-added 'can_shout'
 	-added 'can_upload'
 	-added 'has_voice'
+	-added 'status'
+	-added 'wall_enabled'
 
 [ end of table modifiers ]
 

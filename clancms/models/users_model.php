@@ -775,7 +775,7 @@ class Users_model extends CI_Model {
 	 *
 	 *@access		private
 	 *@param		array
-	 *@return		array
+	 *@return		null
 	 */
 	 function edit_status($data=array(), $user_id)
 	 {
