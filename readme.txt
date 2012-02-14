@@ -10,7 +10,7 @@ for modification details.
 ******************************************
 Created tracker table to log user views for objects.  Assimilated articles and gallery images to check user
 against tabled.  New items are branded with a 'new' image ribbon. Updated article headers to include 
-no background image option.
+no background image option. Fixed issue with squad icon not populating.
 
 ******************************************
               Files Added:
