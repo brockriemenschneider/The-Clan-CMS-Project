@@ -115,9 +115,10 @@
 				
 				<div class="wall_comments">
 					<div id="comment_area">
+					<?php if($this->user->logged_in() && $user->has_voice == 1): ?>
 						<div id="comment_box">
 						<span>Leave a message on <?php echo $this->uri->segment(3);?>'s wall.</span> <br />
-						<?php if($this->user->logged_in() && $user->has_voice == 1): ?>
+						
 								<?php echo form_open('account/wall/' . $this->uri->segment(3)); ?>
 								<?php
 									$data = array(
@@ -140,6 +141,7 @@
 							<div class="clear"></div>
 						</div>
 					<?php endif; ?>
+						</div>
 					<?php echo br(); ?>
 					
 					<?php if($comments): ?>
