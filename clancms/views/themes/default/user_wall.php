@@ -114,34 +114,35 @@
 				<hr class="wall_hr" />
 				
 				<div class="wall_comments">
-					<div id="comment_area">
 					<?php if($this->user->logged_in() && $user->has_voice == 1): ?>
+					<div id="comment_area">
 						<div id="comment_box">
-						<span>Leave a message on <?php echo $this->uri->segment(3);?>'s wall.</span> <br />
+							<span>Leave a message on <?php echo $this->uri->segment(3);?>'s wall.</span> <br />
 						
-								<?php echo form_open('account/wall/' . $this->uri->segment(3)); ?>
-								<?php
+							<?php echo form_open('account/wall/' . $this->uri->segment(3)); ?>
+							
+							<?php
+								$data = array(
+									'name'	=> 'comment',
+									'rows'	=> '2',
+									'id'		=> 'wall_comment'
+								);
+							
+							echo form_textarea($data); ?>
+						</div>
+							<?php 
 									$data = array(
-										'name'	=> 'comment',
-										'rows'	=> '2',
-										'id'		=> 'wall_comment'
+										'name'	=> 'add_comment',
+										'class'	=> 'submit',
+										'value'	=> 'Comment'
 									);
 								
-								echo form_textarea($data); ?>
-						</div>
-								<?php 
-										$data = array(
-											'name'	=> 'add_comment',
-											'class'	=> 'submit',
-											'value'	=> 'Comment'
-										);
-									
-									echo form_submit($data); ?>
-								<?php echo form_close();?>
+								echo form_submit($data); ?>
+								
+							<?php echo form_close();?>
 							<div class="clear"></div>
 						</div>
-					<?php endif; ?>
-						</div>
+					<?php endif;?>
 					<?php echo br(); ?>
 					
 					<?php if($comments): ?>
