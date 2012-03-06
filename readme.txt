@@ -3,9 +3,13 @@
 ==============================================================================
 
 This extension permits admin to upload images for the purpose of adding unique 
-headers to their articles.
+headers to their articles. It works in combination with the user tracker model
+ to digest users' activity, logging articles as new or visited. (Only new is 
+shown, with applicable imagery.)
 
 Recent Updates:
+-- Added tracker database table
+-- Added tracker model
 -- Modified dropdown selector to include chosing the default banner
 -- Modified database and article options for public and private articles
 
@@ -28,6 +32,7 @@ controllers/
 
 models/
 - UPDATE articles_model.php
+- Add tracker_model.php
 
 views/admincp/
 - UPDATE articles.php
