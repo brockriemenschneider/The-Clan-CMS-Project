@@ -296,6 +296,15 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squad_members` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__users`;
+-- command split--
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__sqd_icons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `icon` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8_unicode_c AUTO_INCREMENT=1 ;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__users`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
