@@ -60,18 +60,26 @@ class Twitter_widget extends Widget {
 		// Receiver twitter setting
 		$tweeter = $this->CI->settings->get_setting(array('setting_title' => 'Twitter'));
 		
-		// Run through library
-		$tweets = $this->CI->twitter->parse($tweeter->setting_value, 3);		
-		
-		// Reference object
-		$this->data->tweets =& $tweets;
-		
-		// Assign the widget info
-		$widget->title = 'Twitter Feed';
-		$widget->content = $this->CI->load->view('widgets/twitter', $this->data, TRUE);
-		
-		// Load the widget view
-		$this->CI->load->view(WIDGET . 'widget', $widget);
+		if($tweeter->setting_value)
+		{
+			// Run through library
+			$tweets = $this->CI->twitter->parse($tweeter->setting_value, 3);		
+			
+		}
+		else
+		{
+			// No public twitter user
+			$tweets = '';
+		}
+			// Reference object
+			$this->data->tweets =& $tweets;
+			
+			// Assign the widget info
+			$widget->title = 'Twitter Feed';
+			$widget->content = $this->CI->load->view('widgets/twitter', $this->data, TRUE);
+			
+			// Load the widget view
+			$this->CI->load->view(WIDGET . 'widget', $widget);
 	}
 	
 	// --------------------------------------------------------------------
