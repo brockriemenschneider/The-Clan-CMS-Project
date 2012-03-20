@@ -31,23 +31,6 @@
 				<?php endif; ?>
 			<!-- End Validation -->
 			
-<style>
-.header_upload {
-    box-shadow: 0 0 5px #ccc inset;
-    padding: 8px;
-    border-radius: 7px;
-}
-.header_upload label {
-    font-size: 18px;
-    color: #cc0000;
-    font-weight: bold;
-    padding: 0 5px;
-    line-height: 25px;
-}
-.header_uploaded {
-    font-size: 18px;
-}
-</style>
 			<!-- Article Status -->
 			
 				<div class="subheader"><?php echo heading('Upload New Header', 4); ?></div>
@@ -84,7 +67,7 @@
 				
 		</div>
 		<div class="footer"></div>
-	
+	</div>
 <script type="text/javascript">
 	function deleteConfirm()
 	{

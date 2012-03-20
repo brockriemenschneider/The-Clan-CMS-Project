@@ -55,7 +55,13 @@
 										);
 								
 								echo form_submit($data); ?>
-							<?php if($this->user->is_administrator()): ?><span><?php echo anchor('gallery/cache', 'Cache the Channel'); ?></span><?php endif; ?>
+							<?php if($this->user->is_administrator()): ?>
+								<?php if($official->setting_value): ?>
+								<span><?php echo anchor('gallery/cache', 'Cache the Channel'); ?></span>
+								<?php else: ?>
+								<span><?php echo anchor(ADMINCP . 'settings/index/6', 'Add your Clan\'s YT Chan'); ?></span>
+								<?php endif; ?>
+							<?php endif; ?>
 							<?php echo form_close();?>
 					</div>
 					<?php endif; ?>

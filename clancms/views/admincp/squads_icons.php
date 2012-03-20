@@ -30,46 +30,7 @@
 				<?php endif; ?>
 			<!-- End Validation -->
 			
-<style>
-.upload {
-    box-shadow: 0 0 5px #ccc inset;
-    padding: 8px;
-    border-radius: 7px;
-}
-.upload label {
-    font-size: 18px;
-    color: #cc0000;
-    font-weight: bold;
-    padding: 0 5px;
-    line-height: 25px;
-}
-.uploaded {
-    font-size: 18px;
-}
-.uploaded ul {
-    list-style: none;
-    box-shadow: 0 0 5px #e5e5e5 inset;
-    border-radius: 8px;
-    padding: 0;
-}
-.uploaded li {
-    display: block;
-    float: left;
-    text-align: center;
-    border: 1px solid #555;
-    width: 100px;
-    margin: 0 5px 5px;
-}
-.uploaded li .title {
-    font-size: 12px;
-    font-family: mw3;
-    border-bottom: 1px solid #333;
-}
-.uploaded li .delete {
-    border-top: 1px solid #333;
-    padding: 1px 0;
-}
-</style>
+
 			<!-- Squad Icon Upload -->
 				<div class="subheader"><?php echo heading('Upload New Icon', 4); ?></div>
 				<div class="upload">
@@ -99,7 +60,7 @@
 							</li>
 						<?php endforeach; ?>
 				<?php else:?>
-							<li>There are currently no squad icons.</li>
+							<p>There are currently no squad icons.</p>
 				<?php endif;?>
 					</ul>
 				</div>
@@ -110,6 +71,9 @@
 				
 		</div>
 		<div class="footer"></div>
+	</div>
+	
+</div>
 	
 <script type="text/javascript">
 	function deleteConfirm()
@@ -123,6 +87,4 @@
     	return false;  
 	} 
 </script>
-
-</div>
 <?php $this->load->view(ADMINCP . 'footer'); ?>

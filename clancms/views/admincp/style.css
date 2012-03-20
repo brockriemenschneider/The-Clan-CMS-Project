@@ -1033,3 +1033,219 @@ ul.newsticker a {
     border-radius: 5px 5px 5px 5px;
     padding: 6px;
 }
+
+/* ----------
+	CALENDAR ------ */
+
+#sidebar .widget .content .inside .calendar * {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition:    all 0.2s ease;
+	-ms-transition:     all 0.2s ease;
+	-o-transition:      all 0.2s ease;
+    }
+#sidebar .widget .content .inside .calendar a {
+    color: #FFD800;
+    line-height: 25px;
+    text-decoration: none;
+}
+#sidebar .widget .content .inside .calendar {
+    background: none;
+}
+#sidebar .widget .content .inside .calendar caption {
+    padding: 0 8px;
+}
+#sidebar .widget .content .inside .calendar thead.calendar-weekdays {
+    color: #EE2D00;
+    background: #000;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-offset {
+    border: none;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-event {
+    background: #333;
+    cursor: pointer;
+    border: 1px solid #571101;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-event:hover {
+    background: #666;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-event a {
+    color: #EE2D00;
+    display: block;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-match {
+    background: #222;
+    cursor: pointer;
+    border: 1px solid #015711;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-match:hover {
+    background: #444;
+}
+#sidebar .widget .content .inside .calendar tbody tr td.calendar-match a {
+    color: #147025;
+    display: block;
+}
+#sidebar .widget .content .inside  .calendar tbody tr td.calendar-today a {
+    color: #FFD800;
+    display: block;
+}
+#sidebar .widget .content .inside .calendar tbody tr {
+    color: #FFFFFF;
+    height: 26px;
+}
+#sidebar .widget .content .inside .calendar tbody tr:hover {
+    color: #fff;
+    background: none;
+}
+#sidebar .widget .content .inside .calendar tbody td {
+    border: 1px dashed #555;
+    padding: 0;
+}
+
+#main .box .content .inside .calendar * {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition:    all 0.2s ease;
+	-ms-transition:     all 0.2s ease;
+	-o-transition:      all 0.2s ease;
+    }
+#main .box .content .inside .calendar {
+    background: none;
+    width: 310px;
+    margin: 0 15px 15px 0;
+    text-align: center;
+    float: left;
+}
+#main .box .content .inside .calendar a {
+    color: #FFD800;
+    line-height: 25px;
+    text-decoration: none;
+}
+#main .box .content .inside .calendar caption {
+    padding: 0 8px;
+    width: 310px;
+}
+#main .box .content .inside .calendar thead.calendar-weekdays th {
+    color: #EE2D00;
+    background: #000;
+    text-align: center;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-offset {
+    border: none;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-event, .calendar-legend li.red {
+    background: #333;
+    cursor: pointer;
+    border: 1px solid #571101;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-event:hover {
+    background: #666;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-event a {
+    color: #EE2D00;
+    display: block;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-match, .calendar-legend li.green {
+    background: #222;
+    cursor: pointer;
+    border: 1px solid #015711;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-match:hover {
+    background: #444;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-match a {
+    color: #147025;
+    display: block;
+}
+#main .box .content .inside .calendar tbody tr td.calendar-today a {
+    color: #FFD800;
+    display: block;
+}
+#main .box .content .inside .calendar tbody tr {
+    color: #FFFFFF;
+    height: 26px;
+}
+#main .box .content .inside .calendar tbody tr:hover {
+    color: #fff;
+    background: none;
+}
+#main .box .content .inside .calendar tbody td {
+    border: 1px dashed #555;
+    height: 25px;
+    font-size: 14px;
+    padding: 0;
+}
+
+.ui-datepicker-trigger {
+    cursor: pointer;
+}
+div.calendar-legend {
+    text-align: center;
+    margin: 0 auto 3px;
+}
+.calendar-legend ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.calendar-legend li {
+    border: 1px dashed #555555;
+    display: inline-block;
+    text-align: center;
+    width: 65px;
+    }
+    
+ /* ------------
+ 	Icons and Headers Style -------- */
+ .upload {
+    box-shadow: 0 0 5px #ccc inset;
+    padding: 8px;
+    border-radius: 7px;
+}
+.upload label {
+    font-size: 18px;
+    color: #cc0000;
+    font-weight: bold;
+    padding: 0 5px;
+    line-height: 25px;
+}
+.uploaded {
+    font-size: 18px;
+}
+.uploaded ul {
+    list-style: none;
+    box-shadow: 0 0 5px #e5e5e5 inset;
+    border-radius: 8px;
+    padding: 0;
+}
+.uploaded li {
+    display: block;
+    float: left;
+    text-align: center;
+    border: 1px solid #555;
+    width: 100px;
+    margin: 0 5px 5px;
+}
+.uploaded li .title {
+    font-size: 12px;
+    font-family: mw3;
+    border-bottom: 1px solid #333;
+}
+.uploaded li .delete {
+    border-top: 1px solid #333;
+    padding: 1px 0;
+}
+.header_upload {
+    box-shadow: 0 0 5px #ccc inset;
+    padding: 8px;
+    border-radius: 7px;
+}
+.header_upload label {
+    font-size: 18px;
+    color: #cc0000;
+    font-weight: bold;
+    padding: 0 5px;
+    line-height: 25px;
+}
+.header_uploaded {
+    font-size: 18px;
+}

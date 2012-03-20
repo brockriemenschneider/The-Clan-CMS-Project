@@ -18,6 +18,9 @@
 			
 		if($matches_count)
 			echo '<strong>' . $matches_count . '</strong> matches';
+		
+		if(!$events_count && !$matches_count)
+			echo 'no events';
 	?> 
 	this month.
 </div>
