@@ -548,12 +548,6 @@ border-collapse: collapse;
 	color: #ffffff;
 	font-weight: bold;
 }
-#main .box .header .new{
-    float: left;
-    margin: 9px 0px -28px 10px;
-    position: relative;
-    z-index: 1000;
-}
 
 #main .box .subheader {
 	Background: url('images/box_subheader.png') no-repeat;
@@ -1156,29 +1150,17 @@ margin: 0 0 3px;
 	font-family: mw3;
 	font-size: 10px;
 }
-<<<<<<< HEAD
-#gallery {
-=======
 #photos {
->>>>>>> articles
 	padding: 0 4px;
 	}
 #alerts {
 	height: 40px; 
 	}
-<<<<<<< HEAD
-#gallery ul {
-	list-style: none;
-	padding: 0;
-	}
-#gallery li {
-=======
 #photos ul {
 	list-style: none;
 	padding: 0;
 	}
 #photos li {
->>>>>>> articles
     display: inline-block;
     margin: 0 2px 8px 0;
     border: 1px solid #ccc;
@@ -1186,77 +1168,32 @@ margin: 0 0 3px;
     border-radius: 7px;
     box-shadow: 0 -3px 15px #000 inset;
 }
-<<<<<<< HEAD
-#gallery .official {
-    background: #cc6600;
-    box-shadow: 0 -3px 15px #3b1610 inset;
-    border-color: #cc6600;
-}
-#gallery .gallery_inset {
-=======
 #photos .gallery_inset {
->>>>>>> articles
     border-bottom: 1px solid #666;
     background: #2b2b2b;
     margin: 2px;
     border-radius: 7px 7px 0 0;
 }
-<<<<<<< HEAD
-#gallery .official_inset {
-    border-color: #CC0000;
-}
-#gallery .gallery_inset img {
-    border-radius: 7px 7px 0 0;
-}
-#gallery .gallery_detail {
-=======
 #photos .gallery_inset img {
     border-radius: 7px 7px 0 0;
 }
 #photos .gallery_detail {
->>>>>>> articles
     padding: 0 10px 3px;
     color: #2b2b2b;
     text-shadow: 0 1px 1px #e5e5e5;
     font-size: 12px;
-<<<<<<< HEAD
-    max-width: 110px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-#gallery .official_detail {
-    color: #FFF;
-    text-shadow: 0 1px 2px #2B2B2B;
-}
-#gallery .gallery_detail span {
-    text-shadow: none;
-    color: #2b2b2b;
-}
-#gallery .delete {
-=======
 }
 #photos .gallery_detail span {
     text-shadow: none;
     color: #2b2b2b;
 }
 #photos .delete {
->>>>>>> articles
 	float: right;
 	position: relative;
 	z-index: 1000;
 	margin: 5px 5px -21px 0;
 }
-<<<<<<< HEAD
-#gallery .new {
-    float: left;
-    margin: -3px 0px -41px -3px;
-    position: relative;
-    z-index: 1000;
-}
-#gallery li img {
-=======
 #photos li img {
->>>>>>> articles
 	border: 0 none;
 	clear: both;
 	display: block;
@@ -1335,16 +1272,6 @@ margin: 0 0 3px;
 .share .stumble:hover {
 	background-position: -160px 0;
 }
-<<<<<<< HEAD
-.share .youtube {
-	background: url("images/social_media_32.png") no-repeat scroll -31px 16px transparent;
-	z-index: -999;
-}
-.share .youtube:hover {
-	background-position: -31px 0;
-}
-=======
->>>>>>> articles
 .gallery .properties {
 	background: none repeat scroll 0 0 #ccc;
 	border: 1px solid silver;
@@ -1501,12 +1428,11 @@ textarea {
 }
 .gallery_comments li.post_head {
     color: #999;
-    text-indent: 5px;
+    font-family: mw3;
 }
 .gallery_comments li.posted {
     font-family: centabel;
     font-size: 14px;
-    text-indent: 5px;
 }
 
 /* ------------
@@ -1555,11 +1481,7 @@ textarea {
 
 /* --------------------
 	USER GALLERY ----------*/
-<<<<<<< HEAD
-.stats {
-=======
 	.stats {
->>>>>>> articles
     background: #ccc;
     border: 1px solid silver;
     border-radius: 10px;
@@ -1607,219 +1529,6 @@ textarea {
 /* --------------------
 	UPLOAD FORM -------- */
 .upload {
-<<<<<<< HEAD
-    border-radius: 7px 7px 7px 7px;
-    box-shadow: 0 0 12px #000 inset;
-    padding: 8px;
-    background: #ccc;
-    color: #2b2b2b;
-    font-size: 12px;
-    text-shadow: 0 1px 0px #e5e5e5;
-}
-.upload label {
-    color: #CC0000;
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 25px;
-    padding: 0 5px;
-    text-shadow: -1px -1px 1px #000;
-}
-.edit:hover {
-    box-shadow: 0 0 3px #fff;
-    border-radius: 3px;
-    }
-    
-/* ----------------
-	USER ROSTER TABLE ------------ */
-table.tablesorter {
-    width: 100%;
-    border: 1px solid #666;
-}
-table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-    border: 1px solid #666;
-    color: #fff000;
-    text-shadow: 0 1px #666;
-    border-bottom: none;
-}
-table.tablesorter thead tr .Theader {
-    background-color: #2B2B2B;
-    background-image: url("images/sort.gif");
-    background-position: right center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-}
-table.tablesorter tbody td {
-    vertical-align: middle;
-}
-table.tablesorter tbody tr:nth-child(odd) {
-    background-color: #444;
-}
-table.tablesorter thead tr .headerSortUp {
-    background-image: url("images/sort_asc.gif");
-}
-table.tablesorter thead tr .headerSortDown {
-    background-image: url("images/sort_desc.gif");
-}
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-    background-color: #999;
-    text-shadow: 0px 0px 1px #000;
-    font-style: italic;
-}
-td.icon > .member {
-    list-style: none outside none;
-}
-td.icon li, td.social li {
-    display: inline-block;
-}
-#userTable .exp {
-    text-align: center;
-}
-#userTable .icon {
-	width: 35px;
-}       }
-    
-/* -------------------
-	Twitter Widget --------- */
-.item {
-    margin: 0;
-    padding: 0;
-}
-.item ul {
-    list-style: none outside none;
-    margin: 0;
-    padding: 0;
-}
- .separator{
-    border-bottom: 1px dashed #444;
-    margin: 5px 0;	
-}
-.tweet_intent {
-    list-style: none;
-    height: 20px;
-}
-.tweet_intent li {
-    display: inline-block;
-}
-.tweet_intent .reply {
-    background-position: 0 0;
-}
-.tweet_intent .reply:hover {
-    cursor: pointer;
-    background-position: -16px 0;
-}
-.tweet_intent .retweet {
-    background-position: -81px 0px;
-}
-.tweet_intent .retweet:hover {
-    background-position: -113px 0;
-    cursor: pointer;
-}
-.tweet_intent .favorite {
-    background-position: -32px 0;
-}
-.tweet_intent .favorite:hover {
-    background-position: -65px 0;
-    cursor: pointer;
-}
-.tweet_intent ul li div {
-    width: 16px;
-    float: left;
-    margin: 0 5px 0 10px;
-    height: 16px;
-    background: url("./images/tweet_sprite.png") no-repeat scroll 0 0 transparent;
-}
-
-/* ------
-	WALL COMMENT AREA ----- */
-.wall_head {
-    min-height: 110px;
-    padding: 5px;
-    margin-top: 20px;
-}
-.wall_head .wall_avatar {
-    float: left;
-    height: 100px;
-    width: 100px;
-}
-.wall_head .wall_status {
-    float: left;
-    margin-left: 15px;
-    width: 560px;
-    border-radius: 7px;
-    padding: 3px 10px;
-}
-.wall_head p {
-    font-size: 18px;
-    line-height: 27px;
-    margin: 0;
-    padding: 0;
-    background: #2b2b2b;
-    color: #FFD800;
-}
-.wall_head textarea {
-    background: none repeat scroll 0 0 #CCCCCC;
-    border: 1px solid #666666;
-    border-radius: 8px 8px 8px 8px;
-    color: #000;
-    font-size: 18px;
-    line-height: 27px;
-    margin: 0 auto;
-    padding: 3px;
-    text-shadow: none;
-}
-.wall_comments > #comment_area {
-    width: 450px;
-}
-.wall_comments #comment_box {
-    background: #999;
-    text-align: center;
-    border-radius: 8px;
-}
-.wall_comments #comment_box >span {
-    font-size: 14px;
-    line-height: 21px;
-    text-shadow: 0 1px #2b2b2b;
-    width: 450px;
-}
-.wall_comments textarea {
-    color: #000000;
-    width: 440px;
-    border-radius: 0 0 7px 7px;
-}
-.wall_comments {
-    margin: 10px 0 0;
-}
-.wall_comments .author {
-    border: 1px solid #cc6600;
-    box-shadow: 0 0 3px #cc6600 inset;
-}
-.wall_comments .author li.poster {
-    float: right;
-    padding: 4px;
-    border-left: 1px solid #cc6600;
-}
-.wall_comments ul {
-    border: 1px solid #444444;
-    display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    min-height: 65px;
-}
-.wall_comments li.poster {
-    float: left;
-    padding: 5px;
-    border-right: 1px solid #444;
-}
-.wall_comments li.post_head {
-    color: #999;
-    text-indent: 5px;
-}
-.wall_comments li.posted {
-    font-family: centabel;
-    font-size: 14px;
-    text-indent: 5px;
-=======
     box-shadow: 0 0 5px #ccc inset;
     padding: 8px;
     border-radius: 7px;
@@ -1830,5 +1539,4 @@ td.icon li, td.social li {
     font-weight: bold;
     padding: 0 5px;
     line-height: 25px;
->>>>>>> articles
 }

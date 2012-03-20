@@ -10,10 +10,6 @@
 		<li>Polls</li>
 		<li>Pages</li>
 		<li>Images</li>
-<<<<<<< HEAD
-		<li>Videos</li>
-=======
->>>>>>> articles
 		<li>Shouts</li>
 		<li>Widgets</li>
 	</ul>
@@ -27,14 +23,8 @@
 		<li><?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_default . ' Default'); ?>, <?php echo anchor(ADMINCP . 'usergroups', $total_usergroups_custom . ' Custom'); ?></li>
 		<li><?php echo anchor('polls', $total_polls . ' Polls'); ?>
 		<li><?php echo anchor(ADMINCP . 'pages', $total_pages . ' Pages'); ?></li>
-<<<<<<< HEAD
-		<li><?php echo anchor('gallery/images', $total_images . ' Images'); ?></li>
-		<li><?php echo anchor('gallery/videos', $total_videos . ' Videos'); ?></li>
-		<li><?php echo anchor('shouts', $total_shouts . ' Shouts'); ?></li>
-=======
 		<li><?php echo anchor('gallery', $total_images . ' images'); ?></li>
 		<li><?php echo anchor('shouts', $total_shouts . ' shouts'); ?></li>
->>>>>>> articles
 		<li><?php echo anchor(ADMINCP . 'widgets', $total_widgets . ' Installed'); ?></li>
 	</ul>
 	<div class="clear"></div>

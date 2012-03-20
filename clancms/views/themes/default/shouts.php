@@ -28,7 +28,11 @@
 					<li class=<?php if($shout->rank == 'Administrators'): echo 'admin'; else: echo 'user'; endif; ?>>
 						<?php if($this->user->is_administrator()): echo $actions = anchor('shouts/del_shout/' . $shout->id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?><?php endif; ?>
 						<?php if($shout->avatar): echo img(array('src' => IMAGES . 'avatars/' . $shout->avatar, 'height' => 16, 'width' => 16)); else: echo img(array('src' => IMAGES . 'avatars/avatar_none.png', 'height' => 16, 'width' => 16)); endif; ?>
+<<<<<<< HEAD
 						<?php echo anchor('account/profile/' . $shout->user_clean, $shout->user); ?>
+=======
+						<?php echo anchor('account/profile/' . $shout->user, $shout->user); ?>
+>>>>>>> articles
 						<?php echo $shout->shout; ?>
 						<span class="right white"><?php echo $shout->when; ?></span><span class="right yellow time"><?php echo $shout->delay; ?>&nbsp;&bull;&nbsp;</span>
 						<div class="clear"></div>

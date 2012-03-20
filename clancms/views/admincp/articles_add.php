@@ -114,6 +114,29 @@
 						);
 				
 				echo form_radio($data, '0', set_radio('comments', '0', FALSE)); ?> Disallow
+<<<<<<< HEAD
+=======
+				
+				<?php echo br(); ?>
+
+				<div class="label required">View Permissions</div> 
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '1', set_radio('permissions', '1')); ?> Public
+				
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '0', set_radio('permissions', '0')); ?> Clan Only
+
+>>>>>>> articles
 				<?php echo br(); ?>
 		
 				<?php 

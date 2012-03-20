@@ -79,12 +79,16 @@
 		</li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('polls', 'Polls'); ?></span><span class="right"></span></li>
+<<<<<<< HEAD
 		<li <?php if($this->uri->segment(1) == 'gallery'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('gallery', 'Gallery'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(2) == 'gallery'): echo 'class="selected"'; endif; ?>><?php echo anchor('gallery/videos', 'Videos'); ?></li>
 				<li <?php if($this->uri->segment(2) == 'gallery'): echo 'class="selected"'; endif; ?>><?php echo anchor('gallery/images', 'Images'); ?></li>
 			</ul>
 		</li>
+=======
+		<li <?php if($this->uri->segment(1) == 'gallery'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('gallery', 'Gallery'); ?></span><span class="right"></span></li>
+>>>>>>> articles
 		<?php $this->load->widget_area('navigation'); ?>		
 	</ul>
 	</div>

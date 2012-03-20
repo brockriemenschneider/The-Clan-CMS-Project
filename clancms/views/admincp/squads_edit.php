@@ -136,6 +136,7 @@
 							<?php foreach($icons as $icon): ?>
 								<li>
 									<div><?php echo img(array('src'=> IMAGES. 'squad_icons/' . $icon->icon, 'height' =>32, 'width' =>32)); ?></div>
+<<<<<<< HEAD
 									<div>
 										<?php 
 											if($icon->icon == $squad->squad_icon): 
@@ -145,6 +146,9 @@
 											endif;
 										?>
 									</div>
+=======
+									<div><?php echo form_radio('icon', $icon->icon, set_radio('icon', $squad->squad_icon, FALSE)); ?></div>
+>>>>>>> articles
 								</li>
 							<?php endforeach;?>
 					<?php else: ?>

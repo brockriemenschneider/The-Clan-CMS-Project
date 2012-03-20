@@ -25,6 +25,10 @@
 		</div>
 		<div class="content">
 			<div class="inside">
+<<<<<<< HEAD
+=======
+			
+>>>>>>> articles
 				<?php if($stats): ?>
 					<div class="stats">
 						<div class="title">Gallery Stats</div>
@@ -38,8 +42,13 @@
 							<li>[downloads]</li>
 						</ul>
 						<ul class="info">
+<<<<<<< HEAD
 							<li><?php echo $stats->images; ?></li>
 							<li><?php echo $stats->videos; ?></li>
+=======
+							<li><?php echo $stats->uploads; ?></li>
+							<li>&nbsp;</li>
+>>>>>>> articles
 							<li><?php echo $stats->disk_use; ?></li>
 							<li><?php echo $stats->views; ?></li>
 							<li><?php echo $stats->favors; ?></li>
@@ -49,6 +58,7 @@
 					</div>
 				<?php endif; ?>
 				
+<<<<<<< HEAD
 				<div id="gallery">
 					<?php if($media): ?>
 					 	<ul>
@@ -71,6 +81,27 @@
 					 			<div class="gallery_detail">
 					 				<?php echo $media->title; ?> <br />
 					 				<?php echo mdate("%M %j%S, %Y", $media->date); ?>
+=======
+				<div id="photos">
+					<?php if($images): ?>
+					 	<ul>
+						 <?php foreach($images as $image): ?>
+					 		<li>
+					 			<div class="gallery_inset">
+						 			<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
+										<?php echo $actions = anchor('gallery/del_image/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
+									<?php else: ?>
+										<?php echo $actions = ""; ?>
+									<?php endif; ?>
+						 			<?php if($image->width > 130): 
+						 				echo anchor('gallery/image/' . $image->image_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'title' => $image->title, 'alt' => $image->title . ' by ' . $image->uploader, 'class' => 'resize_x'))); 
+						 			else:  
+						 				echo anchor('gallery/image/' . $image->image_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'title' => $image->title, 'alt' => $image->title . ' by ' . $image->uploader))); endif; ?>
+						 		</div>
+					 			<div class="gallery_detail">
+					 				<?php echo $image->title; ?> <br />
+					 				<?php echo mdate("%M %j%S, %Y", $image->date); ?>
+>>>>>>> articles
 					 			</div>
 					 		</li>
 					 	<?php endforeach; ?>

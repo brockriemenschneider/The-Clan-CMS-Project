@@ -34,11 +34,14 @@
 							<li class="icon">ID</li>
 							<li class="name">User Name</li>
 							<li class="name">User Group</li>
+<<<<<<< HEAD
 							<li class="social">Social IDs</li>
 							<li>Badges</li>
 							<li>Level</li>
 							<li>DKP</li>
 							<li>EXP</li>
+=======
+>>>>>>> articles
 						</ul>
 					</li>
 				<?php foreach($users as $user): ?>

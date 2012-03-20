@@ -11,17 +11,9 @@
 			<?php if($user->user_id == $this->session->userdata('user_id')): ?>
 				<li><span class="left"></span><span class="middle"><?php echo anchor('account', 'My Account'); ?></span><span class="right"></span></li>
 				<li><span class="left"></span><span class="middle"><?php echo anchor('account/social', 'My Social'); ?></span><span class="right"></span></li>
-<<<<<<< HEAD
-				<li><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $user->user_name, 'My Media'); ?></span><span class="right"></span></li>
-				<li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name, 'My Wall'); ?></span><span class="right"></span></li>
-			<?php else: ?>
-				<li><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $this->uri->segment(3), $this->uri->segment(3) . '\'s Media'); ?></span><span class="right"></span></li>
-				<li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $this->uri->segment(3), $this->uri->segment(3) . '\'s Wall'); ?></span><span class="right"></span></li>
-=======
 				<li><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $user->user_name, 'My Media'); ?></span><span class="right"></span></li>
 			<?php else: ?>
 				<li><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $this->uri->segment(3), $this->uri->segment(3) . '\'s Media'); ?></span><span class="right"></span></li>
->>>>>>> articles
 			<?php endif; ?>
 			
 		</ul>
@@ -56,19 +48,16 @@
 							<?php echo anchor('account/shout_no/' . $this->uri->segment(3), 'Remove ' . $this->uri->segment(3) . ' from shoutlist');?>
 						<?php else: ?>
 							<?php echo anchor('account/shout_yes/' . $this->uri->segment(3), 'Add ' . $this->uri->segment(3) . ' to shoutlist');?>
-							<div class="alert"><?php echo $this->uri->segment(3); ?> may not use the shoutbox!</div>
 						<?php endif; ?>
 						
 						<?php if($user->can_upload == 1): ?>
 							<?php echo anchor('account/upload_no/' . $this->uri->segment(3), 'Remove ' . $this->uri->segment(3) . ' from uploaders');?>
 						<?php else: ?>
 							<?php echo anchor('account/upload_yes/' . $this->uri->segment(3), 'Add ' . $this->uri->segment(3) . ' to uploaders');?>
-							<div class="alert"><?php echo $this->uri->segment(3); ?> 's upload rights have been removed!</div>
 						<?php endif; ?>
 						
 					<?php else: ?>
 						<?php echo anchor('account/unmute/' . $this->uri->segment(3), 'Unmute ' . $this->uri->segment(3));?>
-						<div class="alert"><?php echo $this->uri->segment(3); ?> has been muted and may not comment, upload, nor use the shoutbox!</div>
 					<?php endif; ?>
 					
 				</div>

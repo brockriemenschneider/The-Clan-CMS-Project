@@ -41,6 +41,7 @@ class Account extends CI_Controller {
 		$this->load->model('Squads_model', 'squads');
 		
 		// Load the Social model
+<<<<<<< HEAD
 		$this->load->model('Social_model', 'social');
 		
 		// Load the Users model
@@ -48,6 +49,9 @@ class Account extends CI_Controller {
 		
 		// Load the Tracker model
 		$this->load->model('Tracker_model', 'tracker');
+=======
+		$this->load->model('Social_model', 'social');
+>>>>>>> articles
 	}
 	
 	// --------------------------------------------------------------------
@@ -941,6 +945,7 @@ class Account extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
+<<<<<<< HEAD
 	 * Wall
 	 *
 	 * Interactive User Wall
@@ -1220,6 +1225,8 @@ class Account extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
+=======
+>>>>>>> articles
 	 * Agree
 	 *
 	 * User affirms to social agreement
@@ -1273,6 +1280,7 @@ class Account extends CI_Controller {
 	 }
 	 
 	 // --------------------------------------------------------------------
+<<<<<<< HEAD
 	
 	/**
 	 * Mute
@@ -1451,6 +1459,267 @@ class Account extends CI_Controller {
 	 * Shout_no
 	 *
 	 * Restricts a user from the shoutbox
+=======
+	
+	/**
+	 * Mute
+	 *
+	 * Mutes a user
+>>>>>>> articles
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+<<<<<<< HEAD
+	function shout_no()
+=======
+	function mute()
+>>>>>>> articles
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+<<<<<<< HEAD
+				'can_shout'	=> 0
+=======
+				'has_voice'	=> 0
+>>>>>>> articles
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+<<<<<<< HEAD
+	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to shout');
+=======
+	 		$this->session->set_flashdata('message', 'You have muted ' . $user->user_name);
+>>>>>>> articles
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+<<<<<<< HEAD
+	}	
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Shout_yes
+	 *
+	 * Restricts a user from the shoutbox
+=======
+	}
+	
+		 // --------------------------------------------------------------------
+	
+	/**
+	 * Unmute
+	 *
+	 * Unmutes a user
+>>>>>>> articles
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+<<<<<<< HEAD
+	function shout_yes()
+=======
+	function unmute()
+>>>>>>> articles
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+<<<<<<< HEAD
+				'can_shout'	=> 1
+=======
+				'has_voice'	=> 1
+>>>>>>> articles
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+<<<<<<< HEAD
+	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to shout');
+=======
+	 		$this->session->set_flashdata('message', 'You have unmuted ' . $user->user_name);
+>>>>>>> articles
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+<<<<<<< HEAD
+	/**
+	 * Delete Comment
+	 *
+	 * Deletes a wall comment from the databse
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function delete_comment()
+	{
+		// Set up our data
+		$data = array(
+			'comment_id'	=>	$this->uri->segment(3)
+		);
+		
+		// Retrieve the article comment
+		if(!$comment = $this->users->get_comment($data))
+		{
+			// Comment doesn't exist, alert the administrator
+			$this->session->set_flashdata('wall', 'The comment was not found!');
+		
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+		
+		// Check if the user is an administrator
+		if(!$this->user->is_administrator() && $this->session->userdata('user_id') != $comment->user_id)
+		{
+			// User isn't an administrator or the comment user, alert the user
+			$this->session->set_flashdata('wall', 'You are not allowed to delete this comment!');
+			
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+				
+		// Delete the article comment from the database
+		$this->users->delete_comment($comment->comment_id, $data);
+		
+		// Alert the administrator
+		$this->session->set_flashdata('wall', 'The comment was successfully deleted!');
+				
+		// Redirect the administrator
+		redirect($this->session->userdata('previous'));
+	}
+=======
+
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Upload_no
+	 *
+	 * Revokes a user's right to upload
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function upload_no()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_upload'	=> 0
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to upload');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Upload_yes
+	 *
+	 * Returns a user's ability to upload
+	 *
+	 * @access	private
+	 * @return	void
+	 */
+	function upload_yes()
+	{
+		// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Set up the data
+		$data = array(
+			'user_name'	=> $this->uri->segment(3, '')
+		);
+		
+		// Retrieve the user
+		if($user = $this->users->get_user($data))
+		{
+			// User exists, set up the data
+			$data = array(
+				'can_upload'	=> 1
+				);
+			
+			// Update the user in the database
+			$this->users->update_user($user->user_id, $data);
+			
+			// Alert admin
+	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to upload');
+	 		
+	 		// Redirect the administrator
+			redirect($this->session->userdata('previous'));
+		}
+	}
+	
+	 // --------------------------------------------------------------------
+	
+	/**
+	 * Shout_no
+	 *
+	 * Restricts a user from the shoutbox
 	 *
 	 * @access	private
 	 * @return	void
@@ -1529,52 +1798,8 @@ class Account extends CI_Controller {
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
-	}
-	
-	/**
-	 * Delete Comment
-	 *
-	 * Deletes a wall comment from the databse
-	 *
-	 * @access	public
-	 * @return	void
-	 */
-	function delete_comment()
-	{
-		// Set up our data
-		$data = array(
-			'comment_id'	=>	$this->uri->segment(3)
-		);
-		
-		// Retrieve the article comment
-		if(!$comment = $this->users->get_comment($data))
-		{
-			// Comment doesn't exist, alert the administrator
-			$this->session->set_flashdata('wall', 'The comment was not found!');
-		
-			// Redirect the user
-			redirect($this->session->userdata('previous'));
-		}
-		
-		// Check if the user is an administrator
-		if(!$this->user->is_administrator() && $this->session->userdata('user_id') != $comment->user_id)
-		{
-			// User isn't an administrator or the comment user, alert the user
-			$this->session->set_flashdata('wall', 'You are not allowed to delete this comment!');
-			
-			// Redirect the user
-			redirect($this->session->userdata('previous'));
-		}
-				
-		// Delete the article comment from the database
-		$this->users->delete_comment($comment->comment_id, $data);
-		
-		// Alert the administrator
-		$this->session->set_flashdata('wall', 'The comment was successfully deleted!');
-				
-		// Redirect the administrator
-		redirect($this->session->userdata('previous'));
-	}
+	}		
+>>>>>>> articles
 }
 
 /* End of file account.php */

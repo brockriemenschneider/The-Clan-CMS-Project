@@ -113,9 +113,14 @@ class Site_stats_widget extends Widget {
 		// Load the Gallery model
 		$this->CI->load->model('Gallery_model', 'gallery');
 		
+<<<<<<< HEAD
 		// Retrieve the total number of images and videos
 		$this->data->total_images = $this->CI->gallery->count_images();
 		$this->data->total_videos = $this->CI->gallery->count_videos();
+=======
+		// Retrieve the total number of images
+		$this->data->total_images = $this->CI->gallery->count_images();
+>>>>>>> articles
 		
 		// Load the Shouts model
 		$this->CI->load->model('Shouts_model', 'shouts');
