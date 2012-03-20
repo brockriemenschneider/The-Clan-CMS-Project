@@ -45,7 +45,7 @@ class ClanCMS extends CI_Model {
 		$CI->load->model('Session_model', 'user');
 		
 		// Define Install
-		define('INSTALL', FALSE);
+		define('INSTALL', TRUE);
 		
 		// Check if we are installing
 		if(!INSTALL)
