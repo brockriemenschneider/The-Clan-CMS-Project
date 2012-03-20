@@ -43,8 +43,6 @@ class Events extends CI_Controller {
 		// Load the Matches Model
 		$this->load->model('Matches_model', 'matches');	
 		
-		// Load the Tournament Model
-		$this->load->model('Tournaments_model', 'tourneys');	
 		
 	}
 	
