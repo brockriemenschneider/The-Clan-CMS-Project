@@ -30,10 +30,19 @@ class Matches_widget extends Widget {
 	public $description = "Display's recent and upcoming matches a clan has.";
 	public $author = 'Xcel Gaming';
 	public $link = 'http://www.xcelgaming.com';
-	public $version = '1.0.0';
+	public $version = '1.0.1';
 	
 	// Widget Settings
 	public $settings = array(
+		array(
+			'title'			=> 'Opponent Name',
+			'slug'			=> 'matches_opponent',
+			'value'			=> '1',
+			'type'			=> 'select',
+			'options'		=> array('0' => 'Clan Tag', '1' => 'Clan Name'),
+			'description'	=> 'The type of name to show',
+			'rules'			=> 'trim|required'
+		),
 		array(
 			'title'			=> 'Type',
 			'slug'			=> 'matches_type',
@@ -106,8 +115,28 @@ class Matches_widget extends Widget {
 				// Check if opponent exists
 				if($opponent)
 				{
-					// Opponent exists, assign opponent & opponent slug
-					$match->opponent = $opponent->opponent_title;
+					// Opponent exists, check what opponent name to use
+					if((bool) $this->setting['matches_opponent'])
+					{
+						// Assign opponent
+						$match->opponent = $opponent->opponent_title;
+					}
+					else
+					{
+						// Check if opponent tag exists
+						if($opponent->opponent_tag)
+						{
+							// Assign opponent
+							$match->opponent = $opponent->opponent_tag;
+						}
+						else
+						{	
+							// Assign opponent
+							$match->opponent = '-';
+						}
+					}
+					
+					// Assign opponent slug
 					$match->opponent_slug = $opponent->opponent_slug;
 				}
 				else

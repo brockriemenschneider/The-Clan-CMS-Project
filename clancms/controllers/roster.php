@@ -42,6 +42,9 @@ class Roster extends CI_Controller {
 		
 		// Load the Matches model
 		$this->load->model('Matches_model', 'matches');
+		
+		// Load Social Model
+		$this->load->model('Social_model', 'social');
 	}
 	
 	// --------------------------------------------------------------------
@@ -261,6 +264,66 @@ class Roster extends CI_Controller {
 		$this->load->view(THEME . 'squad', $this->data);
 	}
 	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Users
+	 *
+	 * Display's the user list
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	 function users()
+	 {
+	 	// Load the games method
+		$users = $this->squads->get_users();
+		
+		// Cycle member online status
+		foreach($users as $user)
+		{
+			// Check if member user exist
+			if($user->user_id)
+			{
+				// Member user exists, assign member online & member user name
+				$user->online = $this->user->is_online($user->user_id);
+			
+				// Get group
+				$group = $this->users->get_group(array('group_id'=>$user->group_id));
+				$user->group = $group->group_user_title;
+				
+				// Get Social
+				$user->social =& $this->social->get_social($user->user_name);
+				
+				// Get squads
+				$user->member = $this->squads->get_members(array('user_id'=>$user->user_id));
+				
+				// Check if user is in a squad
+				if($user->member)
+				{
+					foreach($user->member as $item)
+					{
+						$item->squad = $this->squads->get_squad(array('squad_id'=>$item->squad_id ));
+					}
+						
+				}
+			}
+			else
+			{
+				return FALSE;
+			}
+		} 
+		// Retrieve the squads
+		$squads = $this->squads->get_squads(array('squad_status' => 1));
+		 
+		 // Reference objects
+		$this->data->users =& $users;
+		$this->data->squads =& $squads;
+		$this->data->squad =& $squad;
+		
+		// Load userlist view
+	 	$this->load->view(THEME . 'users', $this->data);
+	 }
 }
 
 /* End of file roster.php */

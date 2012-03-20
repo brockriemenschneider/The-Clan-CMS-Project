@@ -92,13 +92,6 @@ class Update {
 			// Update to 0.6.1
 			$this->update_061();
 		}
-		
-		// Check if we need to update to 0.6.1
-		if(CLANCMS_VERSION < '0.6.2')
-		{
-			// Update to 0.6.1
-			$this->update_062();
-		}
 	}
 	
 	// --------------------------------------------------------------------
@@ -1623,57 +1616,6 @@ class Update {
 			$this->CI->db->query("ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci");
 		}
 	}
-	// --------------------------------------------------------------------
-	
-    /**
-	 * update_062
-	 *
-	 * Update for v0.6.2
-	 *
-	 * @access	public
-     * @return	bool
-	 */
-    function update_062()
-    {
-		// Set up the fields
-		$fields = array(
-			'id' => array(
-								'type' 			=> 'INT',
-								'constraint'	=> '11',
-								'auto_increment'=> TRUE
-							),
-			'user' => array(
-								'type' 			=> 'VARCHAR',
-								'constraint'	=> '64',
-								'null'			=> FALSE
-							),
-			'shout' => array(
-								'type' 			=> 'VARCHAR',
-								'constraint' 	=> '255',
-								'null'			=> FALSE
-							),
-			'when' => array("date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"),
-			'avatar' => array(
-								'type' 			=> 'VARCHAR',
-								'constraint' 	=> '255',
-								'null'			=> FALSE
-							),
-			'rank' => array(
-								'type' 			=> 'VARCHAR',
-								'constraint' 	=> '18',
-								'null'			=> FALSE
-							)
-		);
-		
-		// Add the fields
-		$this->CI->dbforge->add_field($fields);
-		
-		// Add a key to slider id
-		$this->CI->dbforge->add_key('id');
-		
-        // Create the slider table in the database
-        $this->CI->dbforge->create_table('shoutbox');	
-    }
 	
 	// --------------------------------------------------------------------
 	

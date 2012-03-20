@@ -21,6 +21,9 @@
 		</div>
 		
 		<div class="header">
+			<?php if($this->user->logged_in() && !$article->tracked): ?>
+				<?php echo img(array('src' => THEME_URL . 'images/new.png', 'alt' => 'new', 'height' => 32, 'width' => 32, 'class' => 'new')); ?>
+			<?php endif; ?>
 			<?php if($article->squad): ?>
 				<?php echo heading($article->squad . ': ' . $article->article_title, 4); ?>
 			<?php else: ?>
@@ -29,7 +32,7 @@
 		</div>
 		<div class="content">
 			<div class="inside">
-			
+			<div><?php if($article->article_game): echo img(IMAGES . 'headers/' . $article->article_game); else: echo img(IMAGES . 'headers/default.png'); endif; ?></div>
 				<div class="subheader">
 					<?php echo heading('Posted on ' . mdate("%M %d, %Y at %h:%i %a", $article->date) . ' by ' . anchor('account/profile/' . $this->users->user_slug($article->author), $article->author), 4); ?>
 				</div>

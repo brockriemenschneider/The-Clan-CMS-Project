@@ -1,14 +1,23 @@
 <?php $this->load->view(THEME . 'header'); ?>
 
+<<<<<<< HEAD
 <?php $this->load->view(THEME . 'sidebar'); ?>
 
+=======
+<?php $this->load->view(THEME . 'sidebar'); ?>
+>>>>>>> complete
 <div id="main">
 	<div class="box">
 		<div class="header">
 			<h4>
 				<?php echo $image->title . ' from ' . $image->uploader;?>
+<<<<<<< HEAD
 				<?php if($this->user->is_administrator() OR $this->session->userdata('user_id') == $image->uploader): ?>
 					<?php echo $actions = anchor('gallery/del_image/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
+=======
+				<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
+					<?php echo $actions = anchor('gallery/del_media/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
+>>>>>>> complete
 				<?php else: ?>
 					<?php echo $actions = ""; ?>
 				<?php endif; ?>
@@ -18,7 +27,11 @@
 			<div class="inside">
 				<div class="gallery">
 					<div class="media">
+<<<<<<< HEAD
 						<?php echo img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'alt' => $image->image_slug)); ?>
+=======
+						<?php echo img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'alt' => $image->gallery_slug)); ?>
+>>>>>>> complete
 					</div>
 					
 					<?php if($this->session->flashdata('message')): ?>
@@ -54,11 +67,18 @@
 						<div class="clear"></div>
 						<?php if($this->user->logged_in()): ?>
 						<ul class="share">
+<<<<<<< HEAD
 							<?php echo anchor('gallery/download/' . $image->image_slug, '<li class="download"></li>');?>
 							<li class="favor"></li>
 							<li class="facebook"></li>
 							<li class="twitter"></li>
 							<li class="stumble"></li>
+=======
+							<?php echo anchor('gallery/download/' . $image->gallery_slug, '<li class="download"></li>', array('title' => 'Download original size'));?>
+							<li class="favor"></li>					
+							<li class="stumble"></li>		
+							<?php echo anchor($image->fblink,'<li class="facebook"></li>',array('title'=>'Share on facebook', 'target'=>'_blank'));?>
+>>>>>>> complete
 						</ul>
 						<?php endif; ?>
 					</div>
@@ -75,10 +95,39 @@
 						</div>
 						<div class="uploader_desc">
 							<?php if($image->desc): ?>
+<<<<<<< HEAD
 								<p><?php echo $image->desc; ?></p>
 							<?php else: ?>
 								<?php if($this->session->userdata('username') == $image->uploader): ?>
 									<?php echo form_open('gallery/image/' . $image->image_slug); ?>
+=======
+								<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
+									<?php echo img(array('src' => THEME_URL . 'images/edit.png', 'title' => 'Edit', 'alt' => 'Edit Description', 'class' => 'right edit')); ?>
+									<div id="edit" style="display: none;">
+									<?php echo form_open('gallery/image/' . $image->gallery_slug); ?>
+									<?php $data = array(
+											'name'		=> 'desc',
+											'rows'		=> '4',
+											'cols'			=> '40',
+											'value'		=> $image->desc
+											);
+									echo form_textarea($data); ?>
+									<?php $data = array(
+												'name'		=> 'add_desc',
+												'class'		=> 'submit',
+												'value'		=> 'Describe'
+											);
+										echo form_submit($data); ?>
+									<button id="cancel" class="submit ui-button ui-widget ui-state-default ui-corner-all">Cancel</button>
+									<?php echo form_close(); ?>
+									</div>
+								<?php endif; ?> 
+							
+								<p><?php echo $image->desc; ?></p>
+							<?php else: ?>
+								<?php if($this->session->userdata('username') == $image->uploader): ?>
+									<?php echo form_open('gallery/image/' . $image->gallery_slug); ?>
+>>>>>>> complete
 									<?php
 										$data = array(
 											'name'		=> 'desc',
@@ -109,7 +158,11 @@
 					
 					<div class="gallery_comments">
 						<?php if($this->user->logged_in() && $user->has_voice == 1): ?>
+<<<<<<< HEAD
 								<?php echo form_open('gallery/image/' . $image->image_slug); ?>
+=======
+								<?php echo form_open('gallery/image/' . $image->gallery_slug); ?>
+>>>>>>> complete
 								<?php
 									$data = array(
 										'name'		=> 'comment',
@@ -166,5 +219,33 @@
 	</div>
 	<div class="space"></div>
 </div>
+<<<<<<< HEAD
+=======
+<script>
+$(document).ready(function() {
+	// Get the  current URL
+	var pathname = window.location;
+	 
+	// Create the twitter URL
+	var tweeturl = 'https://www.twitter.com/share?status='+pathname+'&via=codezyne_me&text=Check this out!';
+	
+	// Add tweeter
+	$('.share').append('<a href="'+ tweeturl+'"><li class="twitter" title="Tweet this image"></li></a>')
+	
+	})
+</script>
+<script>
+	$(".edit").click(function () {
+	  $("div#edit").show("fast", function () {
+	    /* use callee so don't have to name the function */
+	    $(this).next("div.edit").show("fast", arguments.callee);
+	  });
+	});
+	$("#cancel").click(function () {
+	  $("div.edit").hide(2000);
+	});
+
+</script>
+>>>>>>> complete
 
 <?php $this->load->view(THEME . 'footer'); ?>

@@ -91,7 +91,50 @@ class Tracker_model extends CI_Model {
 			return FALSE;
 		}
 	}
+<<<<<<< HEAD
 	 
 }
 /* End of file <name>_model.php */
 /* Location: ./clancms/models/<name>_model.php */
+=======
+	
+	 // ----------------------------------------------------------------------------
+	/**
+	 * Get_new
+	 *
+	 * Checks all objects in controller that are new to user
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 *
+	 */
+	 function get_new($controller, $slug, $user)
+	{
+		// Setup the data
+		$data = array(
+			'controller_name'	=>	$controller,
+			'controller_item_id'	=>	$slug,
+			'user_id'			=>	$user,
+			);
+		
+		// Retrieve the query from the database
+		$query = $this->db
+					->where($data)
+					->get('tracker', 1);
+					
+		// Check if query row exists
+		if($query->row())
+		{
+			return $tracked = 1;
+		}
+		else {
+			return FALSE;
+		}
+			
+	}
+	 
+}
+/* End of file tracker_model.php */
+/* Location: ./clancms/models/tracker_model.php */
+>>>>>>> complete

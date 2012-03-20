@@ -25,6 +25,7 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/edit/' . $article->article_id, 'Edit Article: ' . $article->article_title); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -83,6 +84,23 @@
 				<?php echo br(); ?>
 				<div class="description">What squad is this article for?</div>
 		
+				<!-- Game selector -->
+				<div class="label required">Game</div>
+				<?php
+					
+					$options = array('0' => 'default');
+					if($games):
+						foreach($games as $game):
+							$options = $options + array($game->image	=>	$game->title);
+						endforeach;
+					endif;
+					
+				echo form_dropdown('game', $options, set_value('game', $article->article_game), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">Which game is this about? | <?php echo anchor(ADMINCP .'articles/headers', 'View / Add Headers', 'title="News Headers"');?></div>
+		
+		
+		
 				<div class="label required">Title</div>
 				
 				<?php 
@@ -129,6 +147,26 @@
 						);
 				
 				echo form_radio($data, '0', set_radio('comments', '0', (bool) !$article->article_comments)); ?> Disallow
+				
+				<?php echo br(); ?>
+
+				<div class="label required">View Permissions</div> 
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '1', set_radio('permissions', '1', (bool) $article->article_permission)); ?> Public
+				
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '0', set_radio('permissions', '0', (bool) !$article->article_permission)); ?> Clan Only
+				
 				<?php echo br(); ?>
 		
 				<?php 
