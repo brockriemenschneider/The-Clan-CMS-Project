@@ -1,208 +1,62 @@
-<<<<<<< HEAD
 ============================================================================================
-                             co[dezyne] ClanCMS Fork Changes
+                             co[dezyne] ClanCMS Fork Changes (complete)
 ============================================================================================
 
-This is the complete system with all file changes, working and not.  Refer to specific branches
-for modification details.
+Major Features Added:
+-  Article Headers
+-  Squad Icons
+-  Media Gallery
+-  User Walls
+-  Calendar Widget
+-  Events Calendar
+-  User Tracking
+-  Shoutbox
 
-******************************************
-              Recent Changes
-******************************************
+***************************************
+User Tracking
+***************************************
 Created tracker table to log user views for objects.  Assimilated articles and gallery images to check user
 against tabled.  New items are branded with a 'new' image ribbon. Updated article headers to include 
 no background image option. 
 
-Fixed issue with squad icon not populating.
+***************************************
+Shoutbox
+***************************************
+The shoutbox allows users to communicate with each other via a sidebar widget 
+on ClanCMS.  The widget tracks the latest recent shouts and displays a user-friendly 
+timestamp.  Users are alerted via confirmation when their shouts are posted successfully. 
+Links beginning with 'http' and 'www' are parsed into hyperlinks for easy site 
+sharing within the community.
 
-Added user walls
+A shout history is visible to all site members and admin are given the authority 
+to remove shouts no longer desired.
 
-Added Twitter widget & library
-
-******************************************
-              Files Added:
-******************************************
-
-controllers/
-- gallery.php
-- shouts.php
-
-models/
-- gallery_model.php
-- shouts_model.php
-- social_model.php
-- tracker_model.php
-
-libraries/
-- Youtube.php
-- Twitter.php
-
-widgets/
-- shoutbox_widget.php
-- twitter_widget.php
-
-views/widgets/
-- shoutbox.php
-- twitter.php
-
-views/images/
-- gallery/
-- gallery/thumbs/
-- headers/
-- squad_icons/
-
-views/admincp/
-- articles_headers.php
-- squads_icons.php
-
-views/themes/default/
-- gallery.php
-- image.php
-- media.php
-- shouts.php
-- social.php
-- social_agree.php
-- users.php
-- user_wall.php
-
-views/themes/default/js/
-- jquery.jcarousel.js
-- jquery.jcarousel.min.js
-- jcarousel/*
-- tablesorter/
-
-[ end of added ]
-
-******************************************
-              Files Changed
-******************************************
-
-controllers/admincp
-- articles.php
-- squads.php
-
-controllers/
-- account.php
-- articles.php
-- roster.php
-- dashboard.php
-- gallery.php
-
-models/
-- articles_model.php
-- session_model.php
-- squads_model.php
-- users_model.php
-- gallery_model.php
-
-widgets/ 
-- site_stats_widget.php
-
-views/widgets/
-- site_stats.php
-
-views/admincp/
-- articles.php
-- articles_add.php
-- articles_edit.php
-- header.php
-- squads_add.php
-- squads_edit.php
-
-views/themes/default/
-- account.php
-- article.php
-- articles.php
-- footer.php
-- header.php
-- profile.php
-- roster.php
-- squad.php
-- gallery.php
-- image.php
-
-
-[ end of files changed ]
-
-****************************************
-               DB Tables Added
-****************************************
-_gallery
-_gallery_comments
-_headers
-_shoutbox
-_sqd_icons
-_user_api
-_user_extend
-_user_social
-
-[ end of new tables ]
-
-*********************************************
-               DB Tables Modified
-*********************************************
-_articles
-	- added 'article_game'
-_squads
-	- added 'squad_icon'
-
-_users
-	-added 'can_shout'
-	-added 'can_upload'
-	-added 'has_voice'
-	-added 'status'
-	-added 'wall_enabled'
-
-[ end of table modifiers ]
-
-=======
-==============================================================================
-                               co[dezyne] Articles Header
-==============================================================================
-
-This extension permits admin to upload images for the purpose of adding unique 
-headers to their articles. It works in combination with the user tracker model
- to digest users' activity, logging articles as new or visited. (Only new is 
-shown, with applicable imagery.)
-
-Recent Updates:
--- Added tracker database table
--- Added tracker model
--- Modified dropdown selector to include chosing the default banner
--- Modified database and article options for public and private articles
+The shoutbox and shout history is inaccessible to visitors, and admin have the authority 
+to restrict users from using the shoutbox.
 
 ***************************************
-        Files Added & Modified
+Gallery
 ***************************************
-Database Tables:
-- Edit Table '*prefix_articles'
-	- Add row 'article_game'
-	- Add row 'article_permission'
+Users are able to upload images, modify a description of the image, and comment on it. 
+Each image is given a statistical count, which will be implemented in future 
+features.  Uploader comments are differentiated from user comments.  Each user 
+is granted a 'My Media' tab in their profile.
 
-- Add Table '*prefix_headers'
+Images are initially scaled to fit the site, however, an original size is maintained and 
+available for download via the image properties panel.
 
-controllers/admincp/
-- UPDATE articles.php
+Admins are able to remove images, remove comments, and bar users from uploading. 
 
-controllers/
-- UPDATE articles.php
-- UPDATE dashboard.php
+Anons are able to view images but not comment or hotlink
 
-models/
-- UPDATE articles_model.php
-- Add tracker_model.php
+Images and downloads are view-tracked for statistics and notifying users of new media.
 
-views/admincp/
-- UPDATE articles.php
-- UPDATE articles_add.php
-- UPDATE articles_edit.php
-- ADD articles_headers.php
-- UPDATE header.php
+Descriptions are editable inline
 
-views/images/
-- ADD headers/
+***************************************
+Articles
+***************************************
+Articles are able to be given a header and be set to public or private
 
-views/themes/default/
-- UPDATE articles.php
-- UPDATE article.php
->>>>>>> articles
+
+
