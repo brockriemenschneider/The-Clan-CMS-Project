@@ -41,17 +41,10 @@ class Account extends CI_Controller {
 		$this->load->model('Squads_model', 'squads');
 		
 		// Load the Social model
-<<<<<<< HEAD
-		$this->load->model('Social_model', 'social');
-=======
 		$this->load->model('Social_model', 'social');
 		
 		// Load the Users model
 		$this->load->model('Users_model', 'users');
-		
-		// Load the Tracker model
-		$this->load->model('Tracker_model', 'tracker');
->>>>>>> complete
 	}
 	
 	// --------------------------------------------------------------------
@@ -1224,9 +1217,7 @@ class Account extends CI_Controller {
 	 }
 
 	// --------------------------------------------------------------------
-	
 	/**
->>>>>>> complete
 	 * Agree
 	 *
 	 * User affirms to social agreement
@@ -1280,7 +1271,6 @@ class Account extends CI_Controller {
 	 }
 	 
 	 // --------------------------------------------------------------------
-<<<<<<< HEAD
 	
 	/**
 	 * Mute
@@ -1323,57 +1313,7 @@ class Account extends CI_Controller {
 		}
 	}
 	
-		 // --------------------------------------------------------------------
-	
-	/**
-	 * Unmute
-	 *
-	 * Unmutes a user
-=======
-	
-	/**
-	 * Mute
-	 *
-	 * Mutes a user
-	 *
-	 * @access	private
-	 * @return	void
-	 */
-	function mute()
-	{
-		// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Set up the data
-		$data = array(
-			'user_name'	=> $this->uri->segment(3, '')
-		);
-		
-		// Retrieve the user
-		if($user = $this->users->get_user($data))
-		{
-			// User exists, set up the data
-			$data = array(
-				'has_voice'	=> 0
-				);
-			
-			// Update the user in the database
-			$this->users->update_user($user->user_id, $data);
-			
-			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have muted ' . $user->user_name);
-	 		
-	 		// Redirect the administrator
-			redirect($this->session->userdata('previous'));
-		}
-	}
-	
-		 // --------------------------------------------------------------------
-	
+	 // --------------------------------------------------------------------
 	/**
 	 * Unmute
 	 *
@@ -1503,21 +1443,15 @@ class Account extends CI_Controller {
 	}
 	
 	 // --------------------------------------------------------------------
-	
 	/**
 	 * Shout_no
 	 *
 	 * Restricts a user from the shoutbox
->>>>>>> complete
 	 *
 	 * @access	private
 	 * @return	void
 	 */
-<<<<<<< HEAD
-	function unmute()
-=======
 	function shout_no()
->>>>>>> complete
 	{
 		// Check to see if the user is logged in
 		if (!$this->user->logged_in())
@@ -1536,55 +1470,32 @@ class Account extends CI_Controller {
 		{
 			// User exists, set up the data
 			$data = array(
-<<<<<<< HEAD
-				'has_voice'	=> 1
-=======
+				'has_voice'	=> 1,
 				'can_shout'	=> 0
->>>>>>> complete
 				);
 			
 			// Update the user in the database
 			$this->users->update_user($user->user_id, $data);
 			
 			// Alert admin
-<<<<<<< HEAD
 	 		$this->session->set_flashdata('message', 'You have unmuted ' . $user->user_name);
-=======
-	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to shout');
->>>>>>> complete
 	 		
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
-<<<<<<< HEAD
 	}
 	
 
 	 // --------------------------------------------------------------------
-	
-	/**
-	 * Upload_no
-	 *
-	 * Revokes a user's right to upload
-=======
-	}	
-	
-	 // --------------------------------------------------------------------
-	
 	/**
 	 * Shout_yes
 	 *
 	 * Restricts a user from the shoutbox
->>>>>>> complete
 	 *
 	 * @access	private
 	 * @return	void
 	 */
-<<<<<<< HEAD
-	function upload_no()
-=======
 	function shout_yes()
->>>>>>> complete
 	{
 		// Check to see if the user is logged in
 		if (!$this->user->logged_in())
@@ -1603,158 +1514,21 @@ class Account extends CI_Controller {
 		{
 			// User exists, set up the data
 			$data = array(
-<<<<<<< HEAD
-				'can_upload'	=> 0
-=======
 				'can_shout'	=> 1
->>>>>>> complete
 				);
 			
 			// Update the user in the database
 			$this->users->update_user($user->user_id, $data);
 			
 			// Alert admin
-<<<<<<< HEAD
 	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to upload');
-=======
-	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to shout');
->>>>>>> complete
 	 		
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
 	}
-	
-<<<<<<< HEAD
-	 // --------------------------------------------------------------------
-	
-	/**
-	 * Upload_yes
-	 *
-	 * Returns a user's ability to upload
-	 *
-	 * @access	private
-	 * @return	void
-	 */
-	function upload_yes()
-	{
-		// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Set up the data
-		$data = array(
-			'user_name'	=> $this->uri->segment(3, '')
-		);
-		
-		// Retrieve the user
-		if($user = $this->users->get_user($data))
-		{
-			// User exists, set up the data
-			$data = array(
-				'can_upload'	=> 1
-				);
-			
-			// Update the user in the database
-			$this->users->update_user($user->user_id, $data);
-			
-			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to upload');
-	 		
-	 		// Redirect the administrator
-			redirect($this->session->userdata('previous'));
-		}
-	}
-	
-	 // --------------------------------------------------------------------
-	
-	/**
-	 * Shout_no
-	 *
-	 * Restricts a user from the shoutbox
-	 *
-	 * @access	private
-	 * @return	void
-	 */
-	function shout_no()
-	{
-		// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Set up the data
-		$data = array(
-			'user_name'	=> $this->uri->segment(3, '')
-		);
-		
-		// Retrieve the user
-		if($user = $this->users->get_user($data))
-		{
-			// User exists, set up the data
-			$data = array(
-				'can_shout'	=> 0
-				);
-			
-			// Update the user in the database
-			$this->users->update_user($user->user_id, $data);
-			
-			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to shout');
-	 		
-	 		// Redirect the administrator
-			redirect($this->session->userdata('previous'));
-		}
-	}	
-	
-	 // --------------------------------------------------------------------
-	
-	/**
-	 * Shout_yes
-	 *
-	 * Restricts a user from the shoutbox
-	 *
-	 * @access	private
-	 * @return	void
-	 */
-	function shout_yes()
-	{
-		// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Set up the data
-		$data = array(
-			'user_name'	=> $this->uri->segment(3, '')
-		);
-		
-		// Retrieve the user
-		if($user = $this->users->get_user($data))
-		{
-			// User exists, set up the data
-			$data = array(
-				'can_shout'	=> 1
-				);
-			
-			// Update the user in the database
-			$this->users->update_user($user->user_id, $data);
-			
-			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to shout');
-	 		
-	 		// Redirect the administrator
-			redirect($this->session->userdata('previous'));
-		}
-	}		
-=======
+
+	 // --------------------------------------------------------------------	
 	/**
 	 * Delete Comment
 	 *
@@ -1799,7 +1573,6 @@ class Account extends CI_Controller {
 		// Redirect the administrator
 		redirect($this->session->userdata('previous'));
 	}
->>>>>>> complete
 }
 
 /* End of file account.php */

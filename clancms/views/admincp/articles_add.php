@@ -151,10 +151,7 @@
 			<?php echo form_close(); ?>		
 		</div>
 		<div class="footer"></div>
+	</div>
 	
-
-
-
-
 </div>
 <?php $this->load->view(ADMINCP . 'footer'); ?>

@@ -1,23 +1,13 @@
 <?php $this->load->view(THEME . 'header'); ?>
 
-<<<<<<< HEAD
 <?php $this->load->view(THEME . 'sidebar'); ?>
-
-=======
-<?php $this->load->view(THEME . 'sidebar'); ?>
->>>>>>> complete
 <div id="main">
 	<div class="box">
 		<div class="header">
 			<h4>
 				<?php echo $image->title . ' from ' . $image->uploader;?>
-<<<<<<< HEAD
-				<?php if($this->user->is_administrator() OR $this->session->userdata('user_id') == $image->uploader): ?>
-					<?php echo $actions = anchor('gallery/del_image/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
-=======
 				<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
 					<?php echo $actions = anchor('gallery/del_media/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
->>>>>>> complete
 				<?php else: ?>
 					<?php echo $actions = ""; ?>
 				<?php endif; ?>
@@ -27,11 +17,7 @@
 			<div class="inside">
 				<div class="gallery">
 					<div class="media">
-<<<<<<< HEAD
-						<?php echo img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'alt' => $image->image_slug)); ?>
-=======
 						<?php echo img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'alt' => $image->gallery_slug)); ?>
->>>>>>> complete
 					</div>
 					
 					<?php if($this->session->flashdata('message')): ?>
@@ -67,18 +53,10 @@
 						<div class="clear"></div>
 						<?php if($this->user->logged_in()): ?>
 						<ul class="share">
-<<<<<<< HEAD
-							<?php echo anchor('gallery/download/' . $image->image_slug, '<li class="download"></li>');?>
-							<li class="favor"></li>
-							<li class="facebook"></li>
-							<li class="twitter"></li>
-							<li class="stumble"></li>
-=======
 							<?php echo anchor('gallery/download/' . $image->gallery_slug, '<li class="download"></li>', array('title' => 'Download original size'));?>
 							<li class="favor"></li>					
 							<li class="stumble"></li>		
 							<?php echo anchor($image->fblink,'<li class="facebook"></li>',array('title'=>'Share on facebook', 'target'=>'_blank'));?>
->>>>>>> complete
 						</ul>
 						<?php endif; ?>
 					</div>
@@ -95,12 +73,6 @@
 						</div>
 						<div class="uploader_desc">
 							<?php if($image->desc): ?>
-<<<<<<< HEAD
-								<p><?php echo $image->desc; ?></p>
-							<?php else: ?>
-								<?php if($this->session->userdata('username') == $image->uploader): ?>
-									<?php echo form_open('gallery/image/' . $image->image_slug); ?>
-=======
 								<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
 									<?php echo img(array('src' => THEME_URL . 'images/edit.png', 'title' => 'Edit', 'alt' => 'Edit Description', 'class' => 'right edit')); ?>
 									<div id="edit" style="display: none;">
@@ -127,7 +99,6 @@
 							<?php else: ?>
 								<?php if($this->session->userdata('username') == $image->uploader): ?>
 									<?php echo form_open('gallery/image/' . $image->gallery_slug); ?>
->>>>>>> complete
 									<?php
 										$data = array(
 											'name'		=> 'desc',
@@ -158,11 +129,7 @@
 					
 					<div class="gallery_comments">
 						<?php if($this->user->logged_in() && $user->has_voice == 1): ?>
-<<<<<<< HEAD
-								<?php echo form_open('gallery/image/' . $image->image_slug); ?>
-=======
 								<?php echo form_open('gallery/image/' . $image->gallery_slug); ?>
->>>>>>> complete
 								<?php
 									$data = array(
 										'name'		=> 'comment',
@@ -219,8 +186,6 @@
 	</div>
 	<div class="space"></div>
 </div>
-<<<<<<< HEAD
-=======
 <script>
 $(document).ready(function() {
 	// Get the  current URL
@@ -246,6 +211,5 @@ $(document).ready(function() {
 	});
 
 </script>
->>>>>>> complete
 
 <?php $this->load->view(THEME . 'footer'); ?>

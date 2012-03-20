@@ -40,9 +40,6 @@ class Articles extends CI_Controller {
 		// Load the Squads Model
 		$this->load->model('Squads_model', 'squads');
 		
-		// Load the Tracker model
-		$this->load->model('Tracker_model', 'tracker');
-		
 		// Load the typography library
 		$this->load->library('typography');
 		

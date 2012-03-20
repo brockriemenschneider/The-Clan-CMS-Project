@@ -80,8 +80,7 @@
 							
 						</tbody>
 					</table>
-				<?php else: ?>
-					<?php echo 'No events today'; ?>
+
 				<?php endif; ?>
 				</div>
 				

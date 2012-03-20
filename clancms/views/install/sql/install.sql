@@ -400,7 +400,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',
   `user_notes` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` text COLLATE utf8_unicode_ci NOT NULL,
   `user_name` varchar(200) NOT NULL,
   `user_password` varchar(40) NOT NULL,
   `user_salt` varchar(32) NOT NULL,

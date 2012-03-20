@@ -39,13 +39,14 @@ class ClanCMS extends CI_Model {
 		// Create an instance to CI
 		$CI =& get_instance();
 		
-		// Load the settings, users & session models
+		// Load the settings, users, session, & tracker models
 		$CI->load->model('Settings_model', 'settings');
 		$CI->load->model('Users_model', 'users');
 		$CI->load->model('Session_model', 'user');
+		$CI->load->model('Tracker_model', 'tracker');
 		
 		// Define Install
-		define('INSTALL', FALSE);
+		define('INSTALL', TRUE);
 		
 		// Check if we are installing
 		if(!INSTALL)

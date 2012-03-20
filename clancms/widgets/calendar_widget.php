@@ -30,7 +30,7 @@ class Calendar_widget extends Widget {
 	public $description = "Calendar for scheduling and tracking of events.";
 	public $author = 'co[dezyne]';
 	public $link = 'http://codezyne.me';
-	public $version = '0.4';
+	public $version = '0.6';
 	public $requires = '0.6.2';
 	public $compatible = '0.6.2';
 	
@@ -74,9 +74,8 @@ class Calendar_widget extends Widget {
 		// Retrieve this months events & matches
 		$events = $this->CI->events->get_events(array('event_month' => date('n', $time)));
 		$events_count = $this->CI->events->count_events(array('event_month' => date('n', $time)));
-		$matches = $this->CI->matches->get_matches_like((date('Y-n', $time) < 10 ? date('0n', $time) : date('n', $time)));
-		$matches_count = count($matches);
-		
+		$matches = $this->CI->matches->get_matches_like((date('Y-n', $time)));
+		$matches_count = $this->CI->matches->count_matches(array('match_date' => date('Y-n', $time)));
 		$event = array();
 		
 		// Retrieve this month's events
