@@ -63,13 +63,13 @@
 					<?php if($videos): ?>
 					 	<ul>
 						 <?php foreach($videos as $video): ?>
-					 		<li <?php if($video->uploader ==  $official->setting_value): echo 'class=official'; endif;?>>
-					 			<div class="gallery_inset <?php if($video->uploader ==  $official->setting_value): echo 'official_inset'; endif;?>">
+					 		<li <?php if($video->group == 'Feeder'): echo 'class=official'; endif;?>>
+					 			<div class="gallery_inset <?php if($video->group == 'Feeder'): echo 'official_inset'; endif;?>">
 									<?php if($this->user->logged_in() && !$video->tracked): ?>
 										<?php echo anchor('gallery/video/' . $video->gallery_slug, img(array('src' => THEME_URL . 'images/new.png', 'alt' => 'new', 'class' => 'new'))); ?>
 									<?php endif; ?>
 						 			<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $video->uploader): ?>
-										<?php echo $actions = anchor('gallery/del_image/' . $video->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
+										<?php echo $actions = anchor('gallery/del_media/' . $video->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
 									<?php else: ?>
 										<?php echo $actions = ""; ?>
 									<?php endif; ?>
@@ -77,7 +77,7 @@
 						 			<?php echo anchor('gallery/video/' . $video->gallery_slug, img(array('src' =>$video->video, 'title' => $video->title, 'alt' => $video->title . ' by ' . $video->uploader, 'class' => 'resize_x'))); ?> 
 						 			
 						 		</div>
-					 			<div class="gallery_detail <?php if($video->uploader ==  $official->setting_value): echo 'official_detail'; endif;?>">
+					 			<div class="gallery_detail <?php if($video->group ==  'Feeder'): echo 'official_detail'; endif;?>">
 					 				<?php echo $video->title; ?> <br />
 					 				<span>by</span>&nbsp;<?php echo $video->uploader; ?>
 					 			</div>

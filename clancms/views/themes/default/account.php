@@ -1,3 +1,4 @@
+
 <?php $this->load->view(THEME . 'header'); ?>
 
 <?php $this->load->view(THEME . 'sidebar'); ?>
@@ -11,6 +12,7 @@
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('account/', 'My Account'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('account/social', 'My Social'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $user->user_name, 'My Media'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name, 'My Wall'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		

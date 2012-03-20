@@ -7,7 +7,7 @@
 		<div class="header">
 			<h4>
 				<?php echo $video->title . ' from ' . $media->uploader;?>
-				<?php if($this->user->is_administrator() OR $this->session->userdata('user_id') == $media->uploader): ?>
+				<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $media->uploader): ?>
 					<?php echo $actions = anchor('gallery/del_media/' . $media->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
 				<?php else: ?>
 					<?php echo $actions = ""; ?>
@@ -52,16 +52,7 @@
 							<li><?php echo $media->favors; ?></li>
 							<li><?php echo $media->comments; ?></li>
 						</ul>
-						<div class="clear"></div>
-						<?php if($this->user->logged_in()): ?>
-						<ul class="share">
-							<?php echo anchor($video->watchURL, '<li class="youtube"></li>', array('title' => 'Watch on YouTube'));?>
-							<li class="favor"></li>
-							<li class="facebook"></li>
-							<li class="twitter"></li>
-							<li class="stumble"></li>
-						</ul>
-						<?php endif; ?>
+						
 					</div>
 					
 					<div class="gallery_description">
@@ -127,7 +118,7 @@
 						</div>
 					</div>
 					<?php if($this->user->logged_in() && $this->session->userdata('username') != $media->uploader): ?>
-						<div class="right"> More from this uploader: <?php echo anchor('gallery/user/' . $media->uploader, 'here'); ?></div>
+						<?php if($media->group != 'Feeder'):?><div class="right"> More from this uploader: <?php echo anchor('gallery/user/' . $media->uploader, 'here'); ?></div><?php endif; ?>
 					<?php endif;?>
 					
 					<div class="gallery_comments">

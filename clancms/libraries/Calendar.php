@@ -35,7 +35,7 @@ class Calendar {
 	}
 	
 	// -------------------------------------------------------------------
-	function clancms_calendar($today, $year, $month, $events = array(), $day_name_length = 1, $month_href = NULL, $first_day = 0, $pn = array())
+	function clancms_calendar($time, $year, $month, $events = array(), $day_name_length = 1, $month_href = NULL, $first_day = 0, $prev_next = array())
 	{
 		// Begin the month
 		$first_of_month = gmmktime(0,0,0,$month,1,$year);
@@ -50,15 +50,15 @@ class Calendar {
 		$weekday = ($weekday + 7 - $first_day) % 7; 
 		$month_title   = htmlentities(ucfirst($month_name)).'&nbsp;'.$year; 
 		
-		// Month & tag anchors
-		@list($p, $pl) = each($pn); 
-		@list($n, $nl) = each($pn); 
-		if($p): $p = '<span class="left prev-month"><a title="' . date('F \'y', strtotime('-1 Month')) . '" href="' . htmlspecialchars($pl) . '">' . $p . '</a></span>'; endif;
-		if($n): $n = '<span class="right next-month"><a title="' . date('F \'y', strtotime('+1 Month')) . '" href="' . htmlspecialchars($nl) . '">' . $n . '</a></span>'; endif;
-		if($month_href): $month_title = '<span class="this-month"><a href="' . htmlspecialchars($month_href) . '">' . $month_title . '</a></span>'; endif;
-		
+		@list($prev, $prev_link) = each($prev_next);
+		@list($next, $next_link) = each($prev_next);
+		if($prev): $prev = anchor('events/' . htmlspecialchars($prev_link), $prev, array('title'=>'Previous Month', 'class'=> 'left prev-month')); endif;
+		if($next): $next = anchor('events/' . htmlspecialchars($next_link), $next, array('title'=>'Next Month', 'class'=> 'right next-month')); endif;
+		if($month_href): $month_title = anchor('events/' . htmlspecialchars($month_href), $month_title, array('class'=>'this-month')); endif;
+
+
 		// Create table
-		$calendar = '<table class="calendar"><caption class="subheader calendar-month">' . $p . $month_title . $n . '</caption><thead class="calendar-weekdays">';
+		$calendar = '<table class="calendar"><caption class="subheader calendar-month">' . $prev . $month_title . $next . '</caption><thead class="calendar-weekdays">';
 		
 		// Parse day headers
 		if($day_name_length)
@@ -93,13 +93,12 @@ class Calendar {
 				if(is_null($content))  $content  = $day;
 				
 				// Construct tabledata
-				$calendar .= '<td class="' . ($day == $today ? 'calendar-today ' : '') . ($classes ? htmlspecialchars($classes) : '') .'"' . ($summary ? ' title="' . $summary . '">' : '>').
-			//	($link ? '<a href="'. htmlspecialchars($link) . '">' . $content . '</a>' : $content ) . '</td>';
-				($link ? anchor('events/' . htmlspecialchars($link), $content) : $content ) . '</td>';
+				$calendar .= '<td class="' . ($day == date('j', $time) && $month == date('n', $time) ? 'calendar-today ' : '') . ($classes ? htmlspecialchars($classes) : '') .'"' . ($summary ? ' title="' . $summary . '">' : '>').
+				($classes == 'calendar-match' ? anchor('matches/view/' . htmlspecialchars($link), $content) : ($link ? anchor('events/' . htmlspecialchars($link), $content) : $content )) . '</td>';
 			}
 			else
 			{
-				 $calendar .= '<td class="' . ($day == $today ? 'yellow">' : '">') . $day . '</td>';
+				 $calendar .= '<td class="' . ($day == date('j', $time) && $month == date('n', $time) ? 'yellow">' : '">') . $day . '</td>';
 			}
 			
 			

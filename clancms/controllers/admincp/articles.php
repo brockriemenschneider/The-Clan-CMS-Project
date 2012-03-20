@@ -520,10 +520,7 @@ class Articles extends CI_Controller {
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
 					'article_status'	=> $this->input->post('status'),
-<<<<<<< HEAD
-=======
 					'article_permission'	=>	$this->input->post('permissions'),
->>>>>>> articles
 					'article_game'	=> $this->input->post('game'),
 				);
 				

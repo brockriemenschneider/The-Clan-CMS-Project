@@ -112,10 +112,6 @@ class Dashboard extends CI_Controller {
 		}
 		
 		
-<<<<<<< HEAD
-		// Retrieve the articles
-		$articles = $this->articles->get_articles(2, '', array('article_status' => 1));
-=======
 		// Retrieve the articles
 		if($this->user->logged_in())
 		{
@@ -125,7 +121,6 @@ class Dashboard extends CI_Controller {
 		{
 			$articles = $this->articles->get_articles(2, '', array('article_status' => 1, 'article_permission' => 1));
 		}
->>>>>>> articles
 		
 		// Check if articles exist
 		if($articles)

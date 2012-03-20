@@ -186,7 +186,7 @@ class Squads extends CI_Controller {
 		$data = array(
 			'squad_id'	=>	$this->uri->segment(4)
 		);
-		
+	
 		// Retrieve the squad
 		if(!$squad = $this->squads->get_squad($data))
 		{
@@ -206,6 +206,7 @@ class Squads extends CI_Controller {
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
 			$this->form_validation->set_rules('priority', 'Priority', 'trim|required|integer');
+			$this->form_validation->set_rules('icon', 'Icon');
 			
 			// Loop through each member
 			foreach($titles as $member_id => $title)

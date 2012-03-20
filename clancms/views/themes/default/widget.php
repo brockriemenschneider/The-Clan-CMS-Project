@@ -6,12 +6,14 @@
 		<div class="inside">
 				
 			<?php if($title): ?>
-			<div class="subheader">
+			<div class="subheader toggle">
 				<?php echo heading($title, 4); ?>
 			</div>
 			<?php endif; ?>
-			
-			<?php echo $content; ?>
+
+			<div class="doso">
+				<?php echo $content; ?>
+			</div>
 		</div>
 	</div>
 		
@@ -26,6 +28,6 @@
 	</ul>
 	</div>
 	<?php endif; ?>
-	
+
 </div>
 <div class="space"></div>

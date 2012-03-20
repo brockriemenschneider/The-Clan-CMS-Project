@@ -3,10 +3,6 @@
 <?php $this->load->view(THEME . 'sidebar'); ?>
 
 <div id="main">
-<<<<<<< HEAD
-=======
-
->>>>>>> articles
 
 <?php if($slides): ?>
 	<div id="slider-wrapper">

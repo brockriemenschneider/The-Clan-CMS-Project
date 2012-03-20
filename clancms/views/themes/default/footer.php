@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	function deleteConfirm()
 	{
-    	var answer = confirm("Are you sure you want to delete this image? Once deleted, there will be no way to recover it!")
+    	var answer = confirm("Are you sure you want to delete this item? Once deleted, there will be no way to recover it!")
     	if (answer)
 		{
         	document.messages.submit();
@@ -18,6 +18,20 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 </script>
+<script>
+  
+    $(".toggle").toggle(
+    
+      function () {
+        $(this).siblings('.doso').hide();
+      },
+      function () {
+        $(this).siblings('.doso').show();
+        
+      });
+</script>
+
+
 <div id="footer"> 
 	<div class="copyright">Copyright &copy; <?php echo mdate('%Y'); ?> <?php echo anchor('', CLAN_NAME); ?> All Rights Reserved. Powered By <?php echo anchor('http://www.xcelgaming.com', 'Clan CMS v' . CLANCMS_VERSION); ?></div> 
 	<div class="links"> 

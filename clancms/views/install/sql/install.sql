@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
   `comment_title` text COLLATE utf8_unicode_ci NOT NULL,
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   `slider_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -49,7 +49,64 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   `slider_link` varchar(200) NOT NULL,
   `slider_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`slider_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1  ;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__events`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__events` (
+  `event_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `event_slug` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `event_year` year(4) NOT NULL,
+  `event_month` smallint(2) NOT NULL,
+  `event_day` tinyint(2) NOT NULL,
+  `event_time` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `event_owner_id` bigint(20) NOT NULL,
+  `event_title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `event_summary` text COLLATE utf8_unicode_ci NOT NULL,
+  `signups_enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`event_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__event_participants`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__event_participants` (
+  `participant_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `event_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`participant_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__gallery`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery` (
+  `gallery_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gallery_slug` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `image` text COLLATE utf8_unicode_ci NOT NULL,
+  `video` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `uploader` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `views` bigint(20) NOT NULL,
+  `comments` bigint(20) NOT NULL,
+  `favors` bigint(20) NOT NULL,
+  `downloads` bigint(20) NOT NULL,
+  `title` text COLLATE utf8_unicode_ci NOT NULL,
+  `height` int(4) NOT NULL,
+  `width` int(4) NOT NULL,
+  `size` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`gallery_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__gallery_comments`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery_comments` (
+  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gallery_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `comment_title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__group_permissions`;
 -- command split --
@@ -59,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__group_permissions` (
   `permission_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `permission_value` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`permission_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 -- command split --
 INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`, `permission_slug`, `permission_value`) VALUES
 (1, 'Can manage settings?', 'settings', 1),
@@ -73,7 +130,17 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (9, 'Can manage polls?', 'polls', 256),
 (10, 'Can manage opponents?', 'opponents', 512),
 (11, 'Can manage widgets?', 'widgets', 1024),
-(12, 'Can manage news slider?', 'slider', 2048);
+(12, 'Can manage news slider?', 'slider', 2048),
+(13, 'Can manage calendar events?', 'events', 4096);
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__headers`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__headers` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__matches`;
 -- command split --
@@ -247,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__setting_categories` (
   `category_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `category_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 -- command split --
 INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `category_priority`) VALUES
 (1, 'General Settings', 1),
@@ -256,6 +323,18 @@ INSERT INTO `__DBPREFIX__setting_categories` (`category_id`, `category_title`, `
 (4, 'Registration Settings', 4),
 (5, 'Email Settings', 5),
 (6, 'Social Networking', 6);
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__shoutbox`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__shoutbox` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `shout` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rank` varchar(18) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__sponsors`;
 -- command split --
@@ -268,6 +347,15 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__sponsors` (
   `sponsor_priority` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sponsor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__sqd_icons`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__sqd_icons` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `icon` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__squads`;
 -- command split --
@@ -295,17 +383,19 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__squad_members` (
   PRIMARY KEY (`member_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__tracker`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
+  `controller_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `controller_method` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `controller_item_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` bigint(20) NOT NULL DEFAULT '0',
+  `tracktime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__users`;
 -- command split--
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__sqd_icons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `icon` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8_unicode_c AUTO_INCREMENT=1 ;
--- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__users`;
--- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',
@@ -325,12 +415,47 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `can_upload` tinyint(1) NOT NULL DEFAULT '1',
   `has_voice` tinyint(1) NOT NULL DEFAULT '1',
   `wall_enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `status` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 -- command split --
 INSERT INTO `__DBPREFIX__users` (`user_id`, `group_id`, `user_notes`, `user_name`, `user_password`, `user_salt`, `user_email`, `user_timezone`, `user_daylight_savings`, `user_ipaddress`, `user_joined`, `user_avatar`, `user_activation`) VALUES
 (1, '2', '', '__USERNAME__', '__USERPASSWORD__', '__USERSALT__', '__USEREMAIL__', '__USERTIMEZONE__', '__USERDAYLIGHTSAVINGS__', '__USERIPADDRESS__', '__USERJOINED__', '', '1');
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__user_api`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_api` (
+  `host` varchar(24) COLLATE utf8_unicode_ci NOT NULL,
+  `base_url` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `m_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `m_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `m_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  UNIQUE KEY `host` (`host`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
+INSERT INTO `__DBPREFIX__user_api` (`host`, `base_url`, `m_1`, `m_2`, `m_3`) VALUES
+('facebook', 'http://facebook.com/', '', '', ''),
+('twitter', 'https://twitter.com/', '', '', ''),
+('youtube', 'http://www.youtube.com/user/', '', '', '');
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__user_extend`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_extend` (
+  `user_id` bigint(20) NOT NULL,
+  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `facebook` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `twitter` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `steam` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `xbox_live` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ps_online` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `skype` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `bf3` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mw3` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `youtube` varchar(64) NOT NULL DEFAULT '',
+  KEY `user` (`user`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
+
 DROP TABLE IF EXISTS `__DBPREFIX__user_groups`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_groups` (
@@ -350,6 +475,32 @@ INSERT INTO `__DBPREFIX__user_groups` (`group_id`, `group_title`, `group_user_ti
 (2, 'Administrators', 'Administrator', 1, 1, 1, 0, 4095),
 (3, 'Team Members', 'Team Member', 1, 0, 1, 0, 0),
 (4, 'Banned Users', 'Banned', 1, 0, 0, 1, 0);
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__user_social`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_social` (
+  `facebook` varchar(8) NOT NULL,
+  `twitter` varchar(8) NOT NULL,
+  `xbox_live` varchar(8) NOT NULL,
+  `ps_online` varchar(8) NOT NULL,
+  `steam` varchar(8) NOT NULL,
+  `skype` varchar(8) NOT NULL,
+  `user` varchar(8) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__wall_comments`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__wall_comments` (
+`comment_id` bigint( 20 ) NOT NULL AUTO_INCREMENT ,
+`wall_owner_id` bigint( 20 ) NOT NULL ,
+`commenter_id` bigint( 20 ) NOT NULL ,
+`reply_to_id` bigint( 20 ) NOT NULL ,
+`comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+`comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+PRIMARY KEY ( `comment_id` )
+) ENGINE = MYISAM DEFAULT CHARSET = utf8;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__widgets` (
   `widget_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -389,58 +540,6 @@ INSERT INTO `__DBPREFIX__widget_areas` (`area_id`, `area_title`, `area_slug`) VA
 (4, 'Admin CP Header', 'admincp_header'),
 (5, 'Navigation', 'navigation'),
 (6, 'Dashboard', 'dashboard');
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__shoutbox` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `shout` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `when` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `rank` varchar(18) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery` (
-  `gallery_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `image_slug` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `image` text COLLATE utf8_unicode_ci NOT NULL,
-  `uploader` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `desc` text COLLATE utf8_unicode_ci NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `views` bigint(20) NOT NULL,
-  `comments` bigint(20) NOT NULL,
-  `favors` bigint(20) NOT NULL,
-  `downloads` bigint(20) NOT NULL,
-  `title` text COLLATE utf8_unicode_ci NOT NULL,
-  `height` int(4) NOT NULL,
-  `width` int(4) NOT NULL,
-  `size` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`gallery_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
--- command split --
-CREATE TABLE IF NOT EXISTS `Clan_gallery_comments` (
-  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `gallery_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `comment_title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__headers` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) NOT NULL,
-  `image` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
-  `controller_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `controller_method` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `controller_item_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` bigint(20) NOT NULL DEFAULT '0',
-  `tracktime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__wall_comments` (
 `comment_id` bigint( 20 ) NOT NULL AUTO_INCREMENT ,

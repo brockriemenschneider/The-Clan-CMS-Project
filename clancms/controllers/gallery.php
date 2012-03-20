@@ -37,15 +37,12 @@ class Gallery extends CI_Controller {
 		// Load the Gallery model
 		$this->load->model('Gallery_model', 'gallery');
 		
-<<<<<<< HEAD
 		// Load the Tracker model
 		$this->load->model('Tracker_model', 'tracker');
 		
 		// Load the Settings model
 		$this->load->model('Settings_model', 'settings');
 		
-=======
->>>>>>> articles
 		// Load Download helper
 		$this->load->helper('download');
 		
@@ -71,7 +68,6 @@ class Gallery extends CI_Controller {
 	 */
 	function index()
 	{
-<<<<<<< HEAD
 		// Retrieve official channel
 		$official_youtube = $this->settings->get_setting(array('setting_slug' => 'youtube_id'));
 		
@@ -142,6 +138,34 @@ class Gallery extends CI_Controller {
 				{
 					// Get tracked status
 					$video->tracked = $this->tracker->get_new($this->uri->segment(1), $video->gallery_slug, $user->user_id);
+					
+					// Retrieve Uploader's avatar
+					$uploader = $this->users->get_user(array('user_name' => $video->uploader));
+					
+					if($uploader)
+					{
+						$video->uploader_id = $uploader->user_id;
+						
+						// Retrieve uploader's group
+						if($group = $this->users->get_group(array('group_id' => $uploader->group_id)))
+						{
+							// Group exist's assign user group
+							$video->group = $group->group_title;
+						}
+						else
+						{
+							// Group doesn't exist, assign user group
+							$video->group = '';
+						}	
+						
+					}
+					else
+					{
+						// Media was cache'd by non user-name'd account
+						$video->avatar = '';
+						$video->uploader_id = '';
+						$video->group = 'Feeder';
+					}
 				}
 			}
 
@@ -186,9 +210,36 @@ class Gallery extends CI_Controller {
 				{
 					// Get tracked status
 					$video->tracked = $this->tracker->get_new($this->uri->segment(1), $video->gallery_slug, $user->user_id);
+					
+					// Retrieve Uploader's avatar
+					$uploader = $this->users->get_user(array('user_name' => $video->uploader));
+					
+					if($uploader)
+					{
+						$video->uploader_id = $uploader->user_id;
+						
+						// Retrieve uploader's group
+						if($group = $this->users->get_group(array('group_id' => $uploader->group_id)))
+						{
+							// Group exist's assign user group
+							$video->group = $group->group_title;
+						}
+						else
+						{
+							// Group doesn't exist, assign user group
+							$video->group = '';
+						}	
+						
+					}
+					else
+					{
+						// Media was cache'd by non user-name'd account
+						$video->avatar = '';
+						$video->uploader_id = '';
+						$video->group = 'Feeder';
+					}					
 				}
 			}
-
 		}
 		
 		
@@ -221,31 +272,6 @@ class Gallery extends CI_Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('title', 'Image Title', 'trim|required|max_length[15]');
-=======
-		// Video Constraints
-		$ns = array
-		(
-		        'content' => 'http://purl.org/rss/1.0/modules/content/',
-		        'wfw' => 'http://wellformedweb.org/CommentAPI/',
-		        'dc' => 'http://purl.org/dc/elements/1.1/'
-		);
-		$video = array();
-		$blog_url = 'http://gdata.youtube.com/feeds/api/users/bluexephos/uploads';
-		$rawFeed = file_get_contents($blog_url);
-		$data['sxml'] = new SimpleXmlElement($rawFeed);
-
-		// Display all uploaded images
-		$data['images'] = $this->gallery->get_images();
-		
-		// Retrieve our forms
-		$gallery_upload = $this->input->post('upload');
-		
-		// Check it update gallery has been posted
-		if($gallery_upload)
-		{
-			// Set form validation rules
-			$this->form_validation->set_rules('title', 'title', 'trim|required');
->>>>>>> articles
 			$this->form_validation->set_rules('userfile', 'file|required');
 		
 			// Form validation passed, so continue
@@ -255,7 +281,6 @@ class Gallery extends CI_Controller {
 			}
 			
 		}
-<<<<<<< HEAD
 		
 		// Fetch active user
 		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
@@ -302,6 +327,7 @@ class Gallery extends CI_Controller {
 		
 		// Pass video through library 
 		$video = $this->youtube->parse( $id );
+		
 		// Setup our data
 		$data = array(
 			'gallery_slug'	=>	$id,
@@ -318,14 +344,8 @@ class Gallery extends CI_Controller {
 		{
 			//  Submit to database
 			$this->gallery->add_video($data);
-		} /*
-		else 
-		{
-			// Alert the user
-			$this->session->set_flashdata('gallery', 'This video has already been shared!');
-			//redirect('gallery');
-		} */
-				
+		}
+		
 	}
 	// --------------------------------------------------------------------
 	
@@ -378,6 +398,13 @@ class Gallery extends CI_Controller {
 				$media->group = '';
 			}	
 			
+		}
+		else
+		{
+			// Media was cache'd by non user-name'd account
+			$media->avatar = '';
+			$media->uploader_id = '';
+			$media->group = 'Feeder';
 		}
 		
 		// Retrieve our forms
@@ -607,6 +634,13 @@ class Gallery extends CI_Controller {
 				->update('gallery', array('views' => $media->views));
 		}		
 		
+		// Add FB share link
+		$media->fblink = 'http://www.facebook.com/sharer.php?s=100&amp;p[title]=' . 
+					BASE_URL . 'gallery/video/'. $media->gallery_slug . 
+					'&amp;p[summary]=' . $media->desc . 
+					'&amp;p[url]=' . BASE_URL .
+					'&amp;p[images][0]=' . $media->video;
+	
 		// Create references
 		$this->data->comments =& $comments;
 		$this->data->pages =& $pages;
@@ -620,12 +654,6 @@ class Gallery extends CI_Controller {
 	}
 
 
-=======
-
-		$this->load->view(THEME . 'gallery', $data);
-	}
-	
->>>>>>> articles
 	// --------------------------------------------------------------------
 	
 	/**
@@ -638,16 +666,9 @@ class Gallery extends CI_Controller {
 	 */
 	 
 	function image()
-<<<<<<< HEAD
 	{ 		
 		// Retrieve the image if it exists or redirect to gallery
 		$image = $this->gallery->get_gallery_item(array('gallery_slug' => $this->uri->segment(3, '')));
-=======
-	{ 
-		
-		// Retrieve the image if it exists or redirect to gallery
-		$image = $this->gallery->get_image(array('image_slug' => $this->uri->segment(3, '')));
->>>>>>> articles
 		
 		if(!$image)
 		{
@@ -725,11 +746,7 @@ class Gallery extends CI_Controller {
 				$this->session->set_flashdata('message', 'Your description has been edited!');
 				
 				// Redirect the user
-<<<<<<< HEAD
 				redirect('gallery/image/' . $image->gallery_slug);
-=======
-				redirect('gallery/image/' . $image->image_slug);
->>>>>>> articles
 			}
 		}
 		
@@ -742,7 +759,6 @@ class Gallery extends CI_Controller {
 			// Form validation passed & checked if gallery allows comments, so continue
 			if (!$this->form_validation->run() == FALSE)
 			{	
-<<<<<<< HEAD
 				// Add to comments count
 				$count = $image->comments;
 				$count = ($count + 1);
@@ -755,8 +771,6 @@ class Gallery extends CI_Controller {
 				//  Update comment count
 				$this->gallery->edit_desc($data, $image->gallery_id);	
 				
-=======
->>>>>>> articles
 				// Set up our data
 				$data = array (
 					'gallery_id'		=> $image->gallery_id,
@@ -772,11 +786,7 @@ class Gallery extends CI_Controller {
 				$this->session->set_flashdata('message', 'Your comment has been posted!');
 				
 				// Redirect the user
-<<<<<<< HEAD
 				redirect('gallery/image/' . $image->gallery_slug);
-=======
-				redirect('gallery/image/' . $image->image_slug);
->>>>>>> articles
 			}
 		}		
 		
@@ -858,11 +868,7 @@ class Gallery extends CI_Controller {
 		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
 		
 		$comments = $this->gallery->get_comments($per_page, $offset, array('gallery_id' => $image->gallery_id));
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> articles
 		// Check if comments exist
 		if($comments)
 		{
@@ -901,7 +907,6 @@ class Gallery extends CI_Controller {
 				// Create array to hold comment points
 				$count[] = $comment->count;
 			}
-<<<<<<< HEAD
 			
 			// Assign comment points
 			$image->comments = array_sum($count);
@@ -935,32 +940,21 @@ class Gallery extends CI_Controller {
 		
 		// Count views
 		if($user && !$track)
-=======
-			
-		}
-		
-		// Assign comment points
-		$image->comments = array_sum($count);
-		
-		// Fetch active user
-		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
-		
-		// Block user for gaining self-views
-		if($user && $user->user_name != $image->uploader)
->>>>>>> articles
 		{
 			// Hot update view count
 			$views = ($image->views + 1);
 			$image->views = $views;
 			$this->db->where('gallery_id', $image->gallery_id)
 				->update('gallery', array('views' => $image->views));
-<<<<<<< HEAD
 		}		
-=======
-		}
 		
->>>>>>> articles
-		
+		// Add FB share link
+		$image->fblink = 'http://www.facebook.com/sharer.php?s=100&amp;p[title]=' . 
+									BASE_URL . 'gallery/image/'. $image->gallery_slug . 
+									'&amp;p[summary]=' . $image->desc . 
+									'&amp;p[url]=' . BASE_URL .
+									'&amp;p[images][0]=' . IMAGES . 'gallery/thumbs/' . $image->image;
+
 		// Create references
 		$this->data->image =& $image;
 		$this->data->comments =& $comments;
@@ -989,11 +983,7 @@ class Gallery extends CI_Controller {
 		}
 		
 	 	// Retrive image
-<<<<<<< HEAD
 	 	$file = $this->gallery->get_gallery_item(array('gallery_slug' => $this->uri->segment(3)));
-=======
-	 	$file = $this->gallery->get_image(array('image_slug' => $this->uri->segment(3)));
->>>>>>> articles
 	 	
 	 	// Set image location
 	 	$path = file_get_contents(UPLOAD . 'gallery/' .$file->image);
@@ -1003,7 +993,6 @@ class Gallery extends CI_Controller {
 	 		// Set image name
 		 	$name = $file->image;
 		 	
-<<<<<<< HEAD
 		 	// Fetch active user
 		$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
 		
@@ -1045,26 +1034,6 @@ class Gallery extends CI_Controller {
 		{
 	 	 	$this->session->set_flashdata('message', $file->image .' could not be downloaded.  Check if the file still exists.');
 		}
-=======
-		 	$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id')));
-
-			// Block user for gaining self-downloads
-			if($user->user_name != $file->uploader)
-			{
-			 	// Update download counts
-			 	$downloads = ($file->downloads + 1);
-				$file->downloads = $downloads;
-				$this->db->update('gallery', array('downloads' => $file->downloads));
-			}
-			
-			// Send download request
-		 	force_download($name, $path);
-		 }else {
-		 	
-		 	$this->session->set_flashdata('message', $file->image .' could not be downloaded.  Check if the file still exists.');
-		 	
-		 	}
->>>>>>> articles
 	 }
 	 
 	// --------------------------------------------------------------------
@@ -1078,19 +1047,15 @@ class Gallery extends CI_Controller {
 	 */
 	 function user()
 	 {
-<<<<<<< HEAD
 	 	// Load Youtube library
 	 	$this->load->library('youtube');
 	 	
-=======
->>>>>>> articles
 	 	// Retrieve the user slug
 		$user_slug = $this->uri->segment(3, '');
 		
 		// Retrieve the user or show 404
 		($user = $this->users->get_user(array('user_name' => $this->users->user_name($user_slug)))) or show_404();
 		
-<<<<<<< HEAD
 		$media = $this->gallery->user_media($user->user_name);
 		
 		if($media)
@@ -1122,37 +1087,11 @@ class Gallery extends CI_Controller {
 			// Count and sum all elements
 			$stats->images = $this->gallery->count_images(array('uploader' => $user->user_name));
 			$stats->videos = $this->gallery->count_videos(array('uploader' => $user->user_name));
-=======
-		$images = $this->gallery->user_images($user->user_name);
-		
-		if($images)
-		{
-			// Iterate through objects to make arrays
-			foreach($images as $image)
-			{
-				// Retrieve user joined, format timezone & assign user joined
-				$image->date = $this->ClanCMS->timezone($image->date);
-				
-				$views[] = $image->views;
-				
-				$comments[] = $image->comments;
-				
-				$favors[] = $image->favors;
-				
-				$downloads[] = $image->downloads;
-				
-				$size[] = $image->size;
-			}
-			
-			// Count and sum all elements
-			$stats->uploads = $this->gallery->count_images(array('uploader' => $user->user_name));
->>>>>>> articles
 			$stats->views = array_sum($views);
 			$stats->comments = array_sum($comments);
 			$stats->favors = array_sum($favors);
 			$stats->downloads = array_sum($downloads);
 			$stats->disk_use = round((array_sum($size) / 1024), 2) . ' MB';
-<<<<<<< HEAD
 			
 			
 		}
@@ -1161,13 +1100,6 @@ class Gallery extends CI_Controller {
 		// Create refrences
 		$this->data->stats =& $stats;
 		$this->data->media =& $media;
-=======
-		}
-		
-		// Create refrences
-		$this->data->stats =& $stats;
-		$this->data->images =& $images;
->>>>>>> articles
 		$this->data->user =& $user;
 		
 		// Load view
@@ -1183,11 +1115,7 @@ class Gallery extends CI_Controller {
 	 * @access	public
 	 * @return	array
 	 */
-<<<<<<< HEAD
 	function del_media()
-=======
-	function del_image()
->>>>>>> articles
 	{ 
 		// Set up the data
 		$data = array(
@@ -1195,18 +1123,13 @@ class Gallery extends CI_Controller {
 		);
 
 		// Retrieve the header by file_name
-<<<<<<< HEAD
 		if(!$media = $this->gallery->get_gallery_item($data))
-=======
-		if(!$image = $this->gallery->get_image($data))
->>>>>>> articles
 		{
 			// Image doesn't exist, alert the administrator
 			$this->session->set_flashdata('message', 'The image was not found!');
 		
 			// Redirect the administrator
 			redirect($this->session->userdata('previous'));
-<<<<<<< HEAD
 		}
 		
 		if($media->image)
@@ -1224,23 +1147,6 @@ class Gallery extends CI_Controller {
 				
 		// Redirect the administrator
 		redirect($this->session->userdata('previous'));
-=======
-		}
-
-		// Delete the header from gallery & thumbs folders
-		unlink(UPLOAD . 'gallery/' .$image->image);
-		unlink(UPLOAD . 'gallery/thumbs/' . $image->image);
-		
-		
-		// Sumbit image for deletion
-		$this->gallery->delete_image($image->gallery_id, $data);
-		
-		// Alert the administrator
-		$this->session->set_flashdata('message', 'The image <span class="bold">' . $image->title . '</span> was successfully deleted!');
-				
-		// Redirect the administrator
-		redirect('gallery');
->>>>>>> articles
 	
 	}	
 	
@@ -1279,7 +1185,6 @@ class Gallery extends CI_Controller {
 			// Redirect the user
 			redirect($this->session->userdata('previous'));
 		}
-<<<<<<< HEAD
 		
 		// Grab referring page so we can extract views
 		$uri = $this->session->userdata('previous');
@@ -1305,9 +1210,6 @@ class Gallery extends CI_Controller {
 			
 		}
 					
-=======
-				
->>>>>>> articles
 		// Delete the article comment from the database
 		$this->gallery->delete_comment($comment->comment_id, $data);
 		
@@ -1317,7 +1219,6 @@ class Gallery extends CI_Controller {
 		// Redirect the administrator
 		redirect($this->session->userdata('previous'));
 	}
-<<<<<<< HEAD
 	
 	// -------------------------------------------------------------------------
 	/**
@@ -1333,12 +1234,12 @@ class Gallery extends CI_Controller {
 		// Retrieve official channel
 		$official_youtube = $this->settings->get_setting(array('setting_slug' => 'youtube_id'));
 		
+		
 		if($official_youtube)
 		{
 			
 			// Video Constraints
-			$ns = array
-				(
+			$ns = array(
 				        'content' => 'http://purl.org/rss/1.0/modules/content/',
 				        'wfw' => 'http://wellformedweb.org/CommentAPI/',
 				        'dc' => 'http://purl.org/dc/elements/1.1/'
@@ -1364,20 +1265,11 @@ class Gallery extends CI_Controller {
 				
 				// Pass video through library 
 				$this->video_helper( $clan_video_id,  $official_youtube->setting_value);
-				
-				
+		
 			}
 		}
-		
-		// Alert the administrator
-		$this->session->set_flashdata('gallery', 'The channel has been successfully cached!');
-		
-		// Redirect Admin
-		redirect($this->session->userdata('previous'));
 	}
-=======
-
->>>>>>> articles
+	
 /* End of file gallery.php */
 /* Location: ./clancms/controllers/gallery.php */
 }

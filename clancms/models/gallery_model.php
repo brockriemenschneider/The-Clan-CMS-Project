@@ -63,7 +63,6 @@ class Gallery_model extends CI_Model {
 	 * Retrieves image listings from the database
 	 *
 	 * @access	public
-<<<<<<< HEAD
 	 * @return	array
 	 */
 	function get_images() {
@@ -92,15 +91,8 @@ class Gallery_model extends CI_Model {
 	function get_videos() {
 		$q = $this->db
 						->where('video !=', '')
-=======
-	 * @param	array
-	 * @return	array
-	 */
-	function get_images() {
-		$q = $this->db
->>>>>>> articles
 						->order_by('date', 'desc')
-						->get('gallery');
+						->get('gallery', 20);
 		
 		if($q->num_rows() > 0) {
 			foreach ($q->result() as $row) {
@@ -112,25 +104,15 @@ class Gallery_model extends CI_Model {
 	
 	// --------------------------------------------------------------------
 	/**
-<<<<<<< HEAD
 	 * Get Gallery
 	 *
 	 * Selects singular gallery item 
-=======
-	 * Get Image
-	 *
-	 * Selects singular image 
->>>>>>> articles
 	 *
 	 * @access	public
 	 * @param	array
 	 * @return	array
 	 */	
-<<<<<<< HEAD
 	function get_gallery_item($data = array()) {	
-=======
-	function get_image($data = array()) {	
->>>>>>> articles
 
 		// Check for valid data
 		if(empty($data) OR !is_associative($data))
@@ -183,7 +165,6 @@ class Gallery_model extends CI_Model {
 		$this->load->library('upload', $file_config);
 		
 		// Verify file is permissible
-<<<<<<< HEAD
 		if(!$this->upload->do_upload()) 
 		{
 			// Alert the user
@@ -191,16 +172,10 @@ class Gallery_model extends CI_Model {
 		} 
 		else 
 		{
-=======
-		if(!$this->upload->do_upload()) {
-			$this->session->set_flashdata('message', 'The file was unsucessfully uploaded');
-		} else {
->>>>>>> articles
 	
 			//  Do this to parse data for db and resize()
 			$image_data = $this->upload->data();
 			
-<<<<<<< HEAD
 			// Check if image already exists
 			$exists = $this->get_gallery_item(array('image' => $image_data['file_name']));
 			
@@ -222,14 +197,6 @@ class Gallery_model extends CI_Model {
 				} 
 				else 
 				{
-=======
-			
-			if(!$image_data['is_image'] == 1){
-				
-				return false;
-				
-			} else {
->>>>>>> articles
 					// Check if we need to scale the image
 					if($image_data['image_width'] < 700)
 					{
@@ -243,13 +210,9 @@ class Gallery_model extends CI_Model {
 						$this->load->library('image_lib', $scale);
 						$this->image_lib->resize();
 						
-<<<<<<< HEAD
 					} 
 					else 
 					{
-=======
-					} else {
->>>>>>> articles
 					
 						// Scaled image resize restraints
 						$scale = array(
@@ -267,7 +230,6 @@ class Gallery_model extends CI_Model {
 					
 					}
 					
-<<<<<<< HEAD
 					// Setup Image data
 					$data = array(
 							'title'			=>	$this->input->post('title'),
@@ -324,31 +286,6 @@ class Gallery_model extends CI_Model {
 		
 		
 	 }
-=======
-					
-				
-				// Pass info from data to database
-				$data = array(
-						'title'			=>	$this->input->post('title'),
-						'image'		=>	$image_data['file_name'],
-						'uploader'		=>	$this->session->userdata('username'),
-						'height'		=>	$image_data['image_height'],
-						'width'		=>	$image_data['image_width'],
-						'size'			=>	$image_data['file_size'],
-						'image_slug'	=>	$image_data['raw_name']
-						);
-				$this->db->insert('gallery', $data);
-				
-	
-				// Alert the user
-				$this->session->set_flashdata('message', 'The image <span class="bold">' .$this->input->post('title') . '</span> was successfully uploaded!');
-				
-				// Redirect to refresh get_headers()
-				redirect('gallery');
-				}	
-			}
-		}
->>>>>>> articles
 
 	// --------------------------------------------------------------------
 	/**
@@ -370,11 +307,7 @@ class Gallery_model extends CI_Model {
 		}
 		
 		// Check if image exists
-<<<<<<< HEAD
 		if(!$image = $this->get_gallery_item(array('gallery_id' => $image_id)))
-=======
-		if(!$image = $this->get_image(array('gallery_id' => $image_id)))
->>>>>>> articles
 		{
 			// Comment doesn't exist, return FALSE
 			return FALSE;
@@ -411,17 +344,13 @@ class Gallery_model extends CI_Model {
 		$query = $this->db
 						->from('gallery')
 						->where($data)
-<<<<<<< HEAD
 						->where('image !=', '')
-=======
->>>>>>> articles
 						->count_all_results();
 						
 		// Return query
 		return $query;
 	}
 	
-<<<<<<< HEAD
 	
 	// --------------------------------------------------------------------
 	
@@ -453,8 +382,6 @@ class Gallery_model extends CI_Model {
 		// Return query
 		return $query;
 	}
-=======
->>>>>>> articles
 	// -----------------------------------------------------------------------
 	
 	/**
@@ -677,11 +604,7 @@ class Gallery_model extends CI_Model {
 			// Comment doesn't exist, return FALSE
 			return FALSE;
 		}
-<<<<<<< HEAD
 		
-=======
-		
->>>>>>> articles
 		// Data is valid, comment exists, delete the data from the database
 		return $this->db->delete('gallery_comments', array('comment_id' => $comment_id));
 	}
@@ -696,11 +619,7 @@ class Gallery_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */
-<<<<<<< HEAD
 	function user_media($user) {
-=======
-	function user_images($user) {
->>>>>>> articles
 		$q = $this->db->where('uploader', $user)
 					->order_by('date', 'desc')
 					->get('gallery');

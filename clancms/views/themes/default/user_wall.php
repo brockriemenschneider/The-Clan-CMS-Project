@@ -180,12 +180,12 @@
 					<ul>
 						<?php if($pages): ?>
 							<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name . '/page/' . $pages->current_page, 'Page ' . $pages->current_page . ' of ' . $pages->total_pages); ?></span><span class="right"></span></li>
-								<?php if($pages->first): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/1', '<<'); ?></span><span class="right"></span></li><?php endif; ?>
-								<?php if($pages->previous): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/' . ($pages->current_page - 1), '<'); ?></span><span class="right"></span></li><?php endif; ?>
+								<?php if($pages->first): ?><li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/1', '<<'); ?></span><span class="right"></span></li><?php endif; ?>
+								<?php if($pages->previous): ?><li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/' . ($pages->current_page - 1), '<'); ?></span><span class="right"></span></li><?php endif; ?>
 							
 							<?php if($pages->before): ?>
 								<?php foreach($pages->before as $before): ?>
-									<li <?php if($pages->current_page == $before): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/' . $before, $before); ?></span><span class="right"></span></li>
+									<li <?php if($pages->current_page == $before): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/' . $before, $before); ?></span><span class="right"></span></li>
 								<?php endforeach; ?>
 							<?php endif; ?>
 							
@@ -193,12 +193,12 @@
 							
 							<?php if($pages->after): ?>
 								<?php foreach($pages->after as $after): ?>
-									<li <?php if($pages->current_page == $after): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/' . $after, $after); ?></span><span class="right"></span></li>
+									<li <?php if($pages->current_page == $after): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/' . $after, $after); ?></span><span class="right"></span></li>
 								<?php endforeach; ?>
 							<?php endif; ?>
 							
-								<?php if($pages->next): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/' . ($pages->current_page + 1), '>'); ?></span><span class="right"></span></li><?php endif; ?>
-								<?php if($pages->last): ?><li><span class="left"></span><span class="middle"><?php echo anchor('articles/view/' . $article->article_slug . '/page/' . $pages->total_pages, '>>'); ?></span><span class="right"></span></li><?php endif; ?>
+								<?php if($pages->next): ?><li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/' . ($pages->current_page + 1), '>'); ?></span><span class="right"></span></li><?php endif; ?>
+								<?php if($pages->last): ?><li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name  . '/page/' . $pages->total_pages, '>>'); ?></span><span class="right"></span></li><?php endif; ?>
 						<?php endif; ?>
 					</ul>
 					</div>
