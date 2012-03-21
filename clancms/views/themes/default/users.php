@@ -45,7 +45,7 @@
 						<tr class="item">
 							<td class="icon">
 								<ul class="member">
-									<li><?php if($user->user_avatar): echo img(array('src' => IMAGES . 'avatars/'.$user->user_avatar, 'alt' => $user->user_name, 'height' => '24px', 'width' => '24px', 'title' => $user->user_name)); else: echo img(array('src' => IMAGES . 'avatars/avatar_none.png', 'alt' => $user->user_name, 'height' => '24px', 'width' => '24px', 'title' => $user->user_name)); endif;?></li>
+									<li><?php if($user->user_avatar): echo img(array('src' => IMAGES . 'avatars/'.$user->user_avatar, 'alt' => $user->user_name, 'height' => '24px', 'width' => '24px', 'title' => $user->user_name)); else: echo img(array('src' => THEME_URL . 'images/avatar_none.png', 'alt' => $user->user_name, 'height' => '24px', 'width' => '24px', 'title' => $user->user_name)); endif;?></li>
 									<li><?php if($user->online ==1): echo img(array('src' => THEME_URL . 'images/online.png', 'alt' => $user->user_name . ' is online', 'title' => $user->user_name . ' is online')); else: echo img(array('src' => THEME_URL . 'images/offline.png', 'alt' => $user->user_name . ' is offline', 'title' => $user->user_name . ' is offline')); endif;?></li>
 								</ul>
 							</td>

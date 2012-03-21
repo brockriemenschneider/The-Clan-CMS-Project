@@ -161,6 +161,7 @@ class Squads extends CI_Controller {
 		}
 		// Load the games method
 		$icons = $this->squads->get_icons();
+		
 		 // Reference games
 		 $this->data->icons =& $icons;
 		
@@ -321,6 +322,41 @@ class Squads extends CI_Controller {
 		$this->load->view(ADMINCP . 'squads_edit', $this->data);
 	}
 	
+	// --------------------------------------------------------------------
+	/** Squad Icons
+	 * 
+	 *  Adds squad icons
+	 *
+	 * @access	public
+	 * @return	array
+	 */
+	 function icons() 
+	 {
+		// get all Game headers
+		$icons = $this->squads->get_icons();
+
+		//  on submit -> to model
+		if ($this->input->post('upload')) 
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('title', 'Title', 'trim|required');
+		
+			// Form validation passed, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{ 
+				$this->squads->add_icon();
+				
+				// Alert the adminstrator
+				$this->session->set_flashdata('message', 'The icon was successfully uploaded!');
+			}
+		}
+		
+		// Reference icons
+		$this->data->icons =& $icons;
+		
+		// Load the view
+		$this->load->view(ADMINCP . 'squads_icons', $this->data);
+	 }
 	// --------------------------------------------------------------------
 	
 	/**
@@ -631,27 +667,6 @@ class Squads extends CI_Controller {
 		}
 	}
 	
-// --------------------------------------------------------------------
-	/** Squad Icons
-	 * 
-	 *  Adds squad icons
-	 *
-	 * @access	public
-	 * @return	void
-	 */
-	 function icons() {
-		
-		// Display all Game headers
-		$data['icons'] = $this->squads->get_icons();
-		
-		//  on submit -> to model
-		if ($this->input->post('upload')) {
-			$this->squads->add_icon();
-			}
-		
-		
-		$this->load->view(ADMINCP . 'squads_icons', $data);
-	 }
 	// --------------------------------------------------------------------
 	/**
 	 * Delete Icon
