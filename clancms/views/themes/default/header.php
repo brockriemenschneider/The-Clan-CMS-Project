@@ -7,7 +7,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo config_item('charset');?>" />
 	<?php echo link_tag('favicon.ico', 'shortcut icon', 'image/ico'); ?>
 	<?php echo link_tag(THEME_URL . 'style.css'); ?>
-	<?php echo link_tag(THEME_URL . '960.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/jquery-ui-1.8.4.custom.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/nivo-slider/nivo-slider.css'); ?>
 	<?php echo link_tag(THEME_URL . 'js/jcarousel/skin.css'); ?>
@@ -17,8 +16,7 @@
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/nivo-slider/jquery.nivo.slider.pack.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.jcarousel.min.js"></script>
 
-	
-		<!-- Social APIs -->
+	<!-- Social APIs -->
 	<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 	<script type="text/javascript">

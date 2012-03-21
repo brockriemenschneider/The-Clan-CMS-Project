@@ -673,39 +673,27 @@ class Squads_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */
-	function get_icons() {
-		$q = $this->db->get('sqd_icons');
+	function get_icons()
+	{
+		// Retrieve the query from the database
+		$query = $this->db
+						->order_by('id', 'asc')
+						->get('sqd_icons');
 		
-		if($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-			    $data[] = $row;
-			}
-		return $data;
+		// Check if query result exists
+		if($query->result())
+		{
+			// Query result exists, return query result
+			return $query->result();
+		}
+		else
+		{
+			// Query result doesn't exist, return FALSE
+			return FALSE;
 		}
 	}
 
 	// --------------------------------------------------------------------
-	/**
-	 * Get Users
-	 *
-	 * Retrieves member listings from the database
-	 *
-	 * @access	public
-	 * @param	array
-	 * @return	array
-	 */
-	function get_users() {
-		$q = $this->db->get('users');
-		
-		if($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-			    $data[] = $row;
-			}
-		return $data;
-		}
-	}
-
-// --------------------------------------------------------------------
 	/**
 	 * Add Header
 	 *
@@ -715,13 +703,14 @@ class Squads_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */
-	function add_icon() {
+	function add_icon() 
+	{
 		
 		// Image restraints
 		$file_config = array(
 				'allowed_types'	=>	'jpg|jpeg|png|gif',
 				'upload_path'		=>	UPLOAD,
-				'max_size'				=>	1024,
+				'max_size'			=>	1024,
 				'remove_spaces'	=>	TRUE
 			);
 			
@@ -729,48 +718,52 @@ class Squads_model extends CI_Model {
 		$this->load->library('upload', $file_config);
 		
 		// Verify file is permissible
-		if(!$this->upload->do_upload()) {
+		if(!$this->upload->do_upload()) 
+		{
 			$this->session->set_flashdata('message', 'The file was unsucessfully uploaded');
-		} else {
-	
-		//  Do this to parse data for db and resize()
-		$icon_data = $this->upload->data();
-		
-		// resize restraints
-		$resize = array(
-			'source_image' 		=> 	$icon_data['full_path'],
-			'new_image' 		=> 	UPLOAD . 'squad_icons',
-			'maintain_ratio' 	=> 	FALSE,
-			'width'					=>	64,
-			'height'					=>	64
-		);
-		
-		$this->load->library('image_lib', $resize);
-		$this->image_lib->resize();
-		
-		//delete original image
-		unlink(UPLOAD . $icon_data['file_name']);
-		
-		// Pass image and name from data to database
-		$data = array(
-				'title'			=>		$this->input->post('title'),
-				'icon'		=>		$icon_data['file_name']
+		} 
+		else
+		{
+			//  Do this to parse data for db and resize()
+			$icon_data = $this->upload->data();
+			
+			// resize restraints
+			$resize = array(
+				'source_image' 		=> 	$icon_data['full_path'],
+				'new_image' 		=> 	UPLOAD . 'squad_icons',
+				'maintain_ratio' 	=> 	FALSE,
+				'width'					=>	64,
+				'height'					=>	64
 				);
-		$this->db->insert('sqd_icons', $data);
-		
-		
-		// Alert the administrator
-		$this->session->set_flashdata('message', 'The squad icon was successfully uploaded!');
-		
-		// Redirect to refresh get_headers()
-		redirect(ADMINCP . 'squads/icons/');	
+			
+			// Load image library
+			$this->load->library('image_lib', $resize);
+			$this->image_lib->resize();
+			
+			//delete original image
+			unlink(UPLOAD . $icon_data['file_name']);
+			
+			// Pass image and name from data to database
+			$data = array(
+					'title'		=>	$this->input->post('title'),
+					'icon'	=>	$icon_data['file_name']
+					);
+					
+			// Insert into database
+			$this->db->insert('sqd_icons', $data);
+			
+			// Alert the administrator
+			$this->session->set_flashdata('message', 'The squad icon was successfully uploaded!');
+			
+			// Redirect to refresh get_headers()
+			redirect(ADMINCP . 'squads/icons/');	
 
 		}
 	}
 
-// --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 	/**
-	 * Get Icons
+	 * Get Icon
 	 *
 	 * Selects singular squad icon 
 	 *
@@ -778,7 +771,8 @@ class Squads_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */	
-	function get_icon($data = array()) {	
+	function get_icon($data = array()) 
+	{	
 
 		// Check for valid data
 		if(empty($data) OR !is_associative($data))
@@ -793,10 +787,10 @@ class Squads_model extends CI_Model {
 						->get('sqd_icons', 1);
 
 		// Check if query row exists
-		if($query->row())
+		if($query->result())
 		{
 			// Query row exists, return query row
-			return $query->row();
+			return $query->result();
 		}
 		else
 		{
@@ -815,7 +809,8 @@ class Squads_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */
-	function delete_icon($icon_image = 0) {	
+	function delete_icon($icon_image = 0) 
+	{	
 
 		// Check to see if we have valid data
 		if($icon_image == 0)

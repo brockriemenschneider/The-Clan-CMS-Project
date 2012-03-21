@@ -1194,19 +1194,68 @@ div.calendar-legend {
     width: 65px;
     }
     
+/* -------------------
+	Twitter Widget --------- */
+
+#sidebar .widget .content #tweets li a {
+    text-decoration: none;
+}
+.item {
+    margin: 0;
+    padding: 0;
+}
+.item ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+ .separator{
+    border-bottom: 1px dashed #444;
+    margin: 5px 0;	
+}
+.tweet_intent {
+    list-style: none;
+    height: 20px;
+}
+.tweet_intent li {
+    display: inline-block;
+}
+.tweet_intent .reply {
+    background-position: 0 0;
+}
+.tweet_intent .reply:hover {
+    cursor: pointer;
+    background-position: -16px 0;
+}
+.tweet_intent .retweet {
+    background-position: -81px 0px;
+}
+.tweet_intent .retweet:hover {
+    background-position: -113px 0;
+    cursor: pointer;
+}
+.tweet_intent .favorite {
+    background-position: -32px 0;
+}
+.tweet_intent .favorite:hover {
+    background-position: -65px 0;
+    cursor: pointer;
+}
+.tweet_intent ul li div {
+    width: 16px;
+    float: left;
+    margin: 0 5px 0 10px;
+    height: 16px;
+    background: url("./images/tweet_sprite.png") no-repeat scroll 0 0 transparent;
+}
+
  /* ------------
  	Icons and Headers Style -------- */
  .upload {
-    box-shadow: 0 0 5px #ccc inset;
-    padding: 8px;
-    border-radius: 7px;
 }
 .upload label {
     font-size: 18px;
     color: #cc0000;
-    font-weight: bold;
-    padding: 0 5px;
-    line-height: 25px;
 }
 .uploaded {
     font-size: 18px;
@@ -1227,7 +1276,6 @@ div.calendar-legend {
 }
 .uploaded li .title {
     font-size: 12px;
-    font-family: mw3;
     border-bottom: 1px solid #333;
 }
 .uploaded li .delete {
@@ -1235,16 +1283,10 @@ div.calendar-legend {
     padding: 1px 0;
 }
 .header_upload {
-    box-shadow: 0 0 5px #ccc inset;
-    padding: 8px;
-    border-radius: 7px;
 }
 .header_upload label {
     font-size: 18px;
     color: #cc0000;
-    font-weight: bold;
-    padding: 0 5px;
-    line-height: 25px;
 }
 .header_uploaded {
     font-size: 18px;

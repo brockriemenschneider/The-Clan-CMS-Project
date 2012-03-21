@@ -35,11 +35,31 @@
 				<div class="subheader"><?php echo heading('Upload New Icon', 4); ?></div>
 				<div class="upload">
 					<?php 
-						echo form_open_multipart(ADMINCP . 'squads/icons');?>
-					<label for="title">Icon Name</label> <input type="input" name="title" />
-						<?php
-						echo form_upload('userfile');
-						echo form_submit('upload', 'Upload');
+						echo form_open_multipart(ADMINCP . 'squads/icons');
+						
+						echo form_label('Icon Name', 'title');
+						
+						$data = array(
+							'name'	=>	'title',
+							'class'	=>	'input',
+							'size'		=>	25
+							);
+						echo form_input($data);
+						
+						$data = array(
+							'name'	=>	'userfile',
+							'class'	=>	'input',
+							'size'		=>	30
+							);
+						echo form_upload($data);
+						
+						$data = array(
+							'name'	=>	'upload',
+							'class'	=>	'submit',
+							'value'	=>	'Upload'
+							);
+						echo form_submit($data);
+							
 						echo form_close();
 					 ?>
 				</div>
