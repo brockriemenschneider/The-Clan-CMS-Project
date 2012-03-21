@@ -209,7 +209,8 @@ class Install extends CI_Controller {
 			'clancms/views/images',
 			'clancms/views/images/avatars',
 			'clancms/views/images/captcha',
-			'clancms/views/images/sponsors'
+			'clancms/views/images/sponsors',
+			'clancms/views/images/gallery',
 		);
 		
 		// Assign writeable files
