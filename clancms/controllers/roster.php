@@ -277,7 +277,7 @@ class Roster extends CI_Controller {
 	 function users()
 	 {
 	 	// Load the games method
-		$users = $this->squads->get_users();
+		$users = $this->users->get_users();
 		
 		// Cycle member online status
 		foreach($users as $user)

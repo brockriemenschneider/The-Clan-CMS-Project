@@ -95,16 +95,23 @@ class Events extends CI_Controller {
 			{
 				// Reformat match date
 				$data = explode('-', $match->match_date);
-				$match->year = $data[0];
-				$match->month = $data[1];
-				$match->day = explode(' ', $data[2]);
-				$match->day = $match->day[0];
-				$match->title = str_replace('-', ' ', $match->match_slug);
-				$match->title = preg_replace("/[0-9]/", 'Match: ', $match->title);
+				$match->event_time = explode(' ', $match->match_date);
+				$match->event_time = $match->event_time[1];
+				$match->event_year = $data[0];
+				$match->event_month = $data[1];
+				$match->event_day = explode(' ', $data[2]);
+				$match->event_day = $match->event_day[0];
+				$match->event_day < 10 ? $match->event_day =ltrim($match->event_day, 0): '';
+				$match->event_title = str_replace('-', ' ', $match->match_slug);
+				$match->event_title = preg_replace("/[0-9]/", '', $match->event_title);
+				$match->event_summary =$match->event_title;
 
 				// Create array for calendar
-				$event[$match->day] = array($match->match_slug, 'calendar-match', $match->title );
+				$event[$match->event_day] = array($match->match_slug, 'calendar-match', 'Match: ' . $match->event_title );
 				
+				// Check match against current time
+				($match->event_day == $today ? $current_events[] = $match : ($match->event_day < $today ? $past_events[] = $match : $future_events[] = $match));
+	
 			}
 		}
 
@@ -117,14 +124,13 @@ class Events extends CI_Controller {
 		 // Create the calendar
 		$calendar = $this->calendar->clancms_calendar($time, $year,  $month, (isset($event) ? $event : ''), 2, lcfirst(date('M-y', mktime(0,0,0, $month, 1, $year))), 0, $prev_next);
 			
-
-		
 		// Reference objects
 		$this->data->this_month = $this_month;
 		$this->data->current_events =& $current_events;
 		$this->data->past_events =& $past_events;
 		$this->data->future_events =& $future_events;
 		$this->data->events =& $events;
+		$this->data->matches =& $matches;
 		$this->data->time = $time;
 		$this->data->calendar = $calendar;
 		

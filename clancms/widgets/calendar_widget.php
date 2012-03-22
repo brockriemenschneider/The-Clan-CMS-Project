@@ -74,8 +74,9 @@ class Calendar_widget extends Widget {
 		// Retrieve this months events & matches
 		$events = $this->CI->events->get_events(array('event_month' => date('n', $time)));
 		$events_count = $this->CI->events->count_events(array('event_month' => date('n', $time)));
-		$matches = $this->CI->matches->get_matches_like((date('Y-n', $time)));
-		$matches_count = $this->CI->matches->count_matches(array('match_date' => date('Y-n', $time)));
+		$matches = $this->CI->matches->get_matches_like((date('Y-m', $time)));
+		//$matches_count = $this->CI->matches->count_matches(array('match_date' => date('Y-n', $time)));
+		$matches_count = count($matches);
 		$event = array();
 		
 		// Retrieve this month's events
@@ -95,19 +96,19 @@ class Calendar_widget extends Widget {
 			{
 				// Reformat match date
 				$data = explode('-', $match->match_date);
-				$match->year = $data[0];
-				$match->month = $data[1];
-				$match->day = explode(' ', $data[2]);
-				$match->day = $match->day[0];
+				$match->event_year = $data[0];
+				$match->event_month = $data[1];
+				$match->event_day = explode(' ', $data[2]);
+				$match->event_day = $match->event_day[0];
+				$match->event_day < 10 ? $match->event_day =ltrim($match->event_day, 0): '';
 				$match->title = str_replace('-', ' ', $match->match_slug);
 				$match->title = preg_replace("/[0-9]/", 'Match: ', $match->title);
 
 				// Create array for calendar
-				$event[$match->day] = array($match->match_slug, 'calendar-match', $match->title );
+				$event[$match->event_day] = array($match->match_slug, 'calendar-match', $match->title );
 				
 			}
 		}
-		
 		// Create previous and next month anchors
 		$prev_next = array(
 		 	'&lt;&lt;'	=> lcfirst(date('M-y', strtotime('-1 Month'))),
@@ -124,7 +125,7 @@ class Calendar_widget extends Widget {
 		
 		
 		// Assign the widget info
-		$widget->title = 'Calendar'; // This left intentionally blank
+		$widget->title = 'Calendar';
 		$widget->content = $this->CI->load->view('widgets/calendar', $this->data, TRUE);
 		$widget->tabs = array();
 			

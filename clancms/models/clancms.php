@@ -46,7 +46,7 @@ class ClanCMS extends CI_Model {
 		$CI->load->model('Tracker_model', 'tracker');
 		
 		// Define Install
-		define('INSTALL', TRUE);
+		define('INSTALL', FALSE);
 		
 		// Check if we are installing
 		if(!INSTALL)

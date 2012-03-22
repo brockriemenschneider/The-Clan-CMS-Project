@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__matches` (
   `squad_id` bigint(20) NOT NULL DEFAULT '0',
   `match_slug` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `opponent_id` bigint(20) NOT NULL DEFAULT '0',
+  `match_source` TINYINT( 1 ) NOT NULL DEFAULT '0' COMMENT '0 = external | 1 = internal',
   `match_type` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `match_players` bigint(20) NOT NULL DEFAULT '0',
   `match_score` int(10) NOT NULL DEFAULT '0',

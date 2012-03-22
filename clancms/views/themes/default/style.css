@@ -1806,5 +1806,37 @@ div.calendar-legend {
     text-align: center;
     width: 65px;
     }
-    
-    
+#events {
+    float: right;
+    width: 385px;
+}
+#events h4 {
+    background: none repeat scroll 0 0 #000000;
+    color: #FFD800;
+    line-height: 26px;
+    margin: 0;
+    text-align: center;
+}
+#events ul {
+    border-bottom: 2px groove #2A2A2A;
+    display: block;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#events li {
+    display: inline-block;
+    font-size: 11px;
+    line-height: 20px;
+}
+#events li:first-child {
+    width: 140px;
+}
+#events ul.heading {
+    background: none repeat scroll 0 0 #000000;
+    color: #EE2D00;
+    font-weight: 800;
+    line-height: 24px;
+    margin: 2px 0;
+    text-indent: 10px;
+}
