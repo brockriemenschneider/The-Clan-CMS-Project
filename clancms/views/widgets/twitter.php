@@ -20,16 +20,10 @@
 <?php endif; ?>
 </div>
 
+<?php if(isset($tweeter)): ?>
 <script type="text/javascript">
-	twttr.anywhere(function (T) { T("#follow-placeholder").followButton('codezyne_me');});
+	twttr.anywhere(function (T) { T("#follow-placeholder").followButton("<?php echo $tweeter; ?>");});
 </script>
-<script type="text/javascript">
-	twttr.anywhere(function (T) {T("#login").connectButton(); });
-</script>
-<script type="text/javascript">
-	 jQuery(function () { twttr.anywhere(function (T) {if (T.isConnected()) {$("#login-logout").append("<button id="signout" type="button">Sign out of Twitter</button>");
-	$("#signout").bind("click", function () {twttr.anywhere.signOut();});}else {T("#login-logout").connectButton(); } });});
-</script>
-<script type="text/javascript">
-	YUI().use("node", function(Y) {Y.on("domready", function () { twttr.anywhere(function (T) {if (T.isConnected()) {Y.one("#login-logout").append('<button id="signout" type="button">Sign out of Twitter</button>');Y.one("#signout").on("click", function () { twttr.anywhere.signOut();});}else {T("#login-logout").connectButton(); }});});});
-</script>
+
+
+<?php endif; ?>

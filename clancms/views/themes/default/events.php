@@ -23,6 +23,34 @@
 				<?php endif; ?>
 				
 				<?php echo $calendar; ?>
+				
+				<div id="events"> 
+				<?php if($events): ?>
+					<?php echo heading($this_month . '\'s Events and Matches', 4); ?>
+					<ul class="heading">
+						<li>Event</li>
+						<li>Summary</li>
+					</ul>
+					<?php 
+						foreach($events as $event):
+						echo 	'<ul>
+								<li style="color: red;">' . $event->event_title . '</li>
+								<li>' . $event->event_summary . '</li>
+								</ul>';
+						endforeach; 
+						
+						foreach($matches as $match):
+						echo 	'<ul>
+								<li style="color: green;">' . $match->event_title . '</li>
+								<li>' . $match->event_summary . '</li>
+								</ul>';
+						endforeach; 
+					?> 
+				<?php else: ?>
+					<?php echo 'No events this month'; ?> 
+				<?php endif; ?> 
+				</div>
+				
 				<div class="clear"></div>
 				
 				<?php if($this_month == date('F', $time)): ?>
@@ -114,33 +142,7 @@
 				</div>
 				<?php endif; ?>
 				
-				<div id="events"> 
-				<?php if($events): ?>
-					<table> 
-						<caption><?php echo heading($this_month . '\'s Events and Matches', 4); ?></caption>
-						<thead>
-							<tr>
-								<td>Date</td>
-								<td>Time</td>
-								<td>Event</td>
-								<td>Summary</td>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach($events as $event):
-								echo 	'<tr>
-										<td>' . $event->event_day . '</td>
-										<td>' . $event->event_time . '</td>
-										<td>' . $event->event_title . '</td>
-										<td>' . $event->event_summary . '</td>
-										</tr>';
-							endforeach; ?> 
-						</tbody>
-					</table>
-				<?php else: ?>
-					<?php echo 'No events this month'; ?> 
-				<?php endif; ?> 
-				</div>
+	
 				
 				<?php if($this->user->is_administrator()): ?>
 				<div class="add">

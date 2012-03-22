@@ -37,17 +37,17 @@ class Matches_widget extends Widget {
 		array(
 			'title'			=> 'Opponent Name',
 			'slug'			=> 'matches_opponent',
-			'value'			=> '1',
-			'type'			=> 'select',
+			'value'		=> '1',
+			'type'		=> 'select',
 			'options'		=> array('0' => 'Clan Tag', '1' => 'Clan Name'),
 			'description'	=> 'The type of name to show',
-			'rules'			=> 'trim|required'
+			'rules'		=> 'trim|required'
 		),
 		array(
 			'title'			=> 'Type',
 			'slug'			=> 'matches_type',
-			'value'			=> '0',
-			'type'			=> 'select',
+			'value'		=> '0',
+			'type'		=> 'select',
 			'options'		=> array('0' => 'Recent Matches', '1' => 'Upcoming Matches'),
 			'description'	=> 'The type of matches to show',
 			'rules'			=> 'trim|required'
@@ -55,11 +55,11 @@ class Matches_widget extends Widget {
 		array(
 			'title'			=> '# of Matches',
 			'slug'			=> 'matches_number',
-			'value'			=> '5',
-			'type'			=> 'text',
+			'value'		=> '5',
+			'type'		=> 'text',
 			'options'		=> array(),
 			'description'	=> 'The number of matches to show for this match type',
-			'rules'			=> 'trim|required|integer'
+			'rules'		=> 'trim|required|integer'
 		)
 	);
 	
@@ -91,6 +91,9 @@ class Matches_widget extends Widget {
 		// Load the Matches model
 		$this->CI->load->model('Matches_model', 'matches');
 		
+		// Load the Squads model
+		$this->CI->load->model('Squads_model', 'squads');
+		
 		// Check the match type
 		if((bool) $this->setting['matches_type'])
 		{
@@ -109,42 +112,49 @@ class Matches_widget extends Widget {
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
-				// Retrieve the opponent
-				$opponent = $this->CI->matches->get_opponent(array('opponent_id' => $match->opponent_id));
-				
-				// Check if opponent exists
-				if($opponent)
+				// Select proper opponent
+				if((bool) $match->match_source)
 				{
-					// Opponent exists, check what opponent name to use
-					if((bool) $this->setting['matches_opponent'])
+					// Opponent is Internal Squad
+					$opponent = $this->CI->squads->get_squad(array('squad_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
 					{
-						// Assign opponent
-						$match->opponent = $opponent->opponent_title;
+						// Opponent exists, assign match opponent
+						$match->opponent = $opponent->squad_title;
+						$match->opponent_slug = $opponent->squad_slug;
 					}
 					else
 					{
-						// Check if opponent tag exists
-						if($opponent->opponent_tag)
-						{
-							// Assign opponent
-							$match->opponent = $opponent->opponent_tag;
-						}
-						else
-						{	
-							// Assign opponent
-							$match->opponent = '-';
-						}
+						// Opponent doesn't exist, don't assign it
+						$match->opponent = "";
+						$match->opponent_slug = "";
 					}
-					
-					// Assign opponent slug
-					$match->opponent_slug = $opponent->opponent_slug;
 				}
 				else
 				{
-					// Opponent doesn't exist, don't assign it
-					$match->opponent = "";
-					$match->opponent_slug = "";
+					//Oppoenent is external
+					$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
+					{
+						// Opponent exists, assign match opponent
+						$match->opponent = $opponent->opponent_title;
+						$match->opponent_slug = $opponent->opponent_slug;
+						
+					}
+					else
+					{
+						// Opponent doesn't exist, don't assign it
+						$match->opponent = "";
+						$match->opponent_slug = "";
+					}
 				}
+				
+
+
 			
 				// Retrieve match date, format timezone & assign match date
 				$match->date = $this->CI->ClanCMS->timezone($match->match_date);

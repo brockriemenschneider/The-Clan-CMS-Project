@@ -30,7 +30,7 @@ class Twitter_widget extends Widget {
 	public $description = "Display's the clan's official twitter feed.";
 	public $author = 'co[dezyne]';
 	public $link = 'http://codezyne.me';
-	public $version = '0.5.0';
+	public $version = '0.6';
 	
 	/**
 	 * Constructor
@@ -57,6 +57,9 @@ class Twitter_widget extends Widget {
 	 
 	function index()
 	{
+		// Load twitter library
+		$this->CI->load->library('Twitter', 'twitter');
+		
 		// Receiver twitter setting
 		$tweeter = $this->CI->settings->get_setting(array('setting_title' => 'Twitter'));
 		
@@ -71,15 +74,17 @@ class Twitter_widget extends Widget {
 			// No public twitter user
 			$tweets = '';
 		}
-			// Reference object
-			$this->data->tweets =& $tweets;
-			
-			// Assign the widget info
-			$widget->title = 'Twitter Feed';
-			$widget->content = $this->CI->load->view('widgets/twitter', $this->data, TRUE);
-			
-			// Load the widget view
-			$this->CI->load->view(WIDGET . 'widget', $widget);
+		
+		// Reference object
+		$this->data->tweets =& $tweets;
+		$this->data->tweeter = $tweeter->setting_value;
+		
+		// Assign the widget info
+		$widget->title = 'Twitter Feed';
+		$widget->content = $this->CI->load->view('widgets/twitter', $this->data, TRUE);
+		
+		// Load the widget view
+		$this->CI->load->view(WIDGET . 'widget', $widget);
 	}
 	
 	// --------------------------------------------------------------------
