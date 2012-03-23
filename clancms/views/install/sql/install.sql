@@ -396,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__users`;
--- command split--
+-- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',

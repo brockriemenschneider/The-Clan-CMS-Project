@@ -143,18 +143,39 @@ class Matches extends CI_Controller {
 		// Check if matches exist
 		if($matches)
 		{
+				
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
-				// Retrieve the opponent
-				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+				// Format each matches date
+				$match->date = $this->ClanCMS->timezone($match->match_date);
 				
-				// Check if opponent exists
-				if($opponent)
+				// Select proper opponent
+				if((bool) $match->match_source)
 				{
+					// Opponent is Internal Squad
+					$opponent = $this->squads->get_squad(array('squad_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
+					{
+						// Opponent exists, assign match opponent & slug
+						$match->opponent = $opponent->squad_title;
+						$match->opponent_slug = $opponent->squad_slug;
+					}
+				}
+				elseif(!(bool) $match->match_source)
+				{
+					//Oppoenent is external
+					$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
+					{
 					// Opponent exists, assign opponent & opponent slug
 					$match->opponent = $opponent->opponent_title;
 					$match->opponent_slug = $opponent->opponent_slug;
+					}
 				}
 				else
 				{
@@ -162,9 +183,6 @@ class Matches extends CI_Controller {
 					$match->opponent = "";
 					$match->opponent_slug = "";
 				}
-				
-				// Format each matches date
-				$match->date = $this->ClanCMS->timezone($match->match_date);
 				
 				// Retrieve the squad
 				$squad = $this->squads->get_squad(array('squad_id' => $match->squad_id));
@@ -289,15 +307,32 @@ class Matches extends CI_Controller {
 			// Matches exist, loop through each match
 			foreach($matches as $match)
 			{
-				// Retrieve the opponent
-				$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
-				
-				// Check if opponent exists
-				if($opponent)
+				// Select proper opponent
+				if((bool) $match->match_source)
 				{
+					// Opponent is Internal Squad
+					$opponent = $this->squads->get_squad(array('squad_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
+					{
+						// Opponent exists, assign match opponent & slug
+						$match->opponent = $opponent->squad_title;
+						$match->opponent_slug = $opponent->squad_slug;
+					}
+				}
+				elseif(!(bool) $match->match_source)
+				{
+					//Oppoenent is external
+					$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+					
+					// Check if opponent exists
+					if($opponent)
+					{
 					// Opponent exists, assign opponent & opponent slug
 					$match->opponent = $opponent->opponent_title;
 					$match->opponent_slug = $opponent->opponent_slug;
+					}
 				}
 				else
 				{
@@ -353,15 +388,32 @@ class Matches extends CI_Controller {
 			redirect('matches');
 		}
 		
-		// Retrieve the opponent
-		$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
-				
-		// Check if opponent exists
-		if($opponent)
+		// Select proper opponent
+		if((bool) $match->match_source)
 		{
+			// Opponent is Internal Squad
+			$opponent = $this->squads->get_squad(array('squad_id' => $match->opponent_id));
+			
+			// Check if opponent exists
+			if($opponent)
+			{
+				// Opponent exists, assign match opponent & slug
+				$match->opponent = $opponent->squad_title;
+				$match->opponent_slug = $opponent->squad_slug;
+			}
+		}
+		elseif(!(bool) $match->match_source)
+		{
+			//Oppoenent is external
+			$opponent = $this->matches->get_opponent(array('opponent_id' => $match->opponent_id));
+			
+			// Check if opponent exists
+			if($opponent)
+			{
 			// Opponent exists, assign opponent & opponent slug
 			$match->opponent = $opponent->opponent_title;
 			$match->opponent_slug = $opponent->opponent_slug;
+			}
 		}
 		else
 		{
