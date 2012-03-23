@@ -335,6 +335,7 @@ class Articles extends CI_Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
+			$this->form_validation->set_rules('category', 'Category', 'required');
 			$this->form_validation->set_rules('squad', 'Squad', 'trim|required');
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('article', 'Article', 'trim|required');
@@ -346,14 +347,15 @@ class Articles extends CI_Controller {
 			{
 				// Set up the data
 				$data = array (
-					'squad_id'			=> $this->input->post('squad'),
+					'squad_id'		=> $this->input->post('squad'),
+					'category_id'		=> $this->input->post('category'),
 					'article_title'		=> $this->input->post('title'),
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
-					'article_game'			=> $this->input->post('game'),
+					'article_game'		=> $this->input->post('game'),
 					'user_id'			=> $this->session->userdata('user_id'),
-					'article_status'	=> $this->input->post('status'),
-					'article_permission'	=>	$this->input->post('permissions'),
+					'article_status'		=> $this->input->post('status'),
+					'article_permission'	=> $this->input->post('permissions'),
 					'article_date'		=> mdate('%Y-%m-%d %H:%i:%s', now())
 				);
 			
@@ -379,15 +381,15 @@ class Articles extends CI_Controller {
 			}
 		}
 		
-		// Retrieve the squads
+		// Retrieve the squads, games, and categories
 		$squads = $this->squads->get_squads();
-		// Create a reference to squads
-		$this->data->squads =& $squads;
-		
-		// Load the games method
 		$games = $this->articles->get_games();
-		 // Reference games
-		 $this->data->games =& $games;
+		$categories = $this->articles->get_categories();
+		
+		 // Reference games, squads, and categories
+		$this->data->games =& $games;
+		$this->data->squads =& $squads;
+		$this->data->categories =& $categories;
 		
 		
 		// Load the admincp articles add view
@@ -503,6 +505,7 @@ class Articles extends CI_Controller {
 		{
 			// Set form validation rules
 			$this->form_validation->set_rules('status', 'Status', 'trim|required');
+			$this->form_validation->set_rules('category', 'Category', 'required');
 			$this->form_validation->set_rules('squad', 'Squad', 'trim|required');
 			$this->form_validation->set_rules('title', 'Title', 'trim|required');
 			$this->form_validation->set_rules('article', 'Article', 'trim|required');
@@ -514,14 +517,15 @@ class Articles extends CI_Controller {
 			{
 				// Set up the data
 				$data = array (
-					'squad_id'			=> $this->input->post('squad'),
+					'squad_id'		=> $this->input->post('squad'),
+					'category_id'		=> $this->input->post('category'),
 					'article_title'		=> $this->input->post('title'),
 					'article_slug'		=> $article->article_id . '-' . url_title($this->input->post('title')),
 					'article_content'	=> $this->input->post('article'),
 					'article_comments'	=> $this->input->post('comments'),
-					'article_status'	=> $this->input->post('status'),
-					'article_permission'	=>	$this->input->post('permissions'),
-					'article_game'	=> $this->input->post('game'),
+					'article_status'		=> $this->input->post('status'),
+					'article_permission'	=> $this->input->post('permissions'),
+					'article_game'		=> $this->input->post('game'),
 				);
 				
 				// Check if article is a draft
@@ -599,8 +603,9 @@ class Articles extends CI_Controller {
 				}
 			}
 		}
-		// Display all Game headers
+		// Display all Game headers and categories
 		$games = $this->articles->get_games();
+		$categories = $this->articles->get_categories();
 		
 		// Create a reference to article, squads, comments & pages
 		$this->data->article =& $article;
@@ -608,6 +613,7 @@ class Articles extends CI_Controller {
 		$this->data->comments =& $comments;
 		$this->data->pages =& $pages;
 		$this->data->games =& $games;
+		$this->data->categories =& $categories;
 		
 		// Load the admincp articles edit view
 		$this->load->view(ADMINCP . 'articles_edit', $this->data);
@@ -615,6 +621,131 @@ class Articles extends CI_Controller {
 	
 	// --------------------------------------------------------------------
 	
+	/**
+	 * Categories
+	 *
+	 * Displays and creates article categories
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	 function categories()
+	 {
+	 	// Retrieve all categories
+	 	$categories = $this->articles->get_categories();
+	 	
+	 	// Refer to categories
+	 	$this->data->categories =& $categories;
+	 	
+	 	// Load the view
+	 	$this->load->view(ADMINCP . 'articles_categories', $this->data);
+	 }
+	 	
+	// --------------------------------------------------------------------
+	
+	/**
+	 *  Check Category
+	 *
+	 * Check submitted category for existence
+	 * @access	private
+	 *@return		void
+	 *
+	 */
+	 function check_category()
+	 {
+	 	$category = $this->input->post('add_category');
+	 	
+	 	if($category)
+	 	{
+			// Set form validation rules
+			$this->form_validation->set_rules('category_title', 'Category Title', 'trim|required');
+			
+			// Form validation passed, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{
+				// Set up the data
+				$data = array (
+					'category_title' => $this->input->post('category_title')
+					);
+					
+				// Insert into database
+				$this->articles->insert_category($data);
+				
+				// Retrieve the article id
+				$category_id = $this->db->insert_id();
+				
+				// Set up the data
+				$data = array (
+					'category_priority'		=> $category_id
+				);
+				
+				// Update the article in the database
+				$this->articles->update_category($category_id, $data);
+				
+				
+				// Alert the admin
+				$this->session->set_flashdata('message', 'Category ' . $this->input->post('category_title') . 'has been added!');
+					
+				// Redirect user back
+				redirect(ADMINCP . 'articles/categories');
+			}
+			else
+			{
+				// Alert the administrator
+				$this->session->set_flashdata('message', 'That category could not be added to the database!');
+				
+				// Redirect user back
+				redirect(ADMINCP . 'articles/categories');
+			}
+		 }
+	}
+		 
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Delete Category
+	 *
+	 * Delete's a category
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function delete_category($category_id)
+	{ 
+		// Retrieve category
+		$category = $this->articles->get_category(array('category_id' => $category_id));
+		
+		if( !$category)
+		{
+			// Error occured, alert administrator
+			$this->session->set_flashdata('message', 'The article category was not found!');
+				
+			// Redirect user back
+			redirect(ADMINCP . 'articles/categories');
+		}
+		else
+		{
+			// Retrieve all articles with that category
+			$articles = $this->articles->get_articles(array('category_id'=>$category_id));
+			
+			// Reset each article's category to default
+			foreach($articles as $article)
+			{
+				$this->articles->update_article($article->article_id, array('category_id'=>1));
+			}
+			
+			// Delete category from database
+			$this->articles->delete_category($category_id);
+			
+			// Alert administrator of success
+			$this->session->set_flashdata('message', 'The category has been deleted!');
+			
+			// Redirect user back
+			redirect(ADMINCP . 'articles/categories');
+		}
+	}
+
+	// --------------------------------------------------------------------
 	/**
 	 * Delete
 	 *
@@ -759,7 +890,8 @@ class Articles extends CI_Controller {
 	 * @access	public
 	 * @return	void
 	 */
-	 function headers() {
+	 function headers() 
+	 {
 
 		// Display all Game headers
 		$data['games'] = $this->articles->get_games();

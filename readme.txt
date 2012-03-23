@@ -1,5 +1,9 @@
 List of fixes:
 
+Inner-clan squad matches
+Started Clan Categories
+
+==============================================
 Reset install mode to TRUE
 Unfucked lots of merge errors
 Set tracker model to be loaded automatically
