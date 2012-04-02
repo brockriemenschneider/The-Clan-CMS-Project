@@ -30,7 +30,7 @@ class Shoutbox_widget extends Widget {
 	public $description = "Allows users to communicate through shoutbox.";
 	public $author = 'co[dezyne]';
 	public $link = 'http://www.codezyne.me';
-	public $version = '1.6.0';
+	public $version = '2.0';
 	
 
 	/**
@@ -157,6 +157,8 @@ class Shoutbox_widget extends Widget {
 				// Reference newly build shout
 				$shout ->shout = $merged;
 				
+				// Replace whitespace, if exists
+				$shout->user_clean = preg_replace('/\s/', '+', $shout->user);
 			}
 		}
 		

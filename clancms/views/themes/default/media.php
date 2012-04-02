@@ -11,8 +11,10 @@
 				<li><span class="left"></span><span class="middle"><?php echo anchor('account', 'My Account'); ?></span><span class="right"></span></li>
 				<li><span class="left"></span><span class="middle"><?php echo anchor('account/social', 'My Social'); ?></span><span class="right"></span></li>
 				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $user->user_name, 'My Media'); ?></span><span class="right"></span></li>
+				<li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $user->user_name, 'My Wall'); ?></span><span class="right"></span></li>
 			<?php else: ?>
 				<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('gallery/user/' . $this->uri->segment(3), $this->uri->segment(3) . '\'s Media'); ?></span><span class="right"></span></li>
+				<li><span class="left"></span><span class="middle"><?php echo anchor('account/wall/' . $this->uri->segment(3), $this->uri->segment(3) . '\'s Wall'); ?></span><span class="right"></span></li>
 			<?php endif; ?>
 		</ul>
 		</div>
@@ -25,7 +27,6 @@
 		</div>
 		<div class="content">
 			<div class="inside">
-			
 				<?php if($stats): ?>
 					<div class="stats">
 						<div class="title">Gallery Stats</div>
@@ -39,8 +40,8 @@
 							<li>[downloads]</li>
 						</ul>
 						<ul class="info">
-							<li><?php echo $stats->uploads; ?></li>
-							<li>&nbsp;</li>
+							<li><?php echo $stats->images; ?></li>
+							<li><?php echo $stats->videos; ?></li>
 							<li><?php echo $stats->disk_use; ?></li>
 							<li><?php echo $stats->views; ?></li>
 							<li><?php echo $stats->favors; ?></li>
@@ -50,25 +51,28 @@
 					</div>
 				<?php endif; ?>
 				
-				<div id="photos">
-					<?php if($images): ?>
+				<div id="gallery">
+					<?php if($media): ?>
 					 	<ul>
-						 <?php foreach($images as $image): ?>
+						 <?php foreach($media as $media): ?>
 					 		<li>
 					 			<div class="gallery_inset">
-						 			<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $image->uploader): ?>
-										<?php echo $actions = anchor('gallery/del_image/' . $image->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
+						 			<?php if($this->user->is_administrator() OR $this->session->userdata('username') == $media->uploader): ?>
+										<?php echo $actions = anchor('gallery/del_media/' . $media->gallery_id, img(array('src' => THEME_URL . 'images/delete.png', 'alt' => 'Delete', 'class' => 'delete')), array('title' => 'Delete', 'onclick' => "return deleteConfirm();")); ?>
 									<?php else: ?>
 										<?php echo $actions = ""; ?>
 									<?php endif; ?>
-						 			<?php if($image->width > 130): 
-						 				echo anchor('gallery/image/' . $image->image_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'title' => $image->title, 'alt' => $image->title . ' by ' . $image->uploader, 'class' => 'resize_x'))); 
+									<?php if($media->video): 
+										echo anchor('gallery/video/' . $media->gallery_slug, img(array('src' => $media->image, 'title' => $media->title, 'alt' => $media->title . ' by ' . $media->uploader, 'class' => 'resize_x'))); else: ?>
+						 			<?php if($media->width > 130): 
+						 				echo anchor('gallery/image/' . $media->gallery_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $media->image, 'title' => $media->title, 'alt' => $media->title . ' by ' . $media->uploader, 'class' => 'resize_x'))); 
 						 			else:  
-						 				echo anchor('gallery/image/' . $image->image_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $image->image, 'title' => $image->title, 'alt' => $image->title . ' by ' . $image->uploader))); endif; ?>
+						 				echo anchor('gallery/image/' . $media->gallery_slug, img(array('src' => IMAGES . 'gallery/thumbs/' . $media->image, 'title' => $media->title, 'alt' => $media->title . ' by ' . $media->uploader))); endif; ?>
+						 			<?php endif; ?>
 						 		</div>
 					 			<div class="gallery_detail">
-					 				<?php echo $image->title; ?> <br />
-					 				<?php echo mdate("%M %j%S, %Y", $image->date); ?>
+					 				<?php echo $media->title; ?> <br />
+					 				<?php echo mdate("%M %j%S, %Y", $media->date); ?>
 					 			</div>
 					 		</li>
 					 	<?php endforeach; ?>

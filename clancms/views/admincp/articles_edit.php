@@ -26,6 +26,7 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/edit/' . $article->article_id, 'Edit Article: ' . $article->article_title); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/categories', 'News Categories'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -69,6 +70,18 @@
 				echo form_dropdown('status', $options, set_value('status', $article->article_status), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What is the status of this article?</div>
+			
+			<!-- Category Select -->
+				<div class="label required">Category</div>
+				<?php $options = array();
+					if($categories):
+						foreach($categories as $category):
+							$options = $options + array($category->category_id	=>	$category->category_title);
+						endforeach;
+					endif;
+				echo form_dropdown('category', $options, set_value('category', $category->category_id), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">Which category does this article belong to?</div>
 				
 				<div class="label required">Squad</div>
 				<?php
@@ -88,7 +101,7 @@
 				<div class="label required">Game</div>
 				<?php
 					
-					$options = array();
+					$options = array('0' => 'default');
 					if($games):
 						foreach($games as $game):
 							$options = $options + array($game->image	=>	$game->title);
@@ -147,6 +160,26 @@
 						);
 				
 				echo form_radio($data, '0', set_radio('comments', '0', (bool) !$article->article_comments)); ?> Disallow
+				
+				<?php echo br(); ?>
+
+				<div class="label required">View Permissions</div> 
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '1', set_radio('permissions', '1', (bool) $article->article_permission)); ?> Public
+				
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '0', set_radio('permissions', '0', (bool) !$article->article_permission)); ?> Clan Only
+				
 				<?php echo br(); ?>
 		
 				<?php 

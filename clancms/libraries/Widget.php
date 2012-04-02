@@ -19,9 +19,9 @@
  *
  * @package		Clan CMS
  * @subpackage	Libraries
- * @category	Widgets
+ * @category		Widgets
  * @author		Xcel Gaming Development Team
- * @link		http://www.xcelgaming.com
+ * @link			http://www.xcelgaming.com
  */
 class Widget {
 

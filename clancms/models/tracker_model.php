@@ -91,7 +91,7 @@ class Tracker_model extends CI_Model {
 			return FALSE;
 		}
 	}
-	
+	 
 	 // ----------------------------------------------------------------------------
 	/**
 	 * Get_new
@@ -129,5 +129,5 @@ class Tracker_model extends CI_Model {
 	}
 	 
 }
-/* End of file <name>_model.php */
-/* Location: ./clancms/models/<name>_model.php */
+/* End of file tracker_model.php */
+/* Location: ./clancms/models/tracker_model.php */

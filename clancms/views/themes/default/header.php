@@ -15,6 +15,10 @@
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.newsticker.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/nivo-slider/jquery.nivo.slider.pack.js"></script>
 	<script type="text/javascript" src="<?php echo THEME_URL; ?>js/jquery.jcarousel.min.js"></script>
+
+	<!-- Social APIs -->
+	<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 	<script type="text/javascript">
 		$(window).load(function(){
 
@@ -34,17 +38,6 @@
 			$(".submit").button();
 			
 			$("ul#ticker").liScroll();
-		});
-	</script>
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-		    jQuery('#mycarousel').jcarousel({
-		        // Configuration goes here
-		        wrap: 'circular',
-		        auto: 8,
-		        animation: 'slow',
-		        
-		    });
 		});
 	</script>
 	
@@ -72,6 +65,7 @@
 		<?php if($this->ClanCMS->get_setting('forum_link')): ?><li><span class="left"></span><span class="middle"><?php echo anchor($this->ClanCMS->get_setting('forum_link'), 'Forums'); ?></span><span class="right"></span></li><?php endif; ?>
 		<li <?php if($this->uri->segment(1) == 'articles'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('articles', 'News Articles'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'roster'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('roster', 'Team Roster'); ?></span><span class="right"></span></li>
+		<li <?php if($this->uri->segment(1) == 'events'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('events/' . lcfirst(date('M-y', time())), 'Events'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'matches' OR $this->uri->segment(1) == 'opponents'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('matches', 'Matches'); ?></span><span class="right"></span>
 			<ul>
 				<li <?php if($this->uri->segment(1) == 'opponents'): echo 'class="selected"'; endif; ?>><?php echo anchor('opponents', 'Opponents'); ?></li>
@@ -79,8 +73,13 @@
 		</li>
 		<li <?php if($this->uri->segment(1) == 'sponsors'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('sponsors', 'Sponsors'); ?></span><span class="right"></span></li>
 		<li <?php if($this->uri->segment(1) == 'polls'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('polls', 'Polls'); ?></span><span class="right"></span></li>
-		<li <?php if($this->uri->segment(1) == 'gallery'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('gallery', 'Gallery'); ?></span><span class="right"></span></li>
-		<?php $this->load->widget_area('navigation'); ?>		
+		<li <?php if($this->uri->segment(1) == 'gallery'): echo 'class="selected"'; endif; ?>><span class="left"></span><span class="middle"><?php echo anchor('gallery', 'Gallery'); ?></span><span class="right"></span>
+			<ul>
+				<li <?php if($this->uri->segment(2) == 'gallery'): echo 'class="selected"'; endif; ?>><?php echo anchor('gallery/videos', 'Videos'); ?></li>
+				<li <?php if($this->uri->segment(2) == 'gallery'): echo 'class="selected"'; endif; ?>><?php echo anchor('gallery/images', 'Images'); ?></li>
+			</ul>
+		</li>
+		<?php $this->load->widget_area('navigation'); ?>
 	</ul>
 	</div>
 </div>

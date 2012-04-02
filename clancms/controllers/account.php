@@ -42,6 +42,9 @@ class Account extends CI_Controller {
 		
 		// Load the Social model
 		$this->load->model('Social_model', 'social');
+		
+		// Load the Users model
+		$this->load->model('Users_model', 'users');
 	}
 	
 	// --------------------------------------------------------------------
@@ -595,7 +598,7 @@ class Account extends CI_Controller {
 	 * @return	void
 	 */
 	function reset()
-	{		
+	{
 		// Check to see if the user is logged in
 		if ($this->user->logged_in())
 		{
@@ -935,6 +938,286 @@ class Account extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
+<<<<<<< HEAD
+=======
+	 * Wall
+	 *
+	 * Interactive User Wall
+	 *
+	 * @access	private
+	 * @param	array
+	 */		 
+	 function wall()
+	 {
+		
+		// Load the typography library
+		$this->load->library('typography');
+		
+		// Load the bbcode library
+		$this->load->library('BBCode');
+		
+		// Load the text helper
+		$this->load->helper('text');
+		
+	 	// Retrieve the user slug
+		$user_slug = $this->uri->segment(3);
+		
+		// Retrieve the user or show 404
+		($user = $this->users->get_user(array('user_name' => $this->users->user_name($user_slug)))) or show_404();
+
+		// Retrieve our forms
+		$status = $this->input->post('add_status');
+		$comment = $this->input->post('add_comment');
+		
+		// Someone is updating the description
+		if($status && $this->user->logged_in())
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('status', 'Statuts', 'trim|required');
+			
+			// Form validation passed & checked if gallery allows comments, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{
+				// Set up our data
+				$data = array (
+					'status'	=> $this->input->post('status'),
+					);
+			
+				// Insert the comment into the database
+				$this->users->edit_status($data, $user->user_id);
+				
+				// Alert the user
+				$this->session->set_flashdata('wall', 'Your status has been updated!');
+				
+				// Redirect the user
+				redirect($this->session->userdata('previous'));
+			}
+		}
+		
+		// Check if add comment has been posted and check if the user is logged in
+		if($comment && $this->user->logged_in() && $this->user->has_voice())
+		{
+			// Set form validation rules
+			$this->form_validation->set_rules('comment', 'Comment', 'trim|required');
+			
+			// Form validation passed & checked if gallery allows comments, so continue
+			if (!$this->form_validation->run() == FALSE)
+			{	
+				// Set up our data
+				$data = array (
+					'wall_owner_id'	=> $user->user_id,
+					'commenter_id'	=> $this->session->userdata('user_id'),
+					'comment'		=> $this->input->post('comment'),
+					'comment_date'	=> mdate('%Y-%m-%d %H:%i:%s', now())
+				);
+			
+				// Insert the comment into the database
+				$this->users->insert_comment($data);
+				
+				// Alert the user
+				$this->session->set_flashdata('wall', 'Your comment has been posted!');
+				
+				// Redirect
+				redirect($this->session->userdata('previous'));
+				
+			}
+		}		
+		// Retrieve the current page
+		$page = $this->uri->segment(5, '');
+	
+		// Check if page exists
+		if($page == '')
+		{
+			// Page doesn't exist, assign it
+			$page = 1;
+		}
+	
+		//Set up the variables
+		$per_page = 15;
+		$total_results = $this->users->count_comments(array('wall_owner_id' => $user->user_id));
+		$offset = ($page - 1) * $per_page;
+		$pages->total_pages = 0;
+		
+		// Create the pages
+		for($i = 1; $i < ($total_results / $per_page) + 1; $i++)
+		{
+			// Itterate pages
+			$pages->total_pages++;
+		}
+				
+		// Check if there are no results
+		if($total_results == 0)
+		{
+			// Assign total pages
+			$pages->total_pages = 1;
+		}
+		
+		// Set up pages
+		$pages->current_page = $page;
+		$pages->pages_left = 9;
+		$pages->first = (bool) ($pages->current_page > 5);
+		$pages->previous = (bool) ($pages->current_page > '1');
+		$pages->next = (bool) ($pages->current_page != $pages->total_pages);
+		$pages->before = array();
+		$pages->after = array();
+		
+		// Check if the current page is towards the end
+		if(($pages->current_page + 5) < $pages->total_pages)
+		{
+			// Current page is not towards the end, assign start
+			$start = $pages->current_page - 4;
+		}
+		else
+		{
+			// Current page is towards the end, assign start
+			$start = $pages->current_page - $pages->pages_left + ($pages->total_pages - $pages->current_page);
+		}
+		
+		// Assign end
+		$end = $pages->current_page + 1;
+		
+		// Loop through pages before the current page
+		for($page = $start; ($page < $pages->current_page); $page++)
+		{
+			// Check if the page is vaild
+			if($page > 0)
+			{
+				// Page is valid, add it the pages before, increment pages left
+				$pages->before = array_merge($pages->before, array($page));
+				$pages->pages_left--;
+			}
+		}
+		
+		// Loop through pages after the current page
+		for($page = $end; ($pages->pages_left > 0 && $page <= $pages->total_pages); $page++)
+		{
+			// Add the page to pages after, increment pages left
+			$pages->after = array_merge($pages->after, array($page));
+			$pages->pages_left--;
+		}
+		
+		// Set up pages
+		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
+		
+		$comments = $this->users->get_comments($per_page, $offset, array('wall_owner_id' => $user->user_id));
+
+		// Check if comments exist
+		if($comments)
+		{
+			// Comments exist, loop through each comment
+			foreach($comments as $comment)
+			{
+				// Retrieve the user
+				if($commenter = $this->users->get_user(array('user_id' => $comment->commenter_id)))
+				{
+					// User exists, assign comment author & comment avatar
+					$comment->author = $commenter->user_name;
+					$comment->avatar = $commenter->user_avatar;
+				}
+				else
+				{
+					// User doesn't exist, assign comment author & comment avatar
+					$comment->author = '';
+					$comment->avatar = '';
+				}
+				
+				// Format Timezone
+				$comment->comment_date = $this->ClanCMS->timezone($comment->comment_date);
+				
+				// Format wall comment to bbcode
+				$comment->comment = auto_link($this->typography->auto_typography($this->bbcode->to_html($comment->comment)), 'url');
+				
+			}			
+		}
+		
+		if($user->status)
+		{
+			// Format status comment to bbcode
+			$user->status_bb = auto_link($this->typography->auto_typography($this->bbcode->to_html($user->status)), 'url');
+		}
+		
+		// Query tracking table
+		if($user)
+		{
+			// set up data
+			$data = array(
+				'controller_name'	=>	$this->uri->segment(1),
+				'controller_method'	=>	$this->uri->segment(2),
+				'controller_item_id'	=>	$this->uri->segment(3),
+				'user_id'			=>	$user->user_id,
+				);
+			
+			// Check user against tracker
+			$track = $this->tracker->check($data);
+			
+			if(!$track)
+			{
+				// Object is new to user
+				$this->tracker->track($data);
+			}
+
+		}
+		
+		// Create references
+		$this->data->comments =& $comments;
+		$this->data->commenter =& $commenter;
+		$this->data->pages =& $pages;
+		$this->data->user =& $user;
+		
+		// Load the view
+	 	$this->load->view(THEME . 'user_wall', $this->data);
+	 }
+	 
+	 // ---------------------------------------------------------------
+	 /**
+	  * Wall Status
+	  * Enables / Disables a user's wall
+	  *
+	  * @access	private
+	  * @return	null
+	  */
+	 function wall_status($id)
+	 {
+	 	// Check to see if the user is logged in
+		if (!$this->user->logged_in())
+		{
+			// User is not logged in, redirect them
+			redirect('account/login');
+		}
+		
+		// Retrieve the user
+		if(!$user = $this->users->get_user(array('user_id' => $id)))
+		{
+			// User doesn't exist, redirect them
+			redirect('account/login');
+		}
+		
+	 	if((bool)$user->wall_enabled)
+	 	{
+	 		// Wall is enabled, disable it
+	 		$this->users->edit_status(array('wall_enabled' => 0), $id);
+	 		
+	 		// Alert user
+	 		$this->session->flashdata('wall', 'The wall has been closed.');
+	 		
+	 		// Redirect
+	 		redirect($this->session->userdata('previous'));
+	 	}
+	 	else
+	 	{
+	 		// Wall is enabled, disable it
+	 		$this->users->edit_status(array('wall_enabled' => 1), $id);
+	 		
+	 		// Alert user
+	 		$this->session->flashdata('wall', 'The wall has been opened.');
+	 		
+	 		// Redirect
+	 		redirect($this->session->userdata('previous'));
+	 	}
+	 }
+
+	// --------------------------------------------------------------------
+	/**
 	 * Agree
 	 *
 	 * User affirms to social agreement
@@ -1030,8 +1313,7 @@ class Account extends CI_Controller {
 		}
 	}
 	
-		 // --------------------------------------------------------------------
-	
+	 // --------------------------------------------------------------------
 	/**
 	 * Unmute
 	 *
@@ -1161,7 +1443,6 @@ class Account extends CI_Controller {
 	}
 	
 	 // --------------------------------------------------------------------
-	
 	/**
 	 * Shout_no
 	 *
@@ -1189,6 +1470,7 @@ class Account extends CI_Controller {
 		{
 			// User exists, set up the data
 			$data = array(
+				'has_voice'	=> 1,
 				'can_shout'	=> 0
 				);
 			
@@ -1196,15 +1478,15 @@ class Account extends CI_Controller {
 			$this->users->update_user($user->user_id, $data);
 			
 			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to shout');
+	 		$this->session->set_flashdata('message', 'You have unmuted ' . $user->user_name);
 	 		
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
-	}	
+	}
 	
+
 	 // --------------------------------------------------------------------
-	
 	/**
 	 * Shout_yes
 	 *
@@ -1239,12 +1521,58 @@ class Account extends CI_Controller {
 			$this->users->update_user($user->user_id, $data);
 			
 			// Alert admin
-	 		$this->session->set_flashdata('message', 'You have enabled ' . $user->user_name . '\'s ability to shout');
+	 		$this->session->set_flashdata('message', 'You have revoked ' . $user->user_name . '\'s ability to upload');
 	 		
 	 		// Redirect the administrator
 			redirect($this->session->userdata('previous'));
 		}
-	}		
+	}
+
+	 // --------------------------------------------------------------------	
+	/**
+	 * Delete Comment
+	 *
+	 * Deletes a wall comment from the databse
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function delete_comment()
+	{
+		// Set up our data
+		$data = array(
+			'comment_id'	=>	$this->uri->segment(3)
+		);
+		
+		// Retrieve the article comment
+		if(!$comment = $this->users->get_comment($data))
+		{
+			// Comment doesn't exist, alert the administrator
+			$this->session->set_flashdata('wall', 'The comment was not found!');
+		
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+		
+		// Check if the user is an administrator
+		if(!$this->user->is_administrator() && $this->session->userdata('user_id') != $comment->user_id)
+		{
+			// User isn't an administrator or the comment user, alert the user
+			$this->session->set_flashdata('wall', 'You are not allowed to delete this comment!');
+			
+			// Redirect the user
+			redirect($this->session->userdata('previous'));
+		}
+				
+		// Delete the article comment from the database
+		$this->users->delete_comment($comment->comment_id, $data);
+		
+		// Alert the administrator
+		$this->session->set_flashdata('wall', 'The comment was successfully deleted!');
+				
+		// Redirect the administrator
+		redirect($this->session->userdata('previous'));
+	}
 }
 
 /* End of file account.php */

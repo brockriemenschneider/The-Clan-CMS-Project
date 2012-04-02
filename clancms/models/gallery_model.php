@@ -63,13 +63,36 @@ class Gallery_model extends CI_Model {
 	 * Retrieves image listings from the database
 	 *
 	 * @access	public
-	 * @param	array
 	 * @return	array
 	 */
 	function get_images() {
 		$q = $this->db
+						->where('image !=', '')
 						->order_by('date', 'desc')
 						->get('gallery');
+		
+		if($q->num_rows() > 0) {
+			foreach ($q->result() as $row) {
+			    $data[] = $row;
+			}
+		return $data;
+		}
+	}
+
+	// --------------------------------------------------------------------
+	/**
+	 * Get Videos
+	 *
+	 * Retrieves video listings from the database
+	 *
+	 * @access	public
+	 * @return	array
+	 */
+	function get_videos() {
+		$q = $this->db
+						->where('video !=', '')
+						->order_by('date', 'desc')
+						->get('gallery', 20);
 		
 		if($q->num_rows() > 0) {
 			foreach ($q->result() as $row) {
@@ -81,15 +104,15 @@ class Gallery_model extends CI_Model {
 	
 	// --------------------------------------------------------------------
 	/**
-	 * Get Image
+	 * Get Gallery
 	 *
-	 * Selects singular image 
+	 * Selects singular gallery item 
 	 *
 	 * @access	public
 	 * @param	array
 	 * @return	array
 	 */	
-	function get_image($data = array()) {	
+	function get_gallery_item($data = array()) {	
 
 		// Check for valid data
 		if(empty($data) OR !is_associative($data))
@@ -142,19 +165,38 @@ class Gallery_model extends CI_Model {
 		$this->load->library('upload', $file_config);
 		
 		// Verify file is permissible
-		if(!$this->upload->do_upload()) {
-			$this->session->set_flashdata('message', 'The file was unsucessfully uploaded');
-		} else {
+		if(!$this->upload->do_upload()) 
+		{
+			// Alert the user
+			$this->session->set_flashdata('gallery', 'The image was unsucessfully uploaded.  Ensure the gallery directory permissions are 0777.');
+		} 
+		else 
+		{
 	
 			//  Do this to parse data for db and resize()
 			$image_data = $this->upload->data();
 			
+			// Check if image already exists
+			$exists = $this->get_gallery_item(array('image' => $image_data['file_name']));
 			
-			if(!$image_data['is_image'] == 1){
+			if($exists)
+			{
+				// Image exists, Alert the user
+				$this->session->set_flashdata('gallery', 'The image <span class="bold">' .$this->input->post('title') . '</span> already exists!');
 				
-				return false;
-				
-			} else {
+				// Redirect to refresh get_headers()
+				redirect('gallery');
+			}
+			else 
+			{
+				// Check if file is image
+				if(!$image_data['is_image'] == 1){
+					
+					return false;
+					
+				} 
+				else 
+				{
 					// Check if we need to scale the image
 					if($image_data['image_width'] < 700)
 					{
@@ -168,7 +210,9 @@ class Gallery_model extends CI_Model {
 						$this->load->library('image_lib', $scale);
 						$this->image_lib->resize();
 						
-					} else {
+					} 
+					else 
+					{
 					
 						// Scaled image resize restraints
 						$scale = array(
@@ -186,29 +230,62 @@ class Gallery_model extends CI_Model {
 					
 					}
 					
+					// Setup Image data
+					$data = array(
+							'title'			=>	$this->input->post('title'),
+							'image'		=>	$image_data['file_name'],
+							'uploader'		=>	$this->session->userdata('username'),
+							'height'		=>	$image_data['image_height'],
+							'width'		=>	$image_data['image_width'],
+							'size'			=>	$image_data['file_size'],
+							'gallery_slug'	=>	$image_data['raw_name']
+							);
 					
 				
-				// Pass info from data to database
-				$data = array(
-						'title'			=>	$this->input->post('title'),
-						'image'		=>	$image_data['file_name'],
-						'uploader'		=>	$this->session->userdata('username'),
-						'height'		=>	$image_data['image_height'],
-						'width'		=>	$image_data['image_width'],
-						'size'			=>	$image_data['file_size'],
-						'image_slug'	=>	$image_data['raw_name']
-						);
-				$this->db->insert('gallery', $data);
-				
-	
-				// Alert the user
-				$this->session->set_flashdata('message', 'The image <span class="bold">' .$this->input->post('title') . '</span> was successfully uploaded!');
-				
-				// Redirect to refresh get_headers()
-				redirect('gallery');
-				}	
+					// Image is new, upload
+					$this->db->insert('gallery', $data);
+					
+					// Alert the user
+					$this->session->set_flashdata('gallery', 'The image <span class="bold">' .$this->input->post('title') . '</span> was successfully uploaded!');
+					
+					// Redirect to refresh get_headers()
+					redirect('gallery');
+			
+					}
+				}
 			}
 		}
+	
+	// --------------------------------------------------------------------
+	/**
+	 * Add Video
+	 *
+	 * Catalogues youtube video into database
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	array
+	 */
+	 function add_video($video)
+	 {
+	 	/// Check to see if we have valid data
+		if(empty($video))
+		{
+			// Data is invalid, return FALSE
+			return FALSE;
+		}
+		
+		// Data is valid, insert the data in the database
+		$this->db->insert('gallery', $video);
+		
+		// Alert the user
+		$this->session->set_flashdata('gallery', 'The video <span class="bold">' .$this->input->post('title') . '</span> was successfully shared!');
+		
+		// Redirect to refresh get_headers()
+		redirect('gallery');
+		
+		
+	 }
 
 	// --------------------------------------------------------------------
 	/**
@@ -230,7 +307,7 @@ class Gallery_model extends CI_Model {
 		}
 		
 		// Check if image exists
-		if(!$image = $this->get_image(array('gallery_id' => $image_id)))
+		if(!$image = $this->get_gallery_item(array('gallery_id' => $image_id)))
 		{
 			// Comment doesn't exist, return FALSE
 			return FALSE;
@@ -267,12 +344,44 @@ class Gallery_model extends CI_Model {
 		$query = $this->db
 						->from('gallery')
 						->where($data)
+						->where('image !=', '')
 						->count_all_results();
 						
 		// Return query
 		return $query;
 	}
 	
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Count Videos
+	 *
+	 * Count the number of videos in the database
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	array
+	 */
+	function count_videos($data = array())
+	{	
+		// Check for valid data
+		if($data && !is_array($data) && !is_associative($data))
+		{
+			// Invalid data, return FALSE
+			return FALSE;
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->from('gallery')
+						->where($data)
+						->where('video !=', '')
+						->count_all_results();
+						
+		// Return query
+		return $query;
+	}
 	// -----------------------------------------------------------------------
 	
 	/**
@@ -510,7 +619,7 @@ class Gallery_model extends CI_Model {
 	 * @param	array
 	 * @return	array
 	 */
-	function user_images($user) {
+	function user_media($user) {
 		$q = $this->db->where('uploader', $user)
 					->order_by('date', 'desc')
 					->get('gallery');

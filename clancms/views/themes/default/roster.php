@@ -12,13 +12,16 @@
 			<?php if($squads): ?>
 				<?php foreach($squads as $squad): ?>
 					<li><span class="left"></span><span class="middle">
-						<?php if($squad->squad_icon): echo img(array('src' => IMAGES . 'squad_icons/'.$squad->squad_icon, 'alt' => $squad->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $squad->squad_title)); else: echo img(array('src' => IMAGES . 'squad_icons/no_icon.png', 'alt' => $squad->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $squad->squad_title)); endif; ?>
+						<?php if($squad->squad_icon): 
+							echo img(array('src' => IMAGES . 'squad_icons/'.$squad->squad_icon, 'alt' => $squad->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $squad->squad_title)); else: echo img(array('src' => IMAGES . 'squad_icons/no_icon.png', 'alt' => $squad->squad_title, 'height' => '24px', 'width' => '24px', 'title' => $squad->squad_title)); endif; ?>
 						<?php echo anchor('roster/squad/' . $squad->squad_slug, $squad->squad_title); ?>
 						</span><span class="right"></span></li>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</ul>
 		</div>
+		
+		<div class="clear"></div>
 		
 		<?php if($squads): ?>
 		<?php foreach($squads as $squad): ?>

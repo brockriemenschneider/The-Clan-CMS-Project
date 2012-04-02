@@ -4,6 +4,19 @@
 
  <script type="text/javascript">
  $(function() {
+	$("input[name='internal_opponent']").change( function() {
+		if($("input[name='internal_opponent']:checked").val() == 1)
+		{
+			$('#external_match').hide();
+			$('#internal_match').show();
+		}
+		else
+		{
+			$('#external_match').show();
+			$('#internal_match').hide();
+		}
+	});
+	
 	
 	$("input[name='new_opponent']").change( function() {
 		if($("input[name='new_opponent']:checked").val() == 1)
@@ -21,6 +34,11 @@
 	if($("input[name='new_opponent']:checked").val() == 0)
 	{
 		$('#new_opponent').hide();
+	}
+		
+	if($("input[name='internal_opponent']:checked").val() == 0)
+	{
+		$('#internal_match').hide();
 	}
 	
 	$("input[name=players]").keyup(function() {
@@ -66,34 +84,44 @@
 				<div class="subheader">
 					<?php echo heading('Opponent Information', 4); ?>
 				</div>
-		
-				<div class="label required">New Opponent?</div>
 				
-				Yes
-				<input type="radio" name="new_opponent" value="1" <?php echo set_radio('new_opponent', '1'); ?> class="input" />
-				No
-				<input type="radio" name="new_opponent" value="0" <?php echo set_radio('new_opponent', '0', TRUE); ?> class="input" />
+				<div class="label required">Match Opponent Source:</div>
+				
+				Internal Squad
+				<input type="radio" name="internal_opponent" value="1" <?php echo set_radio('internal_opponent', '1'); ?> class="input" />
+				External Squad
+				<input type="radio" name="internal_opponent" value="0" <?php echo set_radio('internal_opponent', '0', TRUE); ?> class="input" />
 				
 				<?php echo br(); ?>
-				<div class="description">Do you want to create a new opponent?</div>
 				
-				<div id="opponents">
-				<div class="label">Opponent</div>
-				<?php
+				<div id="external_match">
+					<div class="label required">New Opponent?</div>
 					
-					$options = array('0' => '',);
-					if($opponents):
-						foreach($opponents as $opponent):
-							$options = $options + array($opponent->opponent_id	=>	$opponent->opponent_title);
-						endforeach;
-					endif;
+					Yes
+					<input type="radio" name="new_opponent" value="1" <?php echo set_radio('new_opponent', '1'); ?> class="input" />
+					No
+					<input type="radio" name="new_opponent" value="0" <?php echo set_radio('new_opponent', '0', TRUE); ?> class="input" />
 					
-				echo form_dropdown('opponent_id', $options, set_value('opponent_id'), 'class="input select"'); ?>
-				<?php echo br(); ?>
-				<div class="description">What opponent played this match?</div>
-				</div>
-				
-				<div id="new_opponent">
+					<?php echo br(); ?>
+					<div class="description">Do you want to create a new opponent?</div>
+					
+					<div id="opponents">
+					<div class="label">Opponent</div>
+					<?php
+						
+						$options = array('0' => '',);
+						if($opponents):
+							foreach($opponents as $opponent):
+								$options = $options + array($opponent->opponent_id	=>	$opponent->opponent_title);
+							endforeach;
+						endif;
+						
+					echo form_dropdown('opponent_id', $options, set_value('opponent_id'), 'class="input select"'); ?>
+					<?php echo br(); ?>
+					<div class="description">What opponent played this match?</div>
+					</div>
+					
+					<div id="new_opponent">
 				<div class="label required">Opponent</div> 
 				<?php 
 				$data = array(
@@ -133,6 +161,23 @@
 				<div class="description">The opponent's clan tag</div>
 				
 				</div>
+				</div>
+				
+				<div id="internal_match">
+					<div class="label required">Opposing Squad:</div>
+					<?php
+						
+						$options = array('' => '',);
+						if($squads):
+							foreach($squads as $squad):
+								$options = $options + array($squad->squad_id	=>	$squad->squad_title);
+							endforeach;
+						endif;
+						
+					echo form_dropdown('opposing_squad', $options, set_value('opposing_squad'), 'class="input select"'); ?>
+					<?php echo br(); ?>
+				</div>
+				
 				<?php echo br(); ?>
 				
 				<div class="subheader">

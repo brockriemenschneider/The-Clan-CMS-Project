@@ -723,7 +723,46 @@ class Matches_model extends CI_Model {
 			return FALSE;
 		}
 	}
+
+	// --------------------------------------------------------------------
 	
+	/**
+	 * Get Matches Like
+	 *
+	 * Retrieves all matches from the database matching string
+	 *
+	 * @access	public
+	 * @param	arg
+	 * @param	array
+	 * @return	array
+	 */
+	function get_matches_like($match = NULL)
+	{
+		// Check if match exists
+		if($match == NULL)
+		{
+			// Match doesn't exist, assign match
+			$match = '';
+		}
+		
+		// Retrieve the query from the database
+		$query = $this->db
+						->like('match_date', $match)
+						->order_by('match_date', 'desc')
+						->get('matches');
+		
+		// Check if query result exists
+		if($query->result())
+		{
+			// Query result exists, return query result
+			return $query->result();
+		}
+		else
+		{
+			// Query result doesn't exist, return FALSE
+			return FALSE;
+		}
+	}	
 	// --------------------------------------------------------------------
 	
 	/**

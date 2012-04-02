@@ -12,6 +12,7 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
+			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/categories', 'News Categories'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -41,6 +42,19 @@
 				echo form_dropdown('status', $options, set_value('status'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What is the status of this article?</div>
+			
+				
+			<!-- Category Select -->
+				<div class="label required">Category</div>
+				<?php $options = array();
+					if($categories):
+						foreach($categories as $category):
+							$options = $options + array($category->category_id	=>	$category->category_title);
+						endforeach;
+					endif;
+				echo form_dropdown('category', $options, set_value('category'), 'class="input select"'); ?>
+				<?php echo br(); ?>
+				<div class="description">Which category does this article belong to?</div>
 				
 				
 			<!-- Squad Select -->
@@ -54,7 +68,7 @@
 				echo form_dropdown('squad', $options, set_value('squad'), 'class="input select"'); ?>
 				<?php echo br(); ?>
 				<div class="description">What squad is this article for?</div>
-		
+				
 		
 			<!-- Title Name -->
 				<div class="label required">Title</div>
@@ -67,7 +81,7 @@
 			
 			<!-- Game selector -->
 				<div class="label required">Game</div>
-				<?php $options = array();
+				<?php $options = array('0' => 'default',);
 					if($games):
 						foreach($games as $game):
 							$options = $options + array($game->image	=>	$game->title);
@@ -114,6 +128,26 @@
 						);
 				
 				echo form_radio($data, '0', set_radio('comments', '0', FALSE)); ?> Disallow
+				
+				<?php echo br(); ?>
+
+				<div class="label required">View Permissions</div> 
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '1', set_radio('permissions', '1')); ?> Public
+				
+				<?php 
+					$data = array(
+						'name'		=> 'permissions',
+						'class'		=> 'input',
+						);
+				
+				echo form_radio($data, '0', set_radio('permissions', '0')); ?> Clan Only
+
 				<?php echo br(); ?>
 		
 				<?php 
@@ -131,10 +165,7 @@
 			<?php echo form_close(); ?>		
 		</div>
 		<div class="footer"></div>
+	</div>
 	
-
-
-
-
 </div>
 <?php $this->load->view(ADMINCP . 'footer'); ?>

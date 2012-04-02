@@ -209,6 +209,8 @@ class Shouts extends CI_Controller {
 				// Reference newly build shout
 				$shout ->shout = $merged;
 				
+				// Replace whitespace, if exists
+				$shout->user_clean = preg_replace('/\s/ ', '+', $shout->user);
 			}
 		}
 

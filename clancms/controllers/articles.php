@@ -64,7 +64,7 @@ class Articles extends CI_Controller {
 	 * @return	void
 	 */
 	function index()
-	{	
+	{
 		// Retrieve the page
 		$page = $this->uri->segment('3');
 	
@@ -143,7 +143,14 @@ class Articles extends CI_Controller {
 		$pages->last = (bool) (($pages->total_pages - 5) > $pages->current_page);
 		
 		// Retrieve the articles
-		$articles = $this->articles->get_articles($per_page, $offset, array('article_status' => 1));
+		if($this->user->logged_in())
+		{
+			$articles = $this->articles->get_articles($per_page, $offset, array('article_status' => 1));
+		}
+		else
+		{
+			$articles = $this->articles->get_articles($per_page, $offset, array('article_status' => 1, 'article_permission' => 1));
+		}
 		
 		// Check if articles exist
 		if($articles)
@@ -187,6 +194,20 @@ class Articles extends CI_Controller {
 					$article->squad = '';
 				}
 				
+				// Retrieve the category
+				$category = $this->articles->get_category(array('category_id' => $article->category_id));
+				
+				// Check that category exists
+				if($category)
+				{
+					$article->category = $category->category_title;
+				}
+				else
+				{
+					// Category doesn't exist
+					$article->category = '';
+				}
+				
 				// Limit the article's words, format the text, create links, and assign it to article summary
 				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
@@ -228,7 +249,14 @@ class Articles extends CI_Controller {
 	function view()
 	{
 		// Retrieve the article if it exists or show 404
-		($article = $this->articles->get_article(array('article_slug' => $this->uri->segment(3, ''), 'article_status' => 1))) or show_404();
+		if($this->user->logged_in())
+		{
+			($article = $this->articles->get_article(array('article_slug' => $this->uri->segment(3, ''), 'article_status' => 1))) or show_404();
+		}
+		else
+		{
+			($article = $this->articles->get_article(array('article_slug' => $this->uri->segment(3, ''), 'article_status' => 1, 'article_permission'=>1))) or show_404();
+		}
 		
 		// Retrieve our forms
 		$add_comment = $this->input->post('add_comment');

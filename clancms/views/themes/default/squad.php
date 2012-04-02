@@ -24,6 +24,8 @@
 		</ul>
 		</div>
 		
+		<div class="clear"></div>
+		
 		<div class="header">
 			<?php echo heading('Roster', 4); ?>
 		</div>

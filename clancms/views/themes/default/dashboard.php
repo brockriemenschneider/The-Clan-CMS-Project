@@ -4,7 +4,6 @@
 
 <div id="main">
 
-
 <?php if($slides): ?>
 	<div id="slider-wrapper">
 		<div id="slider" class="nivoSlider">

@@ -3,8 +3,8 @@
 		<ul id="shouts">
 		<?php foreach($shouts as $shout): ?>
 			<li class=<?php if($shout->rank == 'Administrators'): echo 'admin'; else: echo 'user'; endif; ?>>
-				<?php if($shout->avatar): echo img(array('src' => IMAGES . 'avatars/' . $shout->avatar, 'height' => 16, 'width' => 16)); else: echo img(array('src' => IMAGES . 'avatars/avatar_none.png', 'height' => 16, 'width' => 16)); endif; ?>
-				<?php echo anchor('account/profile/' . $shout->user, $shout->user); ?>
+				<?php if($shout->avatar): echo img(array('src' => IMAGES . 'avatars/' . $shout->avatar, 'height' => 16, 'width' => 16)); else: echo img(array('src' => THEME_URL . 'images/avatar_none.png', 'height' => 16, 'width' => 16)); endif; ?>
+				<?php echo anchor('account/profile/' . $shout->user_clean, $shout->user); ?>
 				<?php echo $shout->shout; ?>
 				<span class="right yellow time"><?php echo $shout->delay; ?></span>
 				<div class="clear"></div>

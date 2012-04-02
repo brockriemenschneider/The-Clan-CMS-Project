@@ -6,10 +6,10 @@
  *
  * @package		Clan CMS
  * @author		Xcel Gaming Development Team
- * @copyright	Copyright (c) 2010 - 2011, Xcel Gaming, Inc.
+ * @copyright		Copyright (c) 2010 - 2011, Xcel Gaming, Inc.
  * @license		http://www.xcelgaming.com/about/license/
- * @link		http://www.xcelgaming.com
- * @since		Version 0.6.0
+ * @link			http://www.xcelgaming.com
+ * @since			Version 0.6.0
  */
 
 // ------------------------------------------------------------------------
@@ -19,9 +19,9 @@
  *
  * @package		Clan CMS
  * @subpackage	Widgets
- * @category	Widgets
+ * @category		Widgets
  * @author		Xcel Gaming Development Team
- * @link		http://www.xcelgaming.com
+ * @link			http://www.xcelgaming.com
  */
 class Site_stats_widget extends Widget {
 
@@ -30,9 +30,9 @@ class Site_stats_widget extends Widget {
 	public $description = "Display's the site's stats.";
 	public $author = 'Xcel Gaming';
 	public $link = 'http://www.xcelgaming.com';
-	public $version = '1.0.0';
-	public $requires = '0.6.0';
-	public $compatible = '0.6.0';
+	public $version = '1.1.0';
+	public $requires = '0.6.2';
+	public $compatible = '0.6.2';
 	
 	/**
 	 * Constructor
@@ -82,13 +82,7 @@ class Site_stats_widget extends Widget {
 		
 		// Retrieve the total number of squads
 		$this->data->total_squads = $this->CI->squads->count_squads();
-		
-		// Load the Sponsors model
-		$this->CI->load->model('Sponsors_model', 'sponsors');
-		
-		// Retrieve the total number of sponsors
-		$this->data->total_sponsors = $this->CI->sponsors->count_sponsors();
-		
+				
 		// Retrieve the total number of users
 		$this->data->total_users = $this->CI->users->count_users();
 		
@@ -104,17 +98,12 @@ class Site_stats_widget extends Widget {
 		// Retrieve the total number of polls
 		$this->data->total_polls = $this->CI->polls->count_polls();
 		
-		// Load the Pages model
-		$this->CI->load->model('Pages_model', 'pages');
-		
-		// Retrieve the total number of pages
-		$this->data->total_pages = $this->CI->pages->count_pages();
-		
 		// Load the Gallery model
 		$this->CI->load->model('Gallery_model', 'gallery');
 		
-		// Retrieve the total number of images
+		// Retrieve the total number of images and videos
 		$this->data->total_images = $this->CI->gallery->count_images();
+		$this->data->total_videos = $this->CI->gallery->count_videos();
 		
 		// Load the Shouts model
 		$this->CI->load->model('Shouts_model', 'shouts');
@@ -122,24 +111,11 @@ class Site_stats_widget extends Widget {
 		// Retrieve total number of shouts
 		$this->data->total_shouts = $this->CI->shouts->count_shouts();
 		
-		// Load the Widgets model
-		$this->CI->load->model('Widgets_model', 'widgets');
+		// Load the Events Model
+		$this->CI->load->model('Events_model', 'events');
 		
-		// Retrieve the total number of widgets
-		$widgets = $this->CI->widgets->scan_widgets();
-		
-		// Assign widget total
-		$widget_total = 0;
-		
-		// Loop through the widgets
-		foreach($widgets as $widget)
-		{
-			// Itterate widget_total
-			$widget_total++;
-		}
-		
-		// Assign total widgets
-		$this->data->total_widgets = $widget_total;
+		// Retrieve total number of events
+		$this->data->total_events = $this->CI->events->count_events();
 		
 		// Assign the widget info
 		$widget->title = 'Site Stats';
