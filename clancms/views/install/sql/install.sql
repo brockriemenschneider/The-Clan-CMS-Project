@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `__DBPREFIX__articles`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category_id` bigint(20) NOT NULL DEFAULT '1',
   `squad_id` bigint(20) NOT NULL DEFAULT '0',
   `article_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `article_slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
