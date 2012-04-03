@@ -38,6 +38,9 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_categories` (
   PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 -- command split --
+INSERT INTO `__DBPREFIX__article_categories` (`category_id`, `category_title`, `category_priority`) VALUES
+(1, 'Clan News', 1);
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__article_comments`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
