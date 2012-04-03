@@ -191,6 +191,20 @@ class Articles extends CI_Controller {
 					$article->squad = '';
 				}
 				
+				// Retrieve the category
+				$category = $this->articles->get_category(array('category_id' => $article->category_id));
+				
+				// Check that category exists
+				if($category)
+				{
+					$article->category = $category->category_title;
+				}
+				else
+				{
+					// Category doesn't exist
+					$article->category = '';
+				}
+				
 				// Limit the article's words, format the text, create links, and assign it to article summary
 				$article->summary = auto_link($this->typography->auto_typography($this->bbcode->to_html(word_limiter($article->article_content, 100))), 'url');
 			}
