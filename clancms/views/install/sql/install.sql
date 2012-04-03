@@ -29,6 +29,15 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
 INSERT INTO `__DBPREFIX__articles` (`article_id`, `squad_id`, `article_title`, `article_slug`, `article_content`, `article_comments`, `user_id`, `article_date`, `article_status`) VALUES
 (1, 0, 'Welcome to Clan CMS!', '1-Welcome-to-Clan-CMS', 'Welcome to your new Clan CMS brought to you by Xcel Gaming!\n\nIf you are seeing this message then you have installed Clan CMS successfully!\n\nPlease take some time to familiarize yourself with the Admin CP to take advantage of all the aspects that Clan CMS has to offer! \n\nThank you & Good Luck,\nXcel Gaming\nhttp://www.xcelgaming.com', 1, 1, '2010-10-10 10:10:10', 1);
 -- command split --
+DROP TABLE IF EXISTS `__DBPREFIX__article_categories`;
+-- command split --
+CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_categories` (
+  `category_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `category_priority` int(10) NOT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+-- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__article_comments`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_comments` (
@@ -396,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__tracker` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__users`;
--- command split--
+-- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_id` bigint(20) NOT NULL DEFAULT '0',
