@@ -51,31 +51,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_slider` (
   PRIMARY KEY (`slider_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1  ;
 -- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__events`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__events` (
-  `event_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `event_slug` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `event_year` year(4) NOT NULL,
-  `event_month` smallint(2) NOT NULL,
-  `event_day` tinyint(2) NOT NULL,
-  `event_time` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `event_owner_id` bigint(20) NOT NULL,
-  `event_title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `event_summary` text COLLATE utf8_unicode_ci NOT NULL,
-  `signups_enabled` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
--- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__event_participants`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__event_participants` (
-  `participant_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `event_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`participant_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
--- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__gallery`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__gallery` (
@@ -131,7 +106,6 @@ INSERT INTO `__DBPREFIX__group_permissions` (`permission_id`, `permission_title`
 (10, 'Can manage opponents?', 'opponents', 512),
 (11, 'Can manage widgets?', 'widgets', 1024),
 (12, 'Can manage news slider?', 'slider', 2048),
-(13, 'Can manage calendar events?', 'events', 4096);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__headers`;
 -- command split --
@@ -302,7 +276,7 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (23, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 8),
 (24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9),
 (25, 6, 'Youtube Channel', 'youtube_id', '', 'text', '', 'YouTube channel username', 'trim', 1),
-(26, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Official Twitter Name', 'trim', 2),
+(26, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Official Twitter Name', 'trim', 2);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
@@ -438,20 +412,6 @@ INSERT INTO `__DBPREFIX__user_groups` (`group_id`, `group_title`, `group_user_ti
 (3, 'Team Members', 'Team Member', 1, 0, 1, 0, 0),
 (4, 'Banned Users', 'Banned', 1, 0, 0, 1, 0);
 -- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__user_social`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_social` (
-  `facebook` varchar(8) NOT NULL,
-  `twitter` varchar(8) NOT NULL,
-  `xbox_live` varchar(8) NOT NULL,
-  `ps_online` varchar(8) NOT NULL,
-  `steam` varchar(8) NOT NULL,
-  `skype` varchar(8) NOT NULL,
-  `user` varchar(8) NOT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
--- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__wall_comments`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__wall_comments` (
@@ -482,7 +442,7 @@ INSERT INTO `__DBPREFIX__widgets` (`widget_id`, `area_id`, `widget_title`, `widg
 (5, 1, 'Users Online', 'users_online', 'b:0;', 4),
 (6, 2, 'Articles', 'articles', 'b:0;', 0),
 (7, 3, 'Admin CP Login', 'login', 'b:0;', 0),
-(8, 3, 'Admin Site Stats', 'admin_stats', 'b:0;', 1),
+(8, 3, 'Site Stats', 'site_stats', 'b:0;', 1),
 (9, 3, 'Admin CP Users Online', 'users_online', 'b:0;', 2),
 (10, 4, 'Admin CP Alerts', 'administrator_alerts', 'b:0;', 0),
 (11, 5, 'Pages', 'pages', 'b:0;', 0),
@@ -503,12 +463,3 @@ INSERT INTO `__DBPREFIX__widget_areas` (`area_id`, `area_title`, `area_slug`) VA
 (5, 'Navigation', 'navigation'),
 (6, 'Dashboard', 'dashboard');
 -- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__wall_comments` (
-`comment_id` bigint( 20 ) NOT NULL AUTO_INCREMENT ,
-`wall_owner_id` bigint( 20 ) NOT NULL ,
-`commenter_id` bigint( 20 ) NOT NULL ,
-`reply_to_id` bigint( 20 ) NOT NULL ,
-`comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-`comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
-PRIMARY KEY ( `comment_id` )
-) ENGINE = MYISAM DEFAULT CHARSET = utf8;

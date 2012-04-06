@@ -6,10 +6,13 @@
 -----0.6.2-----
 Fixed some lingering install bugs
 Added fsock based library to download widgets
-Added custom fields to user profiles
 Added missing captcha folder
 Added more folders to check permissions on during install
-
+Added media gallery
+Added shoutbox
+Added intersquad matches
+Added Social network settings
+Added user walls
 
 -----0.6.1-----
 Fixed polls updating current active poll
