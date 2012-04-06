@@ -8,7 +8,6 @@
 		<div class="tabs">
 		<ul>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor('roster', 'All Squads'); ?></span><span class="right"></span></li>
-			<li><span class="left"></span><span class="middle"><?php echo anchor('roster/users', 'All Users'); ?></span><span class="right"></span></li>
 			<?php if($squads): ?>
 				<?php foreach($squads as $squad): ?>
 					<li><span class="left"></span><span class="middle">

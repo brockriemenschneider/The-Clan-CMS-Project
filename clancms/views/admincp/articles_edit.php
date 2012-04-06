@@ -26,7 +26,6 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add News Article'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/edit/' . $article->article_id, 'Edit Article: ' . $article->article_title); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
-			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/categories', 'News Categories'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
@@ -71,18 +70,7 @@
 				<?php echo br(); ?>
 				<div class="description">What is the status of this article?</div>
 			
-			<!-- Category Select -->
-				<div class="label required">Category</div>
-				<?php $options = array();
-					if($categories):
-						foreach($categories as $category):
-							$options = $options + array($category->category_id	=>	$category->category_title);
-						endforeach;
-					endif;
-				echo form_dropdown('category', $options, set_value('category', $category->category_id), 'class="input select"'); ?>
-				<?php echo br(); ?>
-				<div class="description">Which category does this article belong to?</div>
-				
+		
 				<div class="label required">Squad</div>
 				<?php
 					

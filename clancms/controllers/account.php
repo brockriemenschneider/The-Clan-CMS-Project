@@ -843,74 +843,6 @@ class Account extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
-	 * Social
-	 *
-	 * Social media connections
-	 *
-	 * @access	private
-	 * @param	string
-	 * @return	bool
-	 */	
-	 function social()
-	 {
-	 	// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Retrieve the user
-		if(!$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id'))))
-		{
-			// User doesn't exist, redirect them
-			redirect('account/login');
-		}
-		
-		// Create a reference to user
-		$this->data->user =& $user;
-		
-		$this->data->social =& $social;
-		$social =& $this->social->get_social($user->user_name);
-		
-		// User has not accepted social networking agreement, send them the form
-		if(!$social)
-		{
-			
-			$this->load->view(THEME . 'social_agree', $this->data);
-			
-		}
-		
-		//  on submit -> to model
-		if ($this->input->post('update_social')) {
-			$data = array(
-			'facebook'		=> 	$this->input->post('facebook'),
-			'twitter'		=> 	$this->input->post('twitter'),
-			'xbox_live'	=> 	$this->input->post('xboxlive'),
-			'ps_online'	=> 	$this->input->post('psonline'),
-			'steam'		=> 	$this->input->post('steam'),
-			'skype'		=> 	$this->input->post('skype'),
-			'youtube'		=>	$this->input->post('youtube'),
-			'user'		=>	$user->user_name,
-			'user_id'		=>	$user->user_id
-			);
-			$this->social->update_social($data);
-			
-			// Alert user
-	 		$this->session->set_flashdata('message', 'You have successfully updated your social preferences!');
-	 		
-	 		// Redirect to clear the cache
-	 		redirect('account/social');
-		}
-		
-		// Load view
-	 	$this->load->view(THEME . 'social', $this->data);
-		 
-	 }
-	
-	// --------------------------------------------------------------------
-	
-	/**
 	 * Media
 	 *
 	 * Social media connections
@@ -938,8 +870,6 @@ class Account extends CI_Controller {
 	// --------------------------------------------------------------------
 	
 	/**
-<<<<<<< HEAD
-=======
 	 * Wall
 	 *
 	 * Interactive User Wall
@@ -1216,60 +1146,6 @@ class Account extends CI_Controller {
 	 	}
 	 }
 
-	// --------------------------------------------------------------------
-	/**
-	 * Agree
-	 *
-	 * User affirms to social agreement
-	 *
-	 * @access	private
-	 * @param	string
-	 */
-	 function agree()
-	 {
-	 	// Check to see if the user is logged in
-		if (!$this->user->logged_in())
-		{
-			// User is not logged in, redirect them
-			redirect('account/login');
-		}
-		
-		// Retrieve the user
-		if(!$user = $this->users->get_user(array('user_id' => $this->session->userdata('user_id'))))
-		{
-			// User doesn't exist, redirect them
-			redirect('account/login');
-		}
-		
-		// Create a reference to user
-		$this->data->user =& $user;
-		
-	 	// Retrieve form
-	 	$agree = $this->input->post('social_agree');
-	 	
-	 	if(!$agree)
-	 	{
-	 		
-	 		return FALSE;
-	 		
-	 	} else {
-	 		
-	 		$data = array(
-	 			'user'		=> 	$user->user_name,
-	 			'user_id'		=>	$user->user_id
-	 		);
-	 		
-	 		// Send info to database
-	 		$this->social->update_social($data);
-	 		
-	 		// Alert user
-	 		$this->session->set_flashdata('message', 'You have accepted the social agreement!  You may now provide social IDs');
-	 		
-	 		redirect('account/social');
-	 	}
-	 	
-	 }
-	 
 	 // --------------------------------------------------------------------
 	
 	/**

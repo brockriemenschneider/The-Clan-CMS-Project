@@ -43,6 +43,9 @@ class Dashboard extends CI_Controller {
 		// Load the Pages Model
 		$this->load->model('Pages_model', 'pages');
 		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
+		
 		// Load the typography library
 		$this->load->library('typography');
 		

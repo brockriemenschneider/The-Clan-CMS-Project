@@ -40,6 +40,9 @@ class Articles extends CI_Controller {
 		// Load the Squads Model
 		$this->load->model('Squads_model', 'squads');
 		
+		// Load the Tracker model
+		$this->load->model('Tracker_model', 'tracker');
+		
 		// Load the typography library
 		$this->load->library('typography');
 		
@@ -189,20 +192,6 @@ class Articles extends CI_Controller {
 				{
 					// Squad doesn't exist, assign article squad
 					$article->squad = '';
-				}
-				
-				// Retrieve the category
-				$category = $this->articles->get_category(array('category_id' => $article->category_id));
-				
-				// Check that category exists
-				if($category)
-				{
-					$article->category = $category->category_title;
-				}
-				else
-				{
-					// Category doesn't exist
-					$article->category = '';
 				}
 				
 				// Limit the article's words, format the text, create links, and assign it to article summary

@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS `__DBPREFIX__articles`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
   `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `category_id` bigint(20) NOT NULL DEFAULT '1',
   `squad_id` bigint(20) NOT NULL DEFAULT '0',
   `article_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `article_slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -29,18 +28,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__articles` (
 -- command split --
 INSERT INTO `__DBPREFIX__articles` (`article_id`, `squad_id`, `article_title`, `article_slug`, `article_content`, `article_comments`, `user_id`, `article_date`, `article_status`) VALUES
 (1, 0, 'Welcome to Clan CMS!', '1-Welcome-to-Clan-CMS', 'Welcome to your new Clan CMS brought to you by Xcel Gaming!\n\nIf you are seeing this message then you have installed Clan CMS successfully!\n\nPlease take some time to familiarize yourself with the Admin CP to take advantage of all the aspects that Clan CMS has to offer! \n\nThank you & Good Luck,\nXcel Gaming\nhttp://www.xcelgaming.com', 1, 1, '2010-10-10 10:10:10', 1);
--- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__article_categories`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__article_categories` (
-  `category_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `category_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `category_priority` int(10) NOT NULL,
-  PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
--- command split --
-INSERT INTO `__DBPREFIX__article_categories` (`category_id`, `category_title`, `category_priority`) VALUES
-(1, 'Clan News', 1);
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__article_comments`;
 -- command split --
@@ -314,12 +301,8 @@ INSERT INTO `__DBPREFIX__settings` (`setting_id`, `category_id`, `setting_title`
 (22, 2, 'Slide Image Height', 'slide_height', '189', 'text', '', 'The height of slide images in pixels', 'trim|required|numeric', 7),
 (23, 2, 'Slide Preview Image Width', 'slide_preview_width', '76', 'text', '', 'The width of slide preview images in pixels', 'trim|required|numeric', 8),
 (24, 2, 'Slide Preview Image Height', 'slide_preview_height', '46', 'text', '', 'The height of slide preview images in pixels', 'trim|required|numeric', 9),
-(25, 6, 'Facebook', 'facebook_id', '', 'text', '', 'Clans Facebook Page', 'trim', 1),
-(26, 6, 'Youtube Channel', 'youtube_id', '', 'text', '', 'YouTube channel username', 'trim', 2),
-(27, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Official Twitter Name', 'trim', 3),
-(28, 6, 'Steam', 'facebook_id', '', 'text', '', 'Steam Group', 'trim', 4),
-(29, 6, 'TeamSpeak', 'facebook_id', '', 'text', '', 'TeamSpeak Account Number', 'trim', 5),
-(30, 6, 'Ventrilo', 'facebook_id', '', 'text', '', 'Ventrilo Account Number', 'trim', 6);
+(25, 6, 'Youtube Channel', 'youtube_id', '', 'text', '', 'YouTube channel username', 'trim', 1),
+(26, 6, 'Twitter', 'facebook_id', '', 'text', '', 'Official Twitter Name', 'trim', 2),
 -- command split --
 DROP TABLE IF EXISTS `__DBPREFIX__setting_categories`;
 -- command split --
@@ -435,40 +418,6 @@ CREATE TABLE IF NOT EXISTS `__DBPREFIX__users` (
 INSERT INTO `__DBPREFIX__users` (`user_id`, `group_id`, `user_notes`, `user_name`, `user_password`, `user_salt`, `user_email`, `user_timezone`, `user_daylight_savings`, `user_ipaddress`, `user_joined`, `user_avatar`, `user_activation`) VALUES
 (1, '2', '', '__USERNAME__', '__USERPASSWORD__', '__USERSALT__', '__USEREMAIL__', '__USERTIMEZONE__', '__USERDAYLIGHTSAVINGS__', '__USERIPADDRESS__', '__USERJOINED__', '', '1');
 -- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__user_api`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_api` (
-  `host` varchar(24) COLLATE utf8_unicode_ci NOT NULL,
-  `base_url` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `m_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `m_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `m_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `host` (`host`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
--- command split --
-INSERT INTO `__DBPREFIX__user_api` (`host`, `base_url`, `m_1`, `m_2`, `m_3`) VALUES
-('facebook', 'http://facebook.com/', '', '', ''),
-('twitter', 'https://twitter.com/', '', '', ''),
-('youtube', 'http://www.youtube.com/user/', '', '', '');
--- command split --
-DROP TABLE IF EXISTS `__DBPREFIX__user_extend`;
--- command split --
-CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_extend` (
-  `user_id` bigint(20) NOT NULL,
-  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `facebook` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `twitter` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `steam` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `xbox_live` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `ps_online` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `skype` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `bf3` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `mw3` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `youtube` varchar(64) NOT NULL DEFAULT '',
-  KEY `user` (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
--- command split --
-
 DROP TABLE IF EXISTS `__DBPREFIX__user_groups`;
 -- command split --
 CREATE TABLE IF NOT EXISTS `__DBPREFIX__user_groups` (
@@ -533,7 +482,7 @@ INSERT INTO `__DBPREFIX__widgets` (`widget_id`, `area_id`, `widget_title`, `widg
 (5, 1, 'Users Online', 'users_online', 'b:0;', 4),
 (6, 2, 'Articles', 'articles', 'b:0;', 0),
 (7, 3, 'Admin CP Login', 'login', 'b:0;', 0),
-(8, 3, 'Site Stats', 'site_stats', 'b:0;', 1),
+(8, 3, 'Admin Site Stats', 'admin_stats', 'b:0;', 1),
 (9, 3, 'Admin CP Users Online', 'users_online', 'b:0;', 2),
 (10, 4, 'Admin CP Alerts', 'administrator_alerts', 'b:0;', 0),
 (11, 5, 'Pages', 'pages', 'b:0;', 0),

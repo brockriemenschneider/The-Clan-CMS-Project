@@ -16,7 +16,6 @@
 		<li><?php echo anchor('matches', $total_matches . ' Matches'); ?></li>
 		<li><?php echo anchor('opponents', $total_opponents . ' Opponents'); ?></li>
 		<li><?php echo anchor('squads', $total_squads . ' Squads'); ?></li>
-		<li><?php echo anchor('roster/users', $total_users . ' Users'); ?></li>
 		<li><?php echo anchor('polls', $total_polls . ' Polls'); ?>
 		<li><?php echo anchor('gallery/images', $total_images . ' Images'); ?></li>
 		<li><?php echo anchor('gallery/videos', $total_videos . ' Videos'); ?></li>

@@ -41,12 +41,12 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = "__HOSTNAME__";
-$db['default']['username'] = "__USERNAME__";
-$db['default']['password'] = "__PASSWORD__";
-$db['default']['database'] = "__DATABASE__";
+$db['default']['hostname'] = "localhost";
+$db['default']['username'] = "codezyne";
+$db['default']['password'] = "!!34Asdt99#$";
+$db['default']['database'] = "beta";
 $db['default']['dbdriver'] = "mysql";
-$db['default']['dbprefix'] = "__DBPREFIX__";
+$db['default']['dbprefix'] = "ClanCMS_";
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
@@ -54,9 +54,9 @@ $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_unicode_ci';
 $db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = FALSE;
+
 $db['default']['stricton'] = FALSE;
-$db['default']['port']     = "__PORT__";
+$db['default']['port']     = "3306";
 
 
 /* End of file database.php */
