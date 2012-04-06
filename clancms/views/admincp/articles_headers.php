@@ -12,7 +12,6 @@
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/drafts', 'Drafts'); ?></span><span class="right"></span></li>
 			<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/add', 'Add Article'); ?></span><span class="right"></span></li>
 			<li class="selected"><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/headers', 'News Headers'); ?></span><span class="right"></span></li>
-<li><span class="left"></span><span class="middle"><?php echo anchor(ADMINCP . 'articles/categories', 'News Categories'); ?></span><span class="right"></span></li>
 		</ul>
 		</div>
 		
